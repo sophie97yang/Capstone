@@ -37,8 +37,8 @@ def seed_trips(users):
         location = choice(locations)
         city=location[0]
         state=location[1]
-        startDate=fake.future_date()
-        endDate=fake.date_between(start_date=startDate, end_date='+20d')
+        startDate=fake.date_between(start_date='-5d',end_date='today')
+        endDate=fake.date_between(start_date='today', end_date='+10d')
         image= fake.image_url()
         trip = Trip(
             name=name,city=city,state=state,start_date=startDate,end_date=endDate,image=image
