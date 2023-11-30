@@ -10,7 +10,6 @@ class ExpenseDetail(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")))
     expense_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("expenses.id")))
     price = db.Column(db.Float,nullable=False)
-    settled = db.Column(db.Boolean,default=False)
 
     db.UniqueConstraint('user_id','expense_id',name="uix1")
     user = db.relationship("User", back_populates="expenses")
@@ -20,7 +19,6 @@ class ExpenseDetail(db.Model):
         return {
             'id': self.id,
             'price': self.price,
-            'settled':self.settled,
             "user":self.user.to_dict(),
             "expense":self.expense.to_dict()
         }

@@ -1,5 +1,4 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
-from .trip_details import trip_details
 
 class Trip(db.Model):
     __tablename__ = "trips"
@@ -19,7 +18,7 @@ class Trip(db.Model):
     simplify = db.Column(db.Boolean, default=False)
 
     expenses = db.relationship('Expense',back_populates='trip')
-    users = db.relationship('User',secondary=trip_details,back_populates='trips')
+    users = db.relationship('TripDetail',back_populates='trip')
     bookings = db.relationship('Itinerary',back_populates='trip')
 
     def to_dict(self):
@@ -32,6 +31,6 @@ class Trip(db.Model):
             "end_date":self.end_date,
             "image":self.image,
             "expenses":[expense.to_dict() for expense in self.expenses],
-            "users":[user.to_dict() for user in self.users],
+            # "users":[user.to_dict() for user in self.users],
             "bookings_itinerary":[booking.to_dict() for booking in self.bookings]
         }

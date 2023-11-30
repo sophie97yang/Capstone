@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: de207b1fafa2
+Revision ID: fb7d14dcafd2
 Revises: 
-Create Date: 2023-11-29 12:31:07.997915
+Create Date: 2023-11-29 17:21:17.031023
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'de207b1fafa2'
+revision = 'fb7d14dcafd2'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -55,13 +55,12 @@ def upgrade():
     sa.Column('payer_id', sa.Integer(), nullable=True),
     sa.Column('trip_id', sa.Integer(), nullable=True),
     sa.Column('name', sa.String(length=40), nullable=False),
-    sa.Column('description', sa.String(length=500), nullable=True),
     sa.Column('expense_date', sa.Date(), nullable=False),
     sa.Column('image', sa.String(length=255), nullable=True),
     sa.Column('split_type', sa.String(length=50), nullable=True),
+    sa.Column('split_type_info', sa.String(length=100), nullable=True),
     sa.Column('category', sa.String(length=50), nullable=True),
     sa.Column('total', sa.Float(), nullable=False),
-    sa.Column('settled', sa.Boolean(), nullable=True),
     sa.ForeignKeyConstraint(['payer_id'], ['users.id'], ),
     sa.ForeignKeyConstraint(['trip_id'], ['trips.id'], ),
     sa.PrimaryKeyConstraint('id')
@@ -77,18 +76,19 @@ def upgrade():
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('trip_details',
-    sa.Column('user_id', sa.Integer(), nullable=False),
-    sa.Column('trip_id', sa.Integer(), nullable=False),
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('user_id', sa.Integer(), nullable=True),
+    sa.Column('trip_id', sa.Integer(), nullable=True),
+    sa.Column('settled', sa.Float(), nullable=True),
     sa.ForeignKeyConstraint(['trip_id'], ['trips.id'], ),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
-    sa.PrimaryKeyConstraint('user_id', 'trip_id')
+    sa.PrimaryKeyConstraint('id')
     )
     op.create_table('expense_details',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=True),
     sa.Column('expense_id', sa.Integer(), nullable=True),
     sa.Column('price', sa.Float(), nullable=False),
-    sa.Column('settled', sa.Boolean(), nullable=True),
     sa.ForeignKeyConstraint(['expense_id'], ['expenses.id'], ),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')

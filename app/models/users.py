@@ -2,7 +2,6 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
-from .trip_details import trip_details
 
 
 class User(db.Model, UserMixin):
@@ -20,7 +19,7 @@ class User(db.Model, UserMixin):
     state = db.Column(db.String(50), nullable=False)
     balance = db.Column(db.Float, default=500)
 
-    trips = db.relationship("Trip",secondary=trip_details,back_populates="users")
+    trips = db.relationship("TripDetail",back_populates="user")
     expenses_own = db.relationship("Expense",back_populates="payer")
     expenses = db.relationship("ExpenseDetail",back_populates='user')
 
@@ -44,7 +43,7 @@ class User(db.Model, UserMixin):
             'city':self.city,
             'state':self.state,
             'balance':self.balance,
-            "trips":[trip.to_dict() for trip in self.trips],
-            "expenses_own":[expense.to_dict() for expense in self.expenses_own],
-            "expenses":[expense.to_dict() for expense in self.expenses]
+            # "trips":[trip.to_dict() for trip in self.trips],
+            "expenses_own":[expense.to_dict() for expense in self.expenses_own]
+            # "expenses":[expense.to_dict() for expense in self.expenses]
         }
