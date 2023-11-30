@@ -1,1 +1,7 @@
 /* TODO Add site wide styles */
+.errors {
+    font-size:10px;
+    color:red;
+    font-style:italic;
+    min-height:20px;
+}
