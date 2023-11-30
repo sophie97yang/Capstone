@@ -45,10 +45,16 @@ def seed_trips(users):
         )
         users_involved = sample(users,randint(3,7))
         trip_list_detail=[]
+        count=1
         for user in users_involved:
-            trip_detail = TripDetail(settled=False)
-            trip_detail.user=user
+            if count==1:
+                trip_detail = TripDetail(settled=False,creator=True)
+                trip_detail.user=user
+            else:
+                trip_detail = TripDetail(settled=False)
+                trip_detail.user=user
             trip_list_detail.append(trip_detail)
+            count+=1
 
         trip.users = trip_list_detail
 
