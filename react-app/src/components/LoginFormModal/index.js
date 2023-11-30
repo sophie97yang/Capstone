@@ -26,6 +26,18 @@ function LoginFormModal() {
     }
   };
 
+  const handleDemo = async(e) => {
+    e.preventDefault();
+    const email='demo@gmail.com'
+    const password='password'
+    const data = await dispatch((login(email, password)));
+    if (data) {
+      setErrors(data);
+    } else {
+        closeModal()
+    }
+  }
+
   return (
     <div id='login-modal'>
       <h1>Welcome back.</h1>
@@ -60,6 +72,7 @@ function LoginFormModal() {
           {errors.password ? <p className='errors'>{errors.password}</p>: <p className='errors'></p>}
         </label>
         <button type="submit">Log In</button>
+        <button onClick={handleDemo}>Log in as Demo User</button>
       </form>
     </div>
   );

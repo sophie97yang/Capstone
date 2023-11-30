@@ -20,6 +20,10 @@ def seed_users():
         user = User(first_name=first_name,last_name=last_name,email=email,password='password',city=city,state=state)
         db.session.add(user)
         user_list.append(user)
+    # create a demo user
+    demo = User(first_name='Demo',last_name='User',email='demo@gmail.com',password='password',city='San Diego',state='CA')
+    db.session.add(demo)
+    user_list.append(demo)
     db.session.commit()
     return user_list
 
