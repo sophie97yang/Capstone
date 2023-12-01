@@ -47,7 +47,7 @@ def seed_expenses(users,trips):
 
         name = i[0]
         expense_date=fake.date_between_dates(date_start=trip.start_date, date_end=trip.end_date)
-        split_type=choice(split_types)
+        split_type='Equal'
         image= fake.image_url()
         category=i[1]
         if name == 'Airbnb':

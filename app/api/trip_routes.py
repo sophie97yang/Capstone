@@ -46,7 +46,7 @@ def create_trip():
         trip.users.append(trip_detail)
         db.session.add(trip)
         db.session.commit()
-        return {"trip":trip.to_dict_users()}
+        return {"trip":trip_detail.to_dict_trips()}
     return {"errors":form.errors},400
 
 #update a trip
@@ -80,7 +80,7 @@ def update_trip(id):
              else:
                 trip.image = uploadTripImage["url"]
 
-        return {"trip":trip.to_dict()}
+        return {"trip":trip.to_dict_users()}
     return {"errors":form.errors},400
 
 # add new users to a trip
