@@ -1,0 +1,10 @@
+.my_trips-left img {
+    max-width:450px;
+    min-height:250px;
+}
+
+.invitemodal {
+    max-height:600px;
+    width:700px;
+    overflow-wrap: normal;
+}

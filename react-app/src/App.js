@@ -5,6 +5,9 @@ import SignupFormPage from "./components/SignupFormPage";
 import LoginFormPage from "./components/LoginFormPage";
 import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
+import AllTrips from "./components/AllTripsPage";
+import CreateTripForm from "./components/CreateTripForm";
+import TripDetails from "./components/TripDetailsPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -23,6 +26,18 @@ function App() {
           </Route>
           <Route path="/signup">
             <SignupFormPage />
+          </Route>
+          <Route path='/trips/new'>
+            <CreateTripForm />
+            </Route>
+          <Route exact path='/trips/:id/expenses'>
+            <TripDetails type='expense'/>
+          </Route>
+          <Route exact path='/trips/:id/itineraries'>
+            <TripDetails type='itinerary'/>
+          </Route>
+          <Route path='/trips'>
+            <AllTrips />
           </Route>
         </Switch>
       )}

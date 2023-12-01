@@ -43,7 +43,42 @@ class User(db.Model, UserMixin):
             'city':self.city,
             'state':self.state,
             'balance':self.balance,
-            # "trips":[trip.to_dict() for trip in self.trips],
+            "trips":[trip.to_dict_trips() for trip in self.trips],
             "expenses_own":[expense.to_dict() for expense in self.expenses_own]
             # "expenses":[expense.to_dict() for expense in self.expenses]
         }
+
+
+    def to_dict_users(self):
+        return {
+            'id': self.id,
+            'first_name': self.first_name,
+            'last_name':self.last_name,
+            'email': self.email,
+            'city':self.city,
+            'state':self.state,
+            'balance':self.balance,
+            "expenses_own":[expense.to_dict() for expense in self.expenses_own]
+            # "expenses":[expense.to_dict() for expense in self.expenses]
+        }
+    def to_dict_simple(self):
+        return {
+            'id': self.id,
+            'first_name': self.first_name,
+            'last_name':self.last_name,
+            'email': self.email
+        }
+
+    # def to_dict_current_user(self,user_id):
+    #     return {
+    #         'id': self.id,
+    #         'first_name': self.first_name,
+    #         'last_name':self.last_name,
+    #         'email': self.email,
+    #         'city':self.city,
+    #         'state':self.state,
+    #         'balance':self.balance,
+    #         "trips":[trip.to_dict_trips(user_id) for trip in self.trips],
+    #         "expenses_own":[expense.to_dict() for expense in self.expenses_own]
+    #         # "expenses":[expense.to_dict() for expense in self.expenses]
+    #     }

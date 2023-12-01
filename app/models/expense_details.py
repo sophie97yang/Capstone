@@ -22,3 +22,10 @@ class ExpenseDetail(db.Model):
             "user":self.user.to_dict(),
             "expense":self.expense.to_dict()
         }
+
+    def to_dict_users(self):
+        return {
+            'id': self.id,
+            'price': self.price,
+            'user':self.user.to_dict_simple()
+        }

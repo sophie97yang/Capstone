@@ -18,7 +18,7 @@ class Trip(db.Model):
     simplify = db.Column(db.Boolean, default=False)
 
     expenses = db.relationship('Expense',back_populates='trip')
-    users = db.relationship('TripDetail',back_populates='trip')
+    users = db.relationship('TripDetail',back_populates='trip',cascade="all, delete")
     bookings = db.relationship('Itinerary',back_populates='trip')
 
     def to_dict(self):
@@ -31,6 +31,48 @@ class Trip(db.Model):
             "end_date":self.end_date,
             "image":self.image,
             "expenses":[expense.to_dict() for expense in self.expenses],
-            # "users":[user.to_dict() for user in self.users],
+            "users":[user.to_dict_simple() for user in self.users],
             "bookings_itinerary":[booking.to_dict() for booking in self.bookings]
         }
+
+    def to_dict_users(self):
+        return {
+            "id":self.id,
+            "name":self.name,
+            "description":self.description,
+            "location":(self.city,self.state),
+            "start_date":self.start_date,
+            "end_date":self.end_date,
+            "image":self.image,
+            "expenses":[expense.to_dict() for expense in self.expenses],
+            "users":[user.to_dict_users() for user in self.users],
+            "bookings_itinerary":[booking.to_dict() for booking in self.bookings]
+        }
+
+    def to_dict_simple(self):
+        return {
+            "id":self.id,
+            "name":self.name,
+            "description":self.description,
+            "location":(self.city,self.state),
+            "start_date":self.start_date,
+            "end_date":self.end_date,
+            "image":self.image,
+            "expenses":[expense.to_dict() for expense in self.expenses],
+            "users":[user.to_dict_simple() for user in self.users],
+            "bookings_itinerary":[booking.to_dict() for booking in self.bookings]
+        }
+
+    # def to_dict_current_user(self,user_id):
+    #     return {
+    #         "id":self.id,
+    #         "name":self.name,
+    #         "description":self.description,
+    #         "location":(self.city,self.state),
+    #         "start_date":self.start_date,
+    #         "end_date":self.end_date,
+    #         "image":self.image,
+    #         "expenses":[expense.to_dict_current_user(user_id) for expense in self.expenses],
+    #         "users":[user.to_dict_users() for user in self.users],
+    #         "bookings_itinerary":[booking.to_dict() for booking in self.bookings]
+    #     }

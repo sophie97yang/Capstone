@@ -25,12 +25,34 @@ class Expense(db.Model):
     def to_dict(self):
         return {
             "id":self.id,
+            "payer":self.payer.to_dict_simple(),
             "name":self.name,
             "expense_date":self.expense_date,
             "image":self.image,
             "split_type":self.split_type,
+            "split_type_info":self.split_type_info,
             "category":self.category,
             "total":self.total,
-            "payer":self.payer_id,
+            "details":[detail.to_dict_users() for detail in self.users],
             "trip":self.trip_id
         }
+
+    # def to_dict_current_user(self,user_id):
+    #     for user in self.users:
+    #         print(user.user.id)
+    #         print(user_id)
+    #     specific_expense = [detail for detail in self.users if detail.user.id==int(user_id)]
+    #     print(specific_expense)
+    #     return {
+    #         "id":self.id,
+    #         "payer":self.payer_id,
+    #         "name":self.name,
+    #         "expense_date":self.expense_date,
+    #         "image":self.image,
+    #         "split_type":self.split_type,
+    #         "category":self.category,
+    #         "total":self.total,
+    #         # "details":specific_expense.to_dict_users(),
+    #         'details':[expense.to_dict_users() for expense in self.users],
+    #         "trip":self.trip_id
+    #     }

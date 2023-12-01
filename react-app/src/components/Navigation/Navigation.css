@@ -1,7 +1,20 @@
 .profile-dropdown {
   position: absolute;
+  background-color: white;
 }
 
 .hidden {
   display: none;
+}
+
+.profile-dropdown li {
+  list-style-type:none
+}
+
+nav li {
+  list-style-type:none
+}
+
+nav img {
+  width:200px;
 }
