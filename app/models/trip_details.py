@@ -40,3 +40,7 @@ class TripDetail(db.Model):
             "settled":self.settled,
             "creator":self.creator
         }
+    def to_dict_simple(self):
+        return {
+            "user":self.user.to_dict_simple()
+        }

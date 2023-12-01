@@ -1,13 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
-import {useHistory} from 'react-router-dom';
 import OpenModalButton from "../OpenModalButton";
-import LoginFormModal from "../LoginFormModal";
 import DeleteModal from "./DeleteModal";
+import InviteOthers from "./InviteOthersModal";
 
 function TripOptions({trip}) {
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
-  const history = useHistory();
 
   const openMenu = () => {
     if (showMenu) return;
@@ -42,7 +40,7 @@ function TripOptions({trip}) {
             <OpenModalButton
               buttonText="Invite Others"
               onItemClick={closeMenu}
-              modalComponent={<LoginFormModal />}
+              modalComponent={<InviteOthers trip={trip}/>}
             />
           </li>
           <li>

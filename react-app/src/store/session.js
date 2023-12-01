@@ -4,6 +4,7 @@ const SET_USER = "session/SET_USER";
 const REMOVE_USER = "session/REMOVE_USER";
 const ADD_TRIP = "session/ADD_TRIP";
 const REMOVE_TRIP ='session/REMOVE_TRIP';
+const UPDATE_TRIP='session/UPDATE_TRIP';
 
 const setUser = (user) => ({
 	type: SET_USER,
@@ -21,6 +22,12 @@ const addTrip = (trip) => ({
 
 const removeTrip = (tripDetailId) => ({
 	type:REMOVE_TRIP,
+	tripId:tripDetailId
+})
+
+const updateTrip=(trip,tripDetailId) => ({
+	type:UPDATE_TRIP,
+	trip:trip,
 	tripId:tripDetailId
 })
 
@@ -153,6 +160,35 @@ export const deleteTrip = (tripId,tripDetailId)=> async(dispatch) => {
     }
 }
 
+//ADD USERS TO TRIP
+export const addUsers = (tripId,tripDetailId,email1,email2,email3) => async (dispatch)=> {
+	const response = await fetch(`/api/trips/${tripId}/add/users`, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify({
+			"email_1":email1,
+			"email_2":email2,
+			"email_3":email3
+		}),
+	});
+
+	if (response.ok) {
+		const data = await response.json();
+		dispatch(updateTrip(data,tripDetailId))
+		return null;
+	} else if (response.status < 500) {
+		const data = await response.json();
+		if (data.errors) {
+			return data.errors;
+		}
+	} else {
+		return ["An error occurred. Please try again."];
+	}
+
+}
+
 export default function reducer(state = initialState, action) {
 	let newState
 	switch (action.type) {
@@ -169,8 +205,12 @@ export default function reducer(state = initialState, action) {
 			return newState
 		case REMOVE_TRIP:
 			newState={...state};
-			delete newState.trips[action.tripDetailId];
+			delete newState.user.trips[action.tripId];
 			return newState
+		case UPDATE_TRIP:
+				newState={...state};
+				newState.user.trips[action.tripId].trip=action.trip;
+				return newState;
 		default:
 			return state;
 	}

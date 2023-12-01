@@ -6,7 +6,7 @@ import TripOptions from "./TripOptions";
 const AllTrips = () => {
     const user = useSelector(state=>state.session.user);
     const history=useHistory();
-    const trips = Object.values(user?.trips);
+    const trips =user?.trips ? Object.values(user?.trips):null;
     console.log(trips);
     //calculate how many days until the trip
     trips?.forEach(trip=> {

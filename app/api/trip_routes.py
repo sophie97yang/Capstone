@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify,request
 from flask_login import login_required,current_user
 from ..models import Trip,db,User,TripDetail
 from ..forms.trip_form import TripForm
+from ..forms.add_user_form import AddUserForm
 from .AWS_helpers import get_unique_filename, upload_file_to_s3, remove_file_from_s3
 
 trip_routes = Blueprint('trips', __name__)
@@ -13,7 +14,7 @@ trip_routes = Blueprint('trips', __name__)
 @login_required
 def get_trip(id):
     trip = Trip.query.get(id)
-    return {"trip":trip.to_dict_users()}
+    return {"trip":trip.to_dict_trips()}
 
 #create a trip
 @trip_routes.route('/new',methods=['POST'])
@@ -79,24 +80,51 @@ def update_trip(id):
                 return uploadTripImage
              else:
                 trip.image = uploadTripImage["url"]
-
-        return {"trip":trip.to_dict_users()}
+        db.session.commit()
+        return {"trip":trip.to_dict_trips()}
     return {"errors":form.errors},400
 
 # add new users to a trip
-@trip_routes.route('/<int:id>/add/<int:user_id>',methods=['PUT'])
+@trip_routes.route('/<int:id>/add/users',methods=['POST'])
 @login_required
-def add_trip_users(id,user_id):
+def add_trip_users(id):
     trip = Trip.query.get(id)
-    user = User.query.get(user_id)
-    if not trip or not user:
-        return {'errors': "Trip/User doesn't exist"}, 404
+    if trip is None:
+        return {'errors': "Trip doesn't exist"}, 404
 
-    trip_detail = TripDetail(settled=False)
-    trip_detail.user=user
-    trip.users.append(trip_detail)
-    return {"trip":trip.to_dict()}
+    form =AddUserForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
+        trip_detail_list=[]
 
+        email_1 = form.data('email_1')
+        user_1 = User.query.filter_by(email=email_1).first()
+        if user_1:
+            trip_detail_1 = TripDetail(settled=False,creator=False)
+            trip_detail_1.user=user_1
+            trip_detail_list.append(trip_detail_1)
+
+        email_2 = form.data('email_2')
+        user_2 = User.query.filter_by(email=email_2).first()
+        if user_2:
+            trip_detail_2 = TripDetail(settled=False,creator=False)
+            trip_detail_2.user=user_2
+            trip_detail_list.append(trip_detail_2)
+
+        email_3 = form.data('email_3')
+        user_3 = User.query.filter_by(email=email_3).first()
+        if user_3:
+            trip_detail_3 = TripDetail(settled=False,creator=False)
+            trip_detail_3.user=user_3
+            trip_detail_list.append(trip_detail_3)
+
+        trip.users.append(trip_detail_list)
+        db.session.commit()
+        return {"trip":trip.to_dict()}
+    else:
+        return  {"errors":form.errors},400
+
+#delete trip
 @trip_routes.route('<int:id>/delete',methods=['DELETE'])
 @login_required
 def delete_trip(id):
