@@ -93,7 +93,7 @@ const UpdateTripModal = ({trip}) =>{
             setErrors(res.errors);
           } else {
             dispatch(authenticate())
-            history.push(`/trips/${trip.trip.id}`);
+            history.push(`/trips/${trip.trip.id}/expenses`);
             setSubmitted(true);
             closeModal();
             return "success";

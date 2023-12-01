@@ -25,11 +25,12 @@ class Expense(db.Model):
     def to_dict(self):
         return {
             "id":self.id,
-            "payer":self.payer_id,
+            "payer":self.payer.to_dict_simple(),
             "name":self.name,
             "expense_date":self.expense_date,
             "image":self.image,
             "split_type":self.split_type,
+            "split_type_info":self.split_type_info,
             "category":self.category,
             "total":self.total,
             "details":[detail.to_dict_users() for detail in self.users],

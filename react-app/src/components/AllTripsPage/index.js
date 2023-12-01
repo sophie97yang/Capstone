@@ -65,7 +65,7 @@ const AllTrips = () => {
             </div>
             <div className='my_trips-right'>
                 <TripOptions trip={trip} />
-                <h3>{trip.trip.name}</h3>
+                <h3><Link to={`/trips/${trip.trip.id}/expenses`}>{trip.trip.name}</Link></h3>
                 <div className='my-trips-details'>
                 <p><i className="fa-solid fa-calendar-day"/> {new Date(trip.trip.start_date).toLocaleDateString()} - {new Date(trip.trip.end_date).toLocaleDateString()}</p>
                 <p><i className="fa-solid fa-location-dot"/> {trip.trip.location[0]}, {trip.trip.location[1]}</p>

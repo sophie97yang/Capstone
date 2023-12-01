@@ -19,7 +19,7 @@ function InviteOthers({trip}) {
 
     trip = user.trips[trip.id]
 
-
+    //if user with email isn't found, no action is made
     const handleSubmit = (e) => {
         e.preventDefault();
         setSubmitted(false)

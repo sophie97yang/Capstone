@@ -10,6 +10,7 @@ class TripDetail(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")))
     trip_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("trips.id")))
     settled = db.Column(db.Boolean,default=False)
+    settled_date = db.Column(db.Date)
     creator = db.Column(db.Boolean,default=False)
 
     db.UniqueConstraint('user_id','trip_id',name="uix3")

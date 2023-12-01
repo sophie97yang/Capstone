@@ -1,0 +1,15 @@
+.td-active {
+    color: #57d9ae;
+    font-weight:bold;
+    text-decoration: none;
+}
+
+.td-passive {
+    color: black;
+    text-decoration:none;
+}
+
+.trip-details img {
+    max-width:450px;
+    min-height:250px;
+}

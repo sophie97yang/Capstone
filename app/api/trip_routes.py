@@ -1,9 +1,10 @@
 from flask import Blueprint, jsonify,request
 from flask_login import login_required,current_user
-from ..models import Trip,db,User,TripDetail
+from ..models import Trip,db,User,TripDetail,Expense
 from ..forms.trip_form import TripForm
 from ..forms.add_user_form import AddUserForm
 from .AWS_helpers import get_unique_filename, upload_file_to_s3, remove_file_from_s3
+from datetime import datetime
 
 trip_routes = Blueprint('trips', __name__)
 
@@ -61,6 +62,11 @@ def update_trip(id):
     form =TripForm()
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
+
+        #convert start and end date to date objects
+        new_start = form.data['start_date']
+        print('NEW STARTTTT',type(new_start))
+
         trip.name=form.data['name'],
         trip.description=form.data['description'],
         trip.city=form.data['city'],
@@ -143,3 +149,11 @@ def delete_trip(id):
     db.session.commit()
 
     return {'message': 'Deletion successful'}, 200
+
+# get all expense details by trip id
+@trip_routes.route('/<int:id>/expenses',methods=['GET'])
+@login_required
+def get_all_expenses_by_trip(id):
+    print(id)
+    expenses = Expense.query.order_by(Expense.expense_date).filter_by(trip_id=id).all()
+    return {"expenses":[expense.to_dict() for expense in expenses]}

@@ -27,5 +27,5 @@ class ExpenseDetail(db.Model):
         return {
             'id': self.id,
             'price': self.price,
-            'user':self.user_id
+            'user':self.user.to_dict_simple()
         }
