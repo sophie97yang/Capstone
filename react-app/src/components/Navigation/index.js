@@ -22,8 +22,8 @@ function Navigation({ isLoaded }){
 				<li>
 					<button onClick={(e)=> {
               			e.preventDefault();
-              			history.push('/signup');
-            		}}>Trips</button>
+              			history.push('/login');
+            		}}>Log in</button>
 				</li>
 				<li>
 					<button onClick={(e)=> {

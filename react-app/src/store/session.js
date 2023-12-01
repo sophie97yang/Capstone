@@ -188,6 +188,28 @@ export const addUsers = (tripId,tripDetailId,email1,email2,email3) => async (dis
 	}
 
 }
+//UPDATE TRIP DETAILS
+export const editTrip = (formData,tripId,tripDetail) => async (dispatch) => {
+	try {
+        const res = await fetch(`/api/trips/${tripId}/edit`, {
+            method: "PUT",
+            body: formData
+        })
+
+        if (res.ok) {
+            const {trip} = await res.json()
+            dispatch(updateTrip(trip,tripDetail))
+            return trip
+        } else {
+            const data = await res.json();
+            console.log("There was an error creating trip")
+            return data
+        }
+    } catch (error) {
+        console.error('An error occurred', error);
+        return ['An error occurred'];
+    }
+}
 
 export default function reducer(state = initialState, action) {
 	let newState

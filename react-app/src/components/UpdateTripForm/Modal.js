@@ -1,26 +1,30 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
-import { createTrip } from "../../store/session";
-import { Link } from "react-router-dom";
+import { useHistory, } from "react-router-dom";
+import { authenticate, editTrip } from "../../store/session";
+import { useModal } from "../../context/Modal";
 
-const CreateTripForm = () => {
+const UpdateTripModal = ({trip}) =>{
     const dispatch = useDispatch();
     const history = useHistory();
     const user = useSelector((state) => state.session.user);
+    const {closeModal} = useModal();
 
-    const [name, setName] = useState("");
-    const [description, setDescription] = useState("");
-    const [location,setLocation]=useState('');
-    const [start_date, setStartDate] = useState('');
-    const [end_date, setEndDate] = useState('');
-    const [image, setImage] = useState(null);
+    console.log(trip);
+    // console.log(`${new Date(trip.trip.start_date).getFullYear()}-${new Date(trip.trip.start_date).getMonth()+1}-${new Date(trip.trip.start_date).getDate()}`)
+
+    const [name, setName] = useState(trip.trip.name);
+    const [description, setDescription] = useState(trip.trip.description ? trip.trip.description : "");
+    const [location,setLocation]=useState(trip.trip.location.join(','));
+    const [start_date, setStartDate] = useState(new Date(trip.trip.start_date).toLocaleDateString('en-CA'));
+    const [end_date, setEndDate] = useState(new Date(trip.trip.end_date).toLocaleDateString('en-CA'));
+    const [newImage, setImage] = useState(null);
     const [imageLoading, setImageLoading] = useState(false);
 
     const [submitted, setSubmitted] = useState(false);
     const [errors, setErrors] = useState([]);
 
-    console.log(start_date)
+    console.log(start_date,end_date);
     useEffect(() => {
         setSubmitted(false);
         setErrors({});
@@ -77,19 +81,21 @@ const CreateTripForm = () => {
         form.append("state", location.split(',')[1]);
         form.append("start_date", start_date);
         form.append("end_date", end_date);
-        if (image) {
-            form.append("image", image);
+        if (newImage) {
+            form.append("image", newImage);
         }
 
         setImageLoading(true);
 
-        dispatch(createTrip(form)).then((res) => {
+        dispatch(editTrip(form,trip.trip.id,trip.id)).then((res) => {
           setImageLoading(false);
           if (res.errors) {
             setErrors(res.errors);
           } else {
-            history.push(`/trips`);
+            dispatch(authenticate())
+            history.push(`/trips/${trip.trip.id}`);
             setSubmitted(true);
+            closeModal();
             return "success";
           }
         });
@@ -98,9 +104,9 @@ const CreateTripForm = () => {
 
       return (
         <>
-          <h1 className="add-trip-title breadcrumb"> <Link to='/trips'> My Trips </Link> {'>'} Create a Trip</h1>
+          <h1 className="add-trip-title">Update Trip Details</h1>
           <form className="trip-form" onSubmit={handleSubmit} encType="multipart/form-data">
-            <div id="create-trip_first">
+            <div>
               <label>My trip shall be called...
               <input
                 type="text"
@@ -138,6 +144,7 @@ const CreateTripForm = () => {
             <input
                 type="date"
                 onChange={(e)=> setStartDate(e.target.value)}
+                value={start_date}
             />
             {errors.start_date ? <p className='errors'>{errors.start_date}</p>: <p className='errors'></p>}
             </label>
@@ -146,11 +153,12 @@ const CreateTripForm = () => {
             <input
                 type="date"
                 onChange={(e)=> setEndDate(e.target.value)}
+                value={end_date}
             />
             {errors.end_date ? <p className='errors'>{errors.end_date}</p>: <p className='errors'></p>}
             </label>
 
-            <label>Image
+            <label>Update Image
               <input
                 type="file"
                 accept="image/*"
@@ -158,11 +166,11 @@ const CreateTripForm = () => {
              />
             </label>
 
-            <button type="submit">Create Trip</button>
+            <button type="submit">Update Trip</button>
             {imageLoading && <p>Loading...</p>}
           </form>
         </>
       )
 }
 
-export default CreateTripForm;
+export default UpdateTripModal;

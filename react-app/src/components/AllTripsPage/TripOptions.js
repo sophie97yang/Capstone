@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import OpenModalButton from "../OpenModalButton";
 import DeleteModal from "./DeleteModal";
 import InviteOthers from "./InviteOthersModal";
+import UpdateTripModal from "../UpdateTripForm/Modal";
 
 function TripOptions({trip}) {
   const [showMenu, setShowMenu] = useState(false);
@@ -38,18 +39,34 @@ function TripOptions({trip}) {
         <li>
           <i className="fa-solid fa-user-plus"/>
             <OpenModalButton
-              buttonText="Invite Others"
+              buttonText="Invite"
               onItemClick={closeMenu}
               modalComponent={<InviteOthers trip={trip}/>}
             />
           </li>
+
           <li>
-          <i className="fa-solid fa-trash-can"/>
+            <i className="fa-solid fa-pen-to-square"></i>
+            <OpenModalButton
+              buttonText="Update"
+              onItemClick={closeMenu}
+              modalComponent={<UpdateTripModal trip={trip}/>}
+            />
+          </li>
+
+          <li className='trip-delete-button'>
+           { trip.creator ?
+           <>
+            <i className="fa-solid fa-trash-can"/>
             <OpenModalButton
               buttonText="Delete"
               onItemClick={closeMenu}
               modalComponent={<DeleteModal trip={trip} />}
             />
+            </>
+            :
+            <></>
+          }
           </li>
       </ul>
     </>

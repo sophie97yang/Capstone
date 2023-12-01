@@ -81,7 +81,7 @@ def update_trip(id):
              else:
                 trip.image = uploadTripImage["url"]
         db.session.commit()
-        return {"trip":trip.to_dict_trips()}
+        return {"trip":trip.to_dict()}
     return {"errors":form.errors},400
 
 # add new users to a trip
@@ -97,28 +97,32 @@ def add_trip_users(id):
     if form.validate_on_submit():
         trip_detail_list=[]
 
-        email_1 = form.data('email_1')
+        email_1 = form.data['email_1']
         user_1 = User.query.filter_by(email=email_1).first()
+        print('USEERR',user_1)
         if user_1:
             trip_detail_1 = TripDetail(settled=False,creator=False)
             trip_detail_1.user=user_1
-            trip_detail_list.append(trip_detail_1)
+            # trip_detail_list.append(trip_detail_1)
+            trip.users.append(trip_detail_1)
 
-        email_2 = form.data('email_2')
+        email_2 = form.data['email_2']
         user_2 = User.query.filter_by(email=email_2).first()
         if user_2:
             trip_detail_2 = TripDetail(settled=False,creator=False)
             trip_detail_2.user=user_2
-            trip_detail_list.append(trip_detail_2)
+            # trip_detail_list.append(trip_detail_2)
+            trip.users.append(trip_detail_2)
 
-        email_3 = form.data('email_3')
+        email_3 = form.data['email_3']
         user_3 = User.query.filter_by(email=email_3).first()
         if user_3:
             trip_detail_3 = TripDetail(settled=False,creator=False)
             trip_detail_3.user=user_3
-            trip_detail_list.append(trip_detail_3)
+            # trip_detail_list.append(trip_detail_3)
+            trip.users.append(trip_detail_3)
 
-        trip.users.append(trip_detail_list)
+        # trip.users.append(trip_detail_list)
         db.session.commit()
         return {"trip":trip.to_dict()}
     else:

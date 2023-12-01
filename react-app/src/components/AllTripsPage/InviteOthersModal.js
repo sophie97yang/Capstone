@@ -1,4 +1,4 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { useModal } from "../../context/Modal";
 import {authenticate,addUsers } from "../../store/session";
@@ -13,11 +13,16 @@ function InviteOthers({trip}) {
     const [email3,setEmail3] = useState('')
     const [error,setError] = useState({})
     const [hasSubmitted,setSubmitted]=useState(false)
+    const user = useSelector(state=>state.session.user)
 
     const {closeModal} = useModal();
 
+    trip = user.trips[trip.id]
+
+
     const handleSubmit = (e) => {
         e.preventDefault();
+        setSubmitted(false)
         if (!email1) {
             setError({'email1':'Invite at least one collaborator'});
             return
@@ -28,12 +33,16 @@ function InviteOthers({trip}) {
         } else {
             dispatch(authenticate());
             setSubmitted(true);
+            setEmail1('')
+            setEmail2('')
+            setEmail2('')
         }
     }
     }
 
     return (
         <div className='invite-modal'>
+            <button onClick={closeModal}><i className="fa-solid fa-xmark"></i></button>
             <h2>Trip collaboration</h2>
             <h4><i className="fa-solid fa-user-plus"/>Invite Collaborators</h4>
         <p>Add at least one email to invite collaborators. Anyone who is invited can edit and add to your trip.</p>
@@ -42,7 +51,9 @@ function InviteOthers({trip}) {
             <input
             type='email'
             value={email1}
-            onChange={(e)=> {setEmail1(e.target.value)}}
+            onChange={(e)=> {
+                setEmail1(e.target.value)
+            }}
             />
             {error.email1 ? <p className='errors'>{error.email1}</p>: <p className='errors'></p>}
         </label>
@@ -77,7 +88,7 @@ function InviteOthers({trip}) {
             {trip.trip.users.map(user =>(
                 <li className="collaborators-detail" key={user.user.id}>
                    <p> {user.user.first_name} {user.user.last_name[0]} </p>
-                   <p> {user.user.id==trip.user_id && trip.creator ? 'Owner': 'Can Edit'}</p>
+                   <p> {user.user.id===trip.user_id && trip.creator ? 'Owner': 'Can Edit'}</p>
 
                 </li>
             ))}

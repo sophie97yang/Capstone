@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory,Link } from "react-router-dom";
 import './AllTrips.css'
 import TripOptions from "./TripOptions";
 
@@ -49,7 +49,7 @@ const AllTrips = () => {
 
     return (
         <div>
-            <h1>My Trips</h1>
+            <h1><Link to='/' className='breadcrumb'>Home</Link> {`>`} My Trips</h1>
             <div>
                 <button onClick={(e)=> {
                     e.preventDefault();
