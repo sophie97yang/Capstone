@@ -2,22 +2,25 @@ import { useSelector } from "react-redux";
 import { useHistory,Link } from "react-router-dom";
 import './AllTrips.css'
 import TripOptions from "./TripOptions";
+import OpenModalButton from "../OpenModalButton";
+import AddExpenseForm from "../AddExpenseForm"
 
 const AllTrips = () => {
     const user = useSelector(state=>state.session.user);
     const history=useHistory();
     const trips =user?.trips ? Object.values(user?.trips):null;
-    console.log(trips);
+
     //calculate how many days until the trip
     trips?.forEach(trip=> {
         const today = new Date()
         const start = new Date(trip.trip.start_date)
         trip.until = Math.ceil((start.getTime()-today.getTime())/(1000*60*60*24))
+        //calculate general overview of what is owed by you and how much you spent
         let owed=0;
         let owe=0
         trip.trip.expenses.forEach(expense => {
-            const detail = expense.details.filter(detail=>detail.user===user.id)
-            if(expense.payer===user.id) {
+            const detail = expense.details.filter(detail=>detail.user.id===user.id)
+            if(expense.payer.id===user.id) {
                 if (detail.length){
                     owed+=expense.total-(detail[0].price)
                 } else {
@@ -74,7 +77,10 @@ const AllTrips = () => {
                 <p>{parseInt(trip.owe)<0 ? `You owe:$ ${-1*Number(trip.owe)}`: `You are owed:${trip.owe}` }</p> <p>You lent:${trip.lent} </p>
                 </div>
                 <div className='action-buttons'>
-                <button>Add an Expense</button>
+                <OpenModalButton
+                     buttonText="Add Expense"
+                     modalComponent={<AddExpenseForm trip={trip}/>}
+                 />
                 <button>Settle Up</button>
                 </div>
             </div>

@@ -1,8 +1,9 @@
 from flask import Blueprint, jsonify,request
 from flask_login import login_required,current_user
-from ..models import Trip,db,User,TripDetail,Expense
+from ..models import Trip,db,User,TripDetail,Expense,ExpenseDetail
 from ..forms.trip_form import TripForm
 from ..forms.add_user_form import AddUserForm
+from ..forms.expense_form import ExpenseForm
 from .AWS_helpers import get_unique_filename, upload_file_to_s3, remove_file_from_s3
 from datetime import datetime
 
@@ -63,15 +64,15 @@ def update_trip(id):
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
 
-        #convert start and end date to date objects
-        new_start = form.data['start_date']
-        print('NEW STARTTTT',type(new_start))
+        # #convert start and end date to date objects
+        # new_start = form.data['start_date']
+        # print('NEW STARTTTT',new_start.date())
 
-        trip.name=form.data['name'],
-        trip.description=form.data['description'],
-        trip.city=form.data['city'],
-        trip.state=form.data['state'],
-        trip.start_date=form.data['start_date'],
+        trip.name=form.data['name']
+        trip.description=form.data['description']
+        trip.city=form.data['city']
+        trip.state=form.data['state']
+        trip.start_date=form.data['start_date']
         trip.end_date=form.data['end_date']
 
         #updating trip image
@@ -105,7 +106,7 @@ def add_trip_users(id):
 
         email_1 = form.data['email_1']
         user_1 = User.query.filter_by(email=email_1).first()
-        print('USEERR',user_1)
+
         if user_1:
             trip_detail_1 = TripDetail(settled=False,creator=False)
             trip_detail_1.user=user_1
@@ -157,3 +158,44 @@ def get_all_expenses_by_trip(id):
     print(id)
     expenses = Expense.query.order_by(Expense.expense_date).filter_by(trip_id=id).all()
     return {"expenses":[expense.to_dict() for expense in expenses]}
+
+# create an expense for a trip
+@trip_routes.route('/<int:id>/expense/new',methods=['POST'])
+@login_required
+def create_expense(id):
+    form =ExpenseForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
+        expense = Expense(
+            name=form.data['name'],
+            expense_date=form.data['expense_date'],
+            split_type=form.data['split_type'],
+            split_type_info=form.data['split_type_info'],
+            category=form.data['category'],
+            total=form.data['total']
+        )
+
+        image = form.data["image"]
+        if image:
+             image.filename = get_unique_filename(image.filename)
+             uploadTripImage = upload_file_to_s3(image)
+             if "url" not in uploadTripImage:
+                print(uploadTripImage)
+                return uploadTripImage
+             else:
+                expense.image = uploadTripImage["url"]
+
+        #expense payer is current user
+        expense.payer = current_user
+
+        #users involved
+        users_involved = form.data['users_id'].split(',')
+        for user in users_involved:
+            expense_detail = ExpenseDetail(user_id=int(user))
+
+        # trip_detail.user=current_user
+        # trip.users.append(trip_detail)
+        # db.session.add(trip)
+        # db.session.commit()
+        # return {"trip":trip_detail.to_dict_trips()}
+    return {"errors":form.errors},400

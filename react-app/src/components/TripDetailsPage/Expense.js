@@ -1,4 +1,7 @@
-import {useSelector} from 'react-redux'
+import {useSelector} from 'react-redux';
+import OpenModalButton from '../OpenModalButton';
+import AddExpenseForm from '../AddExpenseForm';
+
 const Expense = ({trip}) => {
     const user = useSelector(state=>state.session.user)
     const user_expense_detail = {};
@@ -44,7 +47,10 @@ const Expense = ({trip}) => {
     return (
         <div className='expense-overview'>
             <div className='expense-action-buttons'>
-            <button>Add an Expense</button>
+            <OpenModalButton
+                     buttonText="Add Expense"
+                     modalComponent={<AddExpenseForm trip={trip}/>}
+                 />
             <button>Settle Up</button>
             </div>
 
