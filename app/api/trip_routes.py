@@ -174,28 +174,55 @@ def create_expense(id):
             category=form.data['category'],
             total=form.data['total']
         )
-
-        image = form.data["image"]
-        if image:
-             image.filename = get_unique_filename(image.filename)
-             uploadTripImage = upload_file_to_s3(image)
-             if "url" not in uploadTripImage:
-                print(uploadTripImage)
-                return uploadTripImage
-             else:
-                expense.image = uploadTripImage["url"]
+        db.session.add(expense)
 
         #expense payer is current user
         expense.payer = current_user
 
         #users involved
-        users_involved = form.data['users_id'].split(',')
-        for user in users_involved:
-            expense_detail = ExpenseDetail(user_id=int(user))
-
-        # trip_detail.user=current_user
-        # trip.users.append(trip_detail)
-        # db.session.add(trip)
-        # db.session.commit()
-        # return {"trip":trip_detail.to_dict_trips()}
+        trip = Trip.query.get(id)
+        split_info = form.data['split_type_info']
+        split_type = form.data['split_type']
+        expense_detail_list = []
+        # if users involved = All - iterate through all of trips users and create an expense detail
+        if (form.data['users_id']=='All'):
+            index=0
+            for trip_detail in trip.users:
+                if split_type=='Equal':
+                    price=float(form.data['total'])/len(trip.users)
+                elif split_type=='Exact':
+                    split_info = form.data['split_type_info'].split(',')
+                    print('SPLIT_INFOO',split_info)
+                    price=float(split_info.pop(index))
+                    index+=1
+                elif split_type=='Percentages':
+                    split_info = form.data['split_type_info'].split(',')
+                    price=(int(split_info.pop(index))/100)*float(form.data['total'])
+                    index+=1
+                expense_detail = ExpenseDetail(user_id=trip_detail.user.id,price=price)
+                expense_detail_list.append(expense_detail)
+        # else:
+        else:
+            users_involved = form.data['users_id'].split(',')
+            index=0
+            for user in users_involved:
+                if split_type=='Equal':
+                    price=float(form.data['total'])/len(users_involved)
+                elif split_type=='Exact':
+                    split_info = form.data['split_type_info'].split(',')
+                    print('SPLIT_INFOO',split_info)
+                    price=float(split_info.pop(index))
+                    index+=1
+                elif split_type=='Percentages':
+                    split_info = form.data['split_type_info'].split(',')
+                    price=(int(split_info.pop(index))/100)*float(form.data['total'])
+                    index+=1
+                expense_detail = ExpenseDetail(user_id=int(user),price=price)
+                expense_detail_list.append(expense_detail)
+        #attach all of expense details to expense
+        expense.users = expense_detail_list
+        #attach expense to trip
+        trip.expenses.append(expense)
+        db.session.commit()
+        return {"trip":trip.to_dict()}
     return {"errors":form.errors},400

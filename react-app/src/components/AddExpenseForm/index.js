@@ -1,7 +1,13 @@
 import {useState,useEffect} from 'react';
+import {useDispatch} from 'react-redux';
 import './AddExpense.css'
+import { addExpense, authenticate } from '../../store/session';
+import {useModal} from '../../context/Modal';
+import {useHistory} from 'react-router-dom';
 
 function AddExpenseForm ({trip}) {
+    const dispatch = useDispatch();
+    const history = useHistory();
     const [usersInvolved,setUsers] = useState(['All']);
     const [allUsers,setDefine] = useState(true);
     const [errors, setErrors] = useState([]);
@@ -14,16 +20,17 @@ function AddExpenseForm ({trip}) {
     const [category, setCategory] = useState('General');
     const [total, setTotal] = useState(0);
     const [checkSplit,setCheckSplit] = useState(0);
+    const {closeModal} = useModal();
 
     const categories=['General','Food and Drink','Transportation','Entertainment']
-    console.log(splitTypeInfo,usersInvolved)
+    // console.log(splitTypeInfo,usersInvolved,checkSplit,total)
 
     useEffect(()=> {
         let totalAssigned=0
         Object.values(splitTypeInfo).forEach(val=> {
-            if (!isNaN(parseInt(val))) totalAssigned+=parseInt(val)
+            if (!isNaN(parseInt(val))) totalAssigned+=Number(val)
         })
-        setCheckSplit(totalAssigned)
+        setCheckSplit(totalAssigned.toFixed(2))
     },[splitTypeInfo])
 
     //reset checkSplit if user changes split type
@@ -32,15 +39,65 @@ function AddExpenseForm ({trip}) {
         setCheckSplit(0)
     },[splitType,allUsers])
 
+    useEffect(()=> {
+        setSplitTypeInfo({})
+    },[usersInvolved])
+
+    useEffect(()=> {
+        setUsers(['All'])
+    },[allUsers])
+
     const handleSubmit = async(e)=> {
         e.preventDefault();
         const errorsList={};
         if (!name) errorsList.name = 'Name is required'
         //check if expense date is given and  in between trip start and end date
+        if (!expenseDate) errorsList.expenseDate = 'Date is required'
+        if (new Date(expenseDate) < new Date(trip.trip.start_date) ||new Date(expenseDate) > new Date(trip.trip.end_date)  ) errorsList.expenseDate = 'Expense must be made during trip duration'
         //check if total is given and greater than 0
+        if (total<=0) errorsList.total = 'You must expense more than 0 dollars'
         //if splittype is percentage and checksplit is !==100 error
+        if (splitType==='Percentages' && checkSplit!=='100.00') errorsList.splitType = 'You must allocate all of your expense'
         //if splittype is exact and checksplit is !==total error
+        if (splitType==='Exact' && checkSplit!==total) errorsList.splitType = 'You must allocate all of your expense'
         //usersinvolved does not match up with splittype info throw error
+        if (usersInvolved[0]==='All' && splitType!=='Equal' && Object.values(splitTypeInfo).length!==trip.trip.users.length) errorsList.checkSplit = 'You must allocate your expense to all people involved.'
+        if (usersInvolved[0]!=='All' && splitType!=='Equal' && Object.values(splitTypeInfo).length!==usersInvolved.length) errorsList.checkSplit = 'You must allocate your expense to all people involved.'
+
+        if (Object.values(errorsList).length) {
+            setErrors(errorsList);
+            return;
+
+        } else {
+            setErrors({})
+            //rework data to be ready to send
+            let UsersInfoSend='All'
+            let SplitTypeInfoSend=null;
+            if (usersInvolved[0]!=='All') {
+            const users = {}
+            usersInvolved.forEach(user => {
+                                users[user.split(',')[0]]=user.split(',')[1]
+                            })
+
+            UsersInfoSend = Object.keys(users).join(',')
+            if (splitType!=='Equal') SplitTypeInfoSend = Object.values(splitTypeInfo).join(',')
+            } else {
+                if (splitType!=='Equal') SplitTypeInfoSend = Object.values(splitTypeInfo).join(',')
+            }
+            console.log('trip',trip)
+            console.log('user-info',UsersInfoSend);
+            console.log('split-info',SplitTypeInfoSend)
+            const data = await dispatch(addExpense(trip.trip.id,trip.id,name,expenseDate,splitType,SplitTypeInfoSend,category,total,UsersInfoSend))
+            if (data) {
+                setErrors(data);
+                console.log(data);
+                return;
+            } else {
+                dispatch(authenticate())
+                history.push(`/trips/${trip.trip.id}/expenses`)
+                closeModal();
+            }
+        }
 
     }
 
@@ -100,20 +157,20 @@ function AddExpenseForm ({trip}) {
                     Category
                 <select value={category} onChange={(e) => setCategory(e.target.value)}>
                     {categories.map(cat => (
-                        <option value={cat}>
+                        <option value={cat} key={cat}>
                             {cat}
                         </option>
                     ))}
                 </select>
-                {errors.splitType ? <p className='errors'>{errors.splitType}</p>: <p className='errors'></p>}
                 </label>
 
 
                 <label>
-                    Total
+                    Total: $
                 <input
                 type="number"
-                onChange={(e)=> setTotal(e.target.value)}
+                onChange={(e)=> setTotal(Number(e.target.value).toFixed(2))}
+                placeholder='0.00'
                 />
                 {errors.total ? <p className='errors'>{errors.total}</p>: <p className='errors'></p>}
                 </label>
@@ -169,6 +226,7 @@ function AddExpenseForm ({trip}) {
                             }
                             <p>Total: {checkSplit}% </p>
                             <p>Total: {100-checkSplit}% left </p>
+                            {errors.checkSplit ? <p className='errors'>{errors.checkSplit}</p>: <p className='errors'></p>}
                         </div>
                     )
                 }
@@ -206,7 +264,8 @@ function AddExpenseForm ({trip}) {
                             ))
                             }
                             <p>Total: ${checkSplit} </p>
-                            <p>Total: ${total-checkSplit} left </p>
+                            <p>Total: ${(total-checkSplit).toFixed(2)} left </p>
+                            {errors.checkSplit ? <p className='errors'>{errors.checkSplit}</p>: <p className='errors'></p>}
                         </div>
                     )
                         }
@@ -214,6 +273,8 @@ function AddExpenseForm ({trip}) {
 
                 <p>{splitType==='Equal' ? <>{allUsers ? `$ ${(total/trip.trip.users.length).toFixed(2)} per person`:  `$ ${(total/usersInvolved.length).toFixed(2)} per person`}</>
                 : `You get back ${0}`}</p>
+
+                <button onClick={handleSubmit}>Save</button>
 
             </form>
         </div>

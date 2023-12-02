@@ -210,6 +210,38 @@ export const editTrip = (formData,tripId,tripDetail) => async (dispatch) => {
         return ['An error occurred'];
     }
 }
+//ADD AN EXPENSE TO TRIP
+export const addExpense = (tripId,tripDetail,name,expenseDate,splitType,splitTypeInfo,category,total,usersInvolved) => async (dispatch) => {
+	const response = await fetch(`/api/trips/${tripId}/expense/new`, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify({
+			name,
+			"expense_date":expenseDate,
+			"split_type":splitType,
+			"split_type_info":splitTypeInfo,
+			category,
+			total,
+			"users_id":usersInvolved
+		}),
+	});
+
+	if (response.ok) {
+		const {trip} = await response.json();
+		dispatch(updateTrip(trip,tripDetail));
+		return null;
+	} else if (response.status < 500) {
+		const data = await response.json();
+		if (data.errors) {
+			return data.errors;
+		}
+	} else {
+		return ["An error occurred. Please try again."];
+	}
+}
+
 
 export default function reducer(state = initialState, action) {
 	let newState
