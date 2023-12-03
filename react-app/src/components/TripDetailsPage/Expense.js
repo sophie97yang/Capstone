@@ -1,6 +1,7 @@
 import {useSelector} from 'react-redux';
 import OpenModalButton from '../OpenModalButton';
 import AddExpenseForm from '../AddExpenseForm';
+import { Link } from 'react-router-dom';
 
 const Expense = ({trip}) => {
     const user = useSelector(state=>state.session.user)
@@ -67,7 +68,7 @@ const Expense = ({trip}) => {
                                         <div key={expense.id} className='expense-detail'>
                                             <p>{month} {new Date(expense.expense_date).getDate()}</p>
                                             <img src={category_images[expense.category]} alt={expense.category}></img>
-                                            <h4>{expense.name}</h4>
+                                            <h4><Link to={`/trips/${trip.id}/expenses/${expense.id}`}>{expense.name}</Link></h4>
 
 
                                             <div>

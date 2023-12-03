@@ -24,10 +24,10 @@ const TripDetails = ({type}) => {
 
     return (
         <div className='trip-details'>
+            <div className='trip-detail-left'>
             <Link to='/trips' className='breadcrumb'>{'<'} All Trips </Link>
-
             <div className='trip-detail-universal'>
-           <img src={trip_details.image} alt={trip_details.name}></img>
+           <img src={trip_details.image} alt={trip_details.name} className='trip-detail-image'></img>
 
            <OpenModalButton modalComponent={<UpdateTripModal trip={trip_found}/>} buttonText={`${trip_details.name}`} />
 
@@ -51,7 +51,27 @@ const TripDetails = ({type}) => {
                 :
                 <Itinerary />
             }
+            </div>
+            <div className='trip-detail-right'>
+                {
+                    type==='expense' ?
+                    <div>
+                        <h2>Group Balances</h2>
+                        {
+                            trip_found.trip.users.map(user=> (
+                                <div key={user.user.id}>
+                                <p>{user.user.first_name}</p>
+                                </div>
+                            ))
+                        }
+                    </div>
+                    :
+                    <div>
+                        <h2>Google Maps</h2>
+                    </div>
+                }
 
+            </div>
         </div>
     )
 

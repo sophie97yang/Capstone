@@ -9,7 +9,19 @@
     text-decoration:none;
 }
 
-.trip-details img {
+.trip-detail-image {
     max-width:450px;
     min-height:250px;
+}
+
+.trip-details {
+    display:flex;
+    flex-direction:row;
+    width:800px;
+    margin:0px auto;
+}
+
+.trip-detail-right {
+    background-color:rgb(231, 226, 226)
+
 }

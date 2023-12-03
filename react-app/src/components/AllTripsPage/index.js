@@ -18,15 +18,22 @@ const AllTrips = () => {
         //calculate general overview of what is owed by you and how much you spent
         let owed=0;
         let owe=0
+        //for each trip's expense
         trip.trip.expenses.forEach(expense => {
+            //user expense detail for specific trip
             const detail = expense.details.filter(detail=>detail.user.id===user.id)
+            //if user is the payer
             if(expense.payer.id===user.id) {
+                //and is involved in the expense
                 if (detail.length){
                     owed+=expense.total-(detail[0].price)
+                    //if user is the payer and is not involved in the expense
                 } else {
                     owed+=expense.total
                 }
-            } else if (detail.length) {
+            }
+            //if user is not the payer but is involved in the expense
+            else if (detail.length) {
                 owe+=detail[0].price
             }
         })

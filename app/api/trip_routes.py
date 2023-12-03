@@ -226,3 +226,93 @@ def create_expense(id):
         db.session.commit()
         return {"trip":trip.to_dict()}
     return {"errors":form.errors},400
+
+#UPDATE AN EXPENSE
+@trip_routes.route('/<int:id>/expense/<int:expenseId>/edit',methods=['PUT'])
+@login_required
+def update_expense(id,expenseId):
+    form =ExpenseForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
+
+        expense = Expense.query.get(expenseId)
+        expense.name=form.data['name']
+        expense.expense_date=form.data['expense_date']
+        split_type=form.data['split_type']
+        expense.split_type_info=form.data['split_type_info']
+        expense.category=form.data['category']
+        expense.total=form.data['total']
+
+        #UPDATE EXPENSE DETAILS FOR USERS INVOLVED
+        # CHECK IF EXPENSE DETAIL EXISTS
+        # IF NOT CREATE A NEW ONE
+        trip = Trip.query.get(id)
+        split_info = form.data['split_type_info']
+        split_type = form.data['split_type']
+        expense_detail_list = []
+        # if users involved = All - iterate through all of trips users and create an expense detail
+        if (form.data['users_id']=='All'):
+            index=0
+            for trip_detail in trip.users:
+                if split_type=='Equal':
+                    price=float(form.data['total'])/len(trip.users)
+                elif split_type=='Exact':
+                    split_info = form.data['split_type_info'].split(',')
+                    print('SPLIT_INFOO',split_info)
+                    price=float(split_info.pop(index))
+                    index+=1
+                elif split_type=='Percentages':
+                    split_info = form.data['split_type_info'].split(',')
+                    price=(int(split_info.pop(index))/100)*float(form.data['total'])
+                    index+=1
+                #check if expense detail already exists
+                user_exists=False
+                detail_found=None
+                for detail in expense.details:
+                    #if detail is found
+                    if detail.user.id==trip_detail.user.id:
+                        user_exists=True
+                        detail_found=detail
+                if user_exists:
+                    detail_found.price=price
+                    expense_detail_list.append(detail_found)
+                else:
+                    expense_detail = ExpenseDetail(user_id=trip_detail.user.id,price=price)
+                    expense_detail_list.append(expense_detail)
+        # else:
+        else:
+            users_involved = form.data['users_id'].split(',')
+            index=0
+            for user in users_involved:
+                if split_type=='Equal':
+                    price=float(form.data['total'])/len(users_involved)
+                elif split_type=='Exact':
+                    split_info = form.data['split_type_info'].split(',')
+                    print('SPLIT_INFOO',split_info)
+                    price=float(split_info.pop(index))
+                    index+=1
+                elif split_type=='Percentages':
+                    split_info = form.data['split_type_info'].split(',')
+                    price=(int(split_info.pop(index))/100)*float(form.data['total'])
+                    index+=1
+                 #check if expense detail already exists
+                user_exists=False
+                detail_found=None
+                for detail in expense.details:
+                    #if detail is found
+                    if detail.user.id==int(user):
+                        user_exists=True
+                        detail_found=detail
+                if user_exists:
+                    detail_found.price=price
+                    expense_detail_list.append(detail_found)
+                else:
+                    expense_detail = ExpenseDetail(user_id=int(user),price=price)
+                    expense_detail_list.append(expense_detail)
+        #attach all of expense details to expense
+        expense.users = expense_detail_list
+        #attach expense to trip
+        trip.expenses.append(expense)
+        db.session.commit()
+        return {"trip":trip.to_dict()}
+    return {"errors":form.errors},400

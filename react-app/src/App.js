@@ -8,6 +8,7 @@ import Navigation from "./components/Navigation";
 import AllTrips from "./components/AllTripsPage";
 import CreateTripForm from "./components/CreateTripForm";
 import TripDetails from "./components/TripDetailsPage";
+import ExpenseDetail from "./components/ExpenseDetails";
 
 function App() {
   const dispatch = useDispatch();
@@ -30,6 +31,9 @@ function App() {
           <Route path='/trips/new'>
             <CreateTripForm />
             </Route>
+          <Route exact path='/trips/:tripId/expenses/:expenseId'>
+            <ExpenseDetail />
+          </Route>
           <Route exact path='/trips/:id/expenses'>
             <TripDetails type='expense'/>
           </Route>
