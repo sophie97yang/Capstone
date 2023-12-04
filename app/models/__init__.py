@@ -4,5 +4,6 @@ from .trips import Trip
 from .expenses import Expense
 from .bookings import Booking
 from .expense_details import ExpenseDetail
+from .expense_update_details import ExpenseUpdateDetail
 from .itineraries import Itinerary
 from .trip_details import TripDetail

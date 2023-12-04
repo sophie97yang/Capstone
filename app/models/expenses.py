@@ -19,7 +19,8 @@ class Expense(db.Model):
 
     payer = db.relationship('User',back_populates='expenses_own')
     trip = db.relationship('Trip',back_populates='expenses')
-    users = db.relationship('ExpenseDetail',back_populates='expense')
+    users = db.relationship('ExpenseDetail',back_populates='expense',cascade="all, delete")
+    updates = db.relationship('ExpenseUpdateDetail',back_populates='expense',cascade="all, delete")
 
 
     def to_dict(self):
@@ -34,7 +35,8 @@ class Expense(db.Model):
             "category":self.category,
             "total":self.total,
             "details":[detail.to_dict_users() for detail in self.users],
-            "trip":self.trip_id
+            "trip":self.trip_id,
+            "updates":[update.to_dict() for update in self.updates]
         }
 
     # def to_dict_current_user(self,user_id):

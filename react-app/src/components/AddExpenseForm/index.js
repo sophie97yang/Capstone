@@ -105,7 +105,7 @@ function AddExpenseForm ({trip}) {
         <div className='add-expense-modal'>
             <h2>Add an Expense</h2>
             <form className='add-expense-form'>
-                <p>With you and:</p>
+                <p>Who is involved?</p>
                 <label className='keep-min'> All Users
                     <input
                         type='checkbox'
@@ -127,7 +127,7 @@ function AddExpenseForm ({trip}) {
                         >
                         <option value={''}>Select Users Below</option>
                        {trip.trip.users.map(user =>  (
-                       <option value={[user.user.id,user.user.first_name]} key={user.user.id}>{user.user.first_name}</option>
+                       <option value={[user.user.id,user.user.first_name]} key={user.user.id}>{user.user.first_name} {user.user.last_name[0]}.</option>
                        ))}
                     </select>
                 </label>

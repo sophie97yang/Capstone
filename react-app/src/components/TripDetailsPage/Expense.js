@@ -80,7 +80,7 @@ const Expense = ({trip}) => {
                                          <div>
                                            {user.id===expense.payer.id ? <p> You lent </p> : <>{ user_expense_detail[expense.id] ? <p>{expense.payer.first_name} lent</p>: 'not involved' }</>}
 
-                                           {user.id===expense.payer.id ? <p>{user_expense_detail[expense.id] ? `$ ${(expense.total-user_expense_detail[expense.id].price).toFixed(2)}`: `$ ${expense.total}`}</p>
+                                           {user.id===expense.payer.id ? <p>{user_expense_detail[expense.id] ? `$ ${(expense.total-user_expense_detail[expense.id].price).toFixed(2)}`: `$ ${expense.total.toFixed(2)}`}</p>
                                            : <p>{user_expense_detail[expense.id] ? `$ ${user_expense_detail[expense.id].price.toFixed(2)}`:''}</p>}
                                            </div>
                                         </div>

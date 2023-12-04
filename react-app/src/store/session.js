@@ -270,7 +270,28 @@ export const updateExpense = (tripId,tripDetail,expenseId,name,expenseDate,split
 		} else {
 			return ["An error occurred. Please try again."];
 		}
-	}
+}
+
+export const deleteExpense = (tripDetail,expenseId) => async (dispatch) => {
+	try {
+        const res = await fetch(`/api/expenses/${expenseId}/delete`, {
+            method: "DELETE"
+        })
+        if (res.ok) {
+			const {trip} = await res.json();
+            dispatch(updateTrip(trip,tripDetail));
+            return trip
+        } else {
+            const data = await res.json();
+            console.log("There was an error removing expense")
+            return data
+        }
+    } catch (error) {
+        console.error('An error occurred', error);
+        return ['An error occurred'];
+    }
+
+}
 
 
 export default function reducer(state = initialState, action) {

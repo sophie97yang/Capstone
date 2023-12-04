@@ -17,7 +17,7 @@ class Trip(db.Model):
     #bonus feature
     simplify = db.Column(db.Boolean, default=False)
 
-    expenses = db.relationship('Expense',back_populates='trip')
+    expenses = db.relationship('Expense',back_populates='trip',cascade="all, delete")
     users = db.relationship('TripDetail',back_populates='trip',cascade="all, delete")
     bookings = db.relationship('Itinerary',back_populates='trip')
 

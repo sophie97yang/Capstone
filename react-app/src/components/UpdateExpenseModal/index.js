@@ -28,7 +28,8 @@ function UpdateExpenseModal ({trip,expense}) {
     if (expense.split_type!=='Equal') {
         const initialSplits_exact = {}
        const splits = expense.split_type_info.split(',')
-       expense.details.forEach(user=> initialSplits_exact[user.user.id] = splits.shift())
+       //come back in reverse order
+       expense.details.forEach(user=> initialSplits_exact[user.user.id] = splits.pop())
        initialSplits = initialSplits_exact
        initialCheck= expense.split_type==='Exact' ? expense.total : 100
     }
@@ -56,10 +57,11 @@ function UpdateExpenseModal ({trip,expense}) {
     //anytime that splittypeinfo changes (user inputs prices for the splits), compare to the total
     useEffect(()=> {
         let totalAssigned=0
-        Object.values(splitTypeInfo).forEach(val=> {
+        if (splitTypeInfo) {
+            Object.values(splitTypeInfo).forEach(val=> {
             if (!isNaN(parseInt(val))) totalAssigned+=Number(val)
         })
-        setCheckSplit(totalAssigned.toFixed(2))
+        setCheckSplit(totalAssigned.toFixed(2))}
     },[splitTypeInfo])
 
     //resets shouldn't happen on first render - move these use effects to onChange
@@ -91,7 +93,7 @@ function UpdateExpenseModal ({trip,expense}) {
         //if splittype is percentage and checksplit is !==100 error
         if (splitType==='Percentages' && checkSplit!=='100.00') errorsList.splitType = 'You must allocate all of your expense'
         //if splittype is exact and checksplit is !==total error
-        if (splitType==='Exact' && checkSplit!==total.toFixed(2)) errorsList.splitType = 'You must allocate all of your expense'
+        if (splitType==='Exact' && checkSplit!==parseInt(total).toFixed(2)) errorsList.splitType = 'You must allocate all of your expense'
         //usersinvolved does not match up with splittype info throw error
         if (usersInvolved[0]==='All' && splitType!=='Equal' && Object.values(splitTypeInfo).length!==trip.trip.users.length) errorsList.checkSplit = 'You must allocate your expense to all people involved.'
         if (usersInvolved[0]!=='All' && splitType!=='Equal' && Object.values(splitTypeInfo).length!==usersInvolved.length) errorsList.checkSplit = 'You must allocate your expense to all people involved.'
@@ -116,9 +118,6 @@ function UpdateExpenseModal ({trip,expense}) {
             } else {
                 if (splitType!=='Equal') SplitTypeInfoSend = Object.values(splitTypeInfo).join(',')
             }
-            console.log('trip',trip)
-            console.log('user-info',UsersInfoSend);
-            console.log('split-info',SplitTypeInfoSend)
             const data = await dispatch(updateExpense(trip.trip.id,trip.id,expense.id,name,expenseDate,splitType,SplitTypeInfoSend,category,total,UsersInfoSend))
             if (data) {
                 setErrors(data);
@@ -126,7 +125,7 @@ function UpdateExpenseModal ({trip,expense}) {
                 return;
             } else {
                 dispatch(authenticate())
-                history.push(`/trips/${trip.trip.id}/expenses`)
+                history.push(`/trips/${trip.id}/expenses/${expense.id}`)
                 closeModal();
             }
         }
@@ -135,9 +134,9 @@ function UpdateExpenseModal ({trip,expense}) {
 
     return (
         <div className='add-expense-modal'>
-            <h2>Add an Expense</h2>
+            <h2>Update an Expense</h2>
             <form className='add-expense-form'>
-                <p>With you and:</p>
+                <p>Who is Involved?</p>
                 <label className='keep-min'> All Users
                     <input
                         type='checkbox'
@@ -164,7 +163,7 @@ function UpdateExpenseModal ({trip,expense}) {
                         >
                         <option value={''}>Select Users Below</option>
                        {trip.trip.users.map(user =>  (
-                       <option value={[user.user.id,user.user.first_name]} key={user.user.id}>{user.user.first_name}</option>
+                       <option value={[user.user.id,user.user.first_name]} key={user.user.id}>{user.user.first_name} {user.user.last_name[0]}.</option>
                        ))}
                     </select>
                 </label>
@@ -207,7 +206,7 @@ function UpdateExpenseModal ({trip,expense}) {
                     Total: $
                 <input
                 type="number"
-                onChange={(e)=> setTotal(Number(e.target.value).toFixed(2))}
+                onChange={(e)=> setTotal(Number(e.target.value))}
                 value={total}
                 />
                 {errors.total ? <p className='errors'>{errors.total}</p>: <p className='errors'></p>}
@@ -321,6 +320,9 @@ function UpdateExpenseModal ({trip,expense}) {
                 : `You get back ${0}`}</p>
 
                 <button onClick={handleSubmit}>Save</button>
+                <button onClick={(e=> {
+                    e.preventDefault();
+                    closeModal()})}>Cancel</button>
 
             </form>
         </div>

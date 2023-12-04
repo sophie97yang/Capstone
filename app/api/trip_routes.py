@@ -1,11 +1,11 @@
 from flask import Blueprint, jsonify,request
 from flask_login import login_required,current_user
-from ..models import Trip,db,User,TripDetail,Expense,ExpenseDetail
+from ..models import Trip,db,User,TripDetail,Expense,ExpenseDetail,ExpenseUpdateDetail
 from ..forms.trip_form import TripForm
 from ..forms.add_user_form import AddUserForm
 from ..forms.expense_form import ExpenseForm
 from .AWS_helpers import get_unique_filename, upload_file_to_s3, remove_file_from_s3
-from datetime import datetime
+from datetime import date
 
 trip_routes = Blueprint('trips', __name__)
 
@@ -136,7 +136,7 @@ def add_trip_users(id):
         return  {"errors":form.errors},400
 
 #delete trip
-@trip_routes.route('<int:id>/delete',methods=['DELETE'])
+@trip_routes.route('/<int:id>/delete',methods=['DELETE'])
 @login_required
 def delete_trip(id):
     trip = Trip.query.get(id)
@@ -186,7 +186,8 @@ def create_expense(id):
         expense_detail_list = []
         # if users involved = All - iterate through all of trips users and create an expense detail
         if (form.data['users_id']=='All'):
-            index=0
+            #users come in reverse order
+            index=len(trip.users)-1
             for trip_detail in trip.users:
                 if split_type=='Equal':
                     price=float(form.data['total'])/len(trip.users)
@@ -194,11 +195,11 @@ def create_expense(id):
                     split_info = form.data['split_type_info'].split(',')
                     print('SPLIT_INFOO',split_info)
                     price=float(split_info.pop(index))
-                    index+=1
+                    index-=1
                 elif split_type=='Percentages':
                     split_info = form.data['split_type_info'].split(',')
                     price=(int(split_info.pop(index))/100)*float(form.data['total'])
-                    index+=1
+                    index-=1
                 expense_detail = ExpenseDetail(user_id=trip_detail.user.id,price=price)
                 expense_detail_list.append(expense_detail)
         # else:
@@ -236,6 +237,17 @@ def update_expense(id,expenseId):
     if form.validate_on_submit():
 
         expense = Expense.query.get(expenseId)
+         # CHECK WHAT DIFFERENCES EXIST AND LOG THOSE CHANGES IN EXPENSE UPDATE DETAILS
+        #categories for update:'split_type','total','name'
+        details_changed=[]
+        if expense.split_type!=form.data['split_type']:
+            details_changed.append(['split_type',f'{expense.split_type},{form.data["split_type"]}'])
+        if expense.total!=form.data['total']:
+            details_changed.append(['total',f'{expense.total},{form.data["total"]}'])
+        if expense.name!=form.data['name']:
+            details_changed.append(['name',f'{expense.name},{form.data["name"]}'])
+
+        #update details
         expense.name=form.data['name']
         expense.expense_date=form.data['expense_date']
         split_type=form.data['split_type']
@@ -252,7 +264,7 @@ def update_expense(id,expenseId):
         expense_detail_list = []
         # if users involved = All - iterate through all of trips users and create an expense detail
         if (form.data['users_id']=='All'):
-            index=0
+            index=len(trip.users)-1
             for trip_detail in trip.users:
                 if split_type=='Equal':
                     price=float(form.data['total'])/len(trip.users)
@@ -260,17 +272,17 @@ def update_expense(id,expenseId):
                     split_info = form.data['split_type_info'].split(',')
                     print('SPLIT_INFOO',split_info)
                     price=float(split_info.pop(index))
-                    index+=1
+                    index-=1
                 elif split_type=='Percentages':
                     split_info = form.data['split_type_info'].split(',')
                     price=(int(split_info.pop(index))/100)*float(form.data['total'])
-                    index+=1
+                    index-=1
                 #check if expense detail already exists
                 user_exists=False
                 detail_found=None
-                for detail in expense.details:
+                for detail in expense.users:
                     #if detail is found
-                    if detail.user.id==trip_detail.user.id:
+                    if detail.user_id==trip_detail.user.id:
                         user_exists=True
                         detail_found=detail
                 if user_exists:
@@ -298,9 +310,9 @@ def update_expense(id,expenseId):
                  #check if expense detail already exists
                 user_exists=False
                 detail_found=None
-                for detail in expense.details:
+                for detail in expense.users:
                     #if detail is found
-                    if detail.user.id==int(user):
+                    if detail.user_id==int(user):
                         user_exists=True
                         detail_found=detail
                 if user_exists:
@@ -310,9 +322,22 @@ def update_expense(id,expenseId):
                     expense_detail = ExpenseDetail(user_id=int(user),price=price)
                     expense_detail_list.append(expense_detail)
         #attach all of expense details to expense
+        #IMPORTANT DETAIL UPDATE USERS:
+        if len(expense.users)!=len(expense_detail_list):
+            details_changed.append(['users'])
         expense.users = expense_detail_list
         #attach expense to trip
         trip.expenses.append(expense)
+        #if important details have been changed:
+        if len(details_changed):
+            #categories for update:'split_type','total','name','users'
+            for change in details_changed:
+                if change[0]!='users':
+                    update_detail=ExpenseUpdateDetail(user_id=current_user.id,expense_id=expense.id,update_date=date.today(),update_type=change[0],update_info=change[1])
+                    db.session.add(update_detail)
+                else:
+                    update_detail=ExpenseUpdateDetail(user_id=current_user.id,expense_id=expense.id,update_date=date.today(),update_type=change[0])
+                    db.session.add(update_detail)
         db.session.commit()
         return {"trip":trip.to_dict()}
     return {"errors":form.errors},400
