@@ -57,6 +57,8 @@ function SignupFormPage() {
         const data = await dispatch(signUp(firstName,lastName,email, password,city,state));
         if (data) {
           setErrors(data)
+        } else {
+          history.push('/trips')
         }
     } else {
         setErrors({"confirmPassword":'Passwords must match'});

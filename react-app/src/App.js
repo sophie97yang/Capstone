@@ -9,6 +9,7 @@ import AllTrips from "./components/AllTripsPage";
 import CreateTripForm from "./components/CreateTripForm";
 import TripDetails from "./components/TripDetailsPage";
 import ExpenseDetail from "./components/ExpenseDetails";
+import LandingPage from "./components/LandingPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -43,7 +44,14 @@ function App() {
           <Route path='/trips'>
             <AllTrips />
           </Route>
+          <Route path='/404'>
+          <h2>404 Not Found</h2>
+        </Route>
+          <Route path='/'>
+            <LandingPage />
+          </Route>
         </Switch>
+
       )}
     </>
   );

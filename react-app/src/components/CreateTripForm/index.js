@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { createTrip } from "../../store/session";
 import { Link } from "react-router-dom";
+import './CreateTrip.css'
 
 const CreateTripForm = () => {
     const dispatch = useDispatch();
@@ -19,6 +20,11 @@ const CreateTripForm = () => {
 
     const [submitted, setSubmitted] = useState(false);
     const [errors, setErrors] = useState([]);
+    const [hidden,setHidden] = useState(true);
+
+    useEffect(()=> {
+      if (name.length) setHidden(false)
+    },[name])
 
     useEffect(() => {
         setSubmitted(false);
@@ -97,7 +103,7 @@ const CreateTripForm = () => {
 
       return (
         <>
-          <h1 className="add-trip-title breadcrumb"> <Link to='/trips'> My Trips </Link> {'>'} Create a Trip</h1>
+          <h2 className="add-trip-title"> <Link to='/trips' className='breadcrumb'> My Trips </Link> {'>'} Create a Trip</h2>
           <form className="trip-form" onSubmit={handleSubmit} encType="multipart/form-data">
             <div id="create-trip_first">
               <label>My trip shall be called...
@@ -112,6 +118,7 @@ const CreateTripForm = () => {
               </label>
             </div>
 
+            <div id='create-trip-second_half' className={!hidden ? '':'hidden'}>
             <label>Description
               <textarea
                 type="textarea"
@@ -159,6 +166,7 @@ const CreateTripForm = () => {
 
             <button type="submit">Create Trip</button>
             {imageLoading && <p>Loading...</p>}
+           </div>
           </form>
         </>
       )

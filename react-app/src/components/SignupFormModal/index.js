@@ -48,7 +48,7 @@ function SignupFormModal() {
 			  setErrors(data)
 			} else {
 				closeModal();
-				history.push('/');
+				history.push('/trips');
 				return null;
 			}
 		} else {

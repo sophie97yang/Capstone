@@ -29,14 +29,16 @@ function ExpenseDetail() {
         "Food and Drink":"https://s3.amazonaws.com/splitwise/uploads/category/icon/square_v2/food-and-drink/other@2x.png",
         "Entertainment":"https://s3.amazonaws.com/splitwise/uploads/category/icon/square_v2/entertainment/other@2x.png"
     }
+    const options={}
+    options.timeZone = "UTC";
     return (
         <div className='expense-details'>
-           <h2> <Link to={`/trips/${trip.trip.id}/expenses`} className='breadcrumb'> {trip.trip.name}{'<'} </Link> About {expense.name} </h2>
+           <h2> <Link to={`/trips/${trip.trip.id}/expenses`} className='breadcrumb'> {trip.trip.name}</Link> {'<'} About {expense.name} </h2>
            <div className='expense-top-header'>
                 <img src={category_images[expense.category]} alt={expense.category}></img>
                 <h2>{expense.name}</h2>
                 <h2>$ {expense.total.toFixed(2)}</h2>
-                <p>Added by {expense.payer.first_name} {expense.payer.last_name[0]}. on {new Date(expense.expense_date).toLocaleDateString()}</p>
+                <p>Added by {expense.payer.first_name} {expense.payer.last_name[0]}. on {new Date(expense.expense_date).toLocaleDateString('en-US',options)}</p>
                 <OpenModalButton
                 modalComponent={<UpdateExpenseModal trip={trip} expense={expense}/>}
                 buttonText='Edit Expense'/>

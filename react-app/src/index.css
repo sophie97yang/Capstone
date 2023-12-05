@@ -8,3 +8,12 @@
     font-style:italic;
     min-height:20px;
 }
+
+.breadcrumb {
+    text-decoration: none;
+    color: gray;
+}
+
+.breadcrumb:hover {
+    color:#57d9ae
+}

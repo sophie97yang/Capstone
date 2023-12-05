@@ -58,9 +58,9 @@ const AllTrips = () => {
     const choice = Math.floor(Math.random()*images.length)
 
     return (
-        <div>
-            <h2><Link to='/' className='breadcrumb'>Home</Link> {`<`} My Trips</h2>
-            <div>
+        <div className='all-trips'>
+            <h2 className='breadcrumb-container'><Link to='/' className='breadcrumb'>Home</Link> {`>`} My Trips</h2>
+            <div className='all-trips-buttons'>
                 <button onClick={(e)=> {
                     e.preventDefault();
                     history.push('/trips/new')
@@ -71,7 +71,7 @@ const AllTrips = () => {
                 }}>Explore places to go</button>
             </div>
            { trips?.map(trip=> (
-            <div key={trip.id}>
+            <div key={trip.id} className='individual-trip'>
             <div className='my_trips-left'>
             <img src={trip.trip.image?trip.trip.image:images[choice]} alt={trip.trip.name}></img>
             {trip.until>0 ? <p>In {trip.until} days</p>:<p></p>}

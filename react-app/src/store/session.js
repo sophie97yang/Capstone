@@ -175,8 +175,8 @@ export const addUsers = (tripId,tripDetailId,email1,email2,email3) => async (dis
 	});
 
 	if (response.ok) {
-		const data = await response.json();
-		dispatch(updateTrip(data,tripDetailId))
+		const {trip} = await response.json();
+		dispatch(updateTrip(trip,tripDetailId))
 		return null;
 	} else if (response.status < 500) {
 		const data = await response.json();
