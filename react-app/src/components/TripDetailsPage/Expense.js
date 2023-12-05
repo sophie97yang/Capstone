@@ -1,5 +1,10 @@
-import {useSelector} from 'react-redux'
-const Expense = ({trip}) => {
+import {useSelector} from 'react-redux';
+import OpenModalButton from '../OpenModalButton';
+import AddExpenseForm from '../AddExpenseForm';
+import { Link } from 'react-router-dom';
+import SettleUp from '../SettleUpModal';
+
+const Expense = ({trip,group_balances,total_info}) => {
     const user = useSelector(state=>state.session.user)
     const user_expense_detail = {};
     //images to display depending on expense category
@@ -34,7 +39,11 @@ const Expense = ({trip}) => {
              }
         }
         //filter out expense detail relavent to user
-        user_expense_detail[expense.id]=expense.details.filter(detail => detail.user.id===user.id)[0]
+        user_expense_detail[expense.id]={...expense.details.filter(detail => detail.user.id===user.id)[0]}
+        // console.log('before',user_expense_detail)
+        if (user_expense_detail[expense.id].id){
+             user_expense_detail[expense.id]['payer'] = expense.payer
+        }
     })
 
     console.log(expense_by_year)
@@ -44,8 +53,16 @@ const Expense = ({trip}) => {
     return (
         <div className='expense-overview'>
             <div className='expense-action-buttons'>
-            <button>Add an Expense</button>
-            <button>Settle Up</button>
+            <OpenModalButton
+                     buttonText="Add Expense"
+                     modalComponent={<AddExpenseForm trip={trip}/>}
+                 />
+            <OpenModalButton
+                     buttonText="Settle Up"
+                     //userExpenses: expenses that the user owes in the trip
+                     //expensesOwn:expenses that the user has paid and owns
+                     modalComponent={<SettleUp group_balances={group_balances} total_info={total_info} trip={trip} />}
+                 />
             </div>
 
             {
@@ -61,7 +78,7 @@ const Expense = ({trip}) => {
                                         <div key={expense.id} className='expense-detail'>
                                             <p>{month} {new Date(expense.expense_date).getDate()}</p>
                                             <img src={category_images[expense.category]} alt={expense.category}></img>
-                                            <h4>{expense.name}</h4>
+                                            <h4><Link to={`/trips/${trip.id}/expenses/${expense.id}`}>{expense.name}</Link></h4>
 
 
                                             <div>
@@ -71,10 +88,10 @@ const Expense = ({trip}) => {
 
 
                                          <div>
-                                           {user.id===expense.payer.id ? <p> You lent </p> : <>{ user_expense_detail[expense.id] ? <p>{expense.payer.first_name} lent</p>: 'not involved' }</>}
+                                           {user.id===expense.payer.id ? <p> You lent </p> : <>{ user_expense_detail[expense.id].id ? <p>{expense.payer.first_name} lent</p>: 'not involved' }</>}
 
-                                           {user.id===expense.payer.id ? <p>{user_expense_detail[expense.id] ? `$ ${(expense.total-user_expense_detail[expense.id].price).toFixed(2)}`: `$ ${expense.total}`}</p>
-                                           : <p>{user_expense_detail[expense.id] ? `$ ${user_expense_detail[expense.id].price.toFixed(2)}`:''}</p>}
+                                           {user.id===expense.payer.id ? <p>{user_expense_detail[expense.id].id ? `$ ${(expense.total-user_expense_detail[expense.id].price).toFixed(2)}`: `$ ${expense.total.toFixed(2)}`}</p>
+                                           : <p>{user_expense_detail[expense.id].id ? `$ ${user_expense_detail[expense.id].price.toFixed(2)}`:''}</p>}
                                            </div>
                                         </div>
                                     ))

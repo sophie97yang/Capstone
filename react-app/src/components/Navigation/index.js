@@ -18,7 +18,7 @@ function Navigation({ isLoaded }){
 				<li>
 					<ProfileButton user={sessionUser} />
 				</li> :
-				<>
+				<div className='auth-action-buttons'>
 				<li>
 					<button onClick={(e)=> {
               			e.preventDefault();
@@ -31,7 +31,7 @@ function Navigation({ isLoaded }){
               			history.push('/signup');
             		}}>Sign Up</button>
 				</li>
-				</>
+				</div>
 			)}
 
 		</nav>

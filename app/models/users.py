@@ -22,6 +22,7 @@ class User(db.Model, UserMixin):
     trips = db.relationship("TripDetail",back_populates="user")
     expenses_own = db.relationship("Expense",back_populates="payer")
     expenses = db.relationship("ExpenseDetail",back_populates='user')
+    updates = db.relationship('ExpenseUpdateDetail',back_populates='user')
 
     @property
     def password(self):

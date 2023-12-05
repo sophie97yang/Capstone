@@ -20,7 +20,6 @@ const CreateTripForm = () => {
     const [submitted, setSubmitted] = useState(false);
     const [errors, setErrors] = useState([]);
 
-    console.log(start_date)
     useEffect(() => {
         setSubmitted(false);
         setErrors({});

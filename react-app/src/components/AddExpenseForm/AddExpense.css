@@ -1,0 +1,17 @@
+.add-expense-modal {
+    width:600px;
+    min-height:600px;
+    overflow:scroll
+}
+
+.add-expense-modal .hidden {
+    display:none
+}
+
+.add-expense-modal label {
+    display:block;
+}
+
+.user-choice {
+    height:fit-content
+}

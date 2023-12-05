@@ -17,9 +17,10 @@ class Trip(db.Model):
     #bonus feature
     simplify = db.Column(db.Boolean, default=False)
 
-    expenses = db.relationship('Expense',back_populates='trip')
-    users = db.relationship('TripDetail',back_populates='trip',cascade="all, delete")
+    expenses = db.relationship('Expense',back_populates='trip',cascade="all, delete")
+    users = db.relationship('TripDetail',back_populates='trip',cascade="all, delete",order_by="TripDetail.user_id")
     bookings = db.relationship('Itinerary',back_populates='trip')
+    between_user_expenses = db.relationship('BetweenUserExpense',back_populates='trip',cascade="all,delete")
 
     def to_dict(self):
         return {
@@ -32,7 +33,8 @@ class Trip(db.Model):
             "image":self.image,
             "expenses":[expense.to_dict() for expense in self.expenses],
             "users":[user.to_dict_simple() for user in self.users],
-            "bookings_itinerary":[booking.to_dict() for booking in self.bookings]
+            "bookings_itinerary":[booking.to_dict() for booking in self.bookings],
+            "between_user_expenses":[relationship.to_dict() for relationship in self.between_user_expenses]
         }
 
     def to_dict_users(self):

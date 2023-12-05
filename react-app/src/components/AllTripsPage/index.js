@@ -2,28 +2,38 @@ import { useSelector } from "react-redux";
 import { useHistory,Link } from "react-router-dom";
 import './AllTrips.css'
 import TripOptions from "./TripOptions";
+import OpenModalButton from "../OpenModalButton";
+import AddExpenseForm from "../AddExpenseForm"
 
 const AllTrips = () => {
     const user = useSelector(state=>state.session.user);
     const history=useHistory();
     const trips =user?.trips ? Object.values(user?.trips):null;
-    console.log(trips);
+
     //calculate how many days until the trip
     trips?.forEach(trip=> {
         const today = new Date()
         const start = new Date(trip.trip.start_date)
         trip.until = Math.ceil((start.getTime()-today.getTime())/(1000*60*60*24))
+        //calculate general overview of what is owed by you and how much you spent
         let owed=0;
         let owe=0
+        //for each trip's expense
         trip.trip.expenses.forEach(expense => {
-            const detail = expense.details.filter(detail=>detail.user===user.id)
-            if(expense.payer===user.id) {
+            //user expense detail for specific trip
+            const detail = expense.details.filter(detail=>detail.user.id===user.id)
+            //if user is the payer
+            if(expense.payer.id===user.id) {
+                //and is involved in the expense
                 if (detail.length){
                     owed+=expense.total-(detail[0].price)
+                    //if user is the payer and is not involved in the expense
                 } else {
                     owed+=expense.total
                 }
-            } else if (detail.length) {
+            }
+            //if user is not the payer but is involved in the expense
+            else if (detail.length) {
                 owe+=detail[0].price
             }
         })
@@ -49,13 +59,16 @@ const AllTrips = () => {
 
     return (
         <div>
-            <h1><Link to='/' className='breadcrumb'>Home</Link> {`>`} My Trips</h1>
+            <h2><Link to='/' className='breadcrumb'>Home</Link> {`<`} My Trips</h2>
             <div>
                 <button onClick={(e)=> {
                     e.preventDefault();
                     history.push('/trips/new')
                 }}>Create a New Trip</button>
-                <button>Something else here</button>
+                <button onClick={(e)=> {
+                    e.preventDefault();
+                    history.push('/bookings')
+                }}>Explore places to go</button>
             </div>
            { trips?.map(trip=> (
             <div key={trip.id}>
@@ -74,8 +87,10 @@ const AllTrips = () => {
                 <p>{parseInt(trip.owe)<0 ? `You owe:$ ${-1*Number(trip.owe)}`: `You are owed:${trip.owe}` }</p> <p>You lent:${trip.lent} </p>
                 </div>
                 <div className='action-buttons'>
-                <button>Add an Expense</button>
-                <button>Settle Up</button>
+                <OpenModalButton
+                     buttonText="Add Expense"
+                     modalComponent={<AddExpenseForm trip={trip}/>}
+                 />
                 </div>
             </div>
             </div>

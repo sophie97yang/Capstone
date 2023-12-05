@@ -210,6 +210,111 @@ export const editTrip = (formData,tripId,tripDetail) => async (dispatch) => {
         return ['An error occurred'];
     }
 }
+//ADD AN EXPENSE TO TRIP
+export const addExpense = (tripId,tripDetail,name,expenseDate,splitType,splitTypeInfo,category,total,usersInvolved) => async (dispatch) => {
+	const response = await fetch(`/api/trips/${tripId}/expense/new`, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify({
+			name,
+			"expense_date":expenseDate,
+			"split_type":splitType,
+			"split_type_info":splitTypeInfo,
+			category,
+			total,
+			"users_id":usersInvolved
+		}),
+	});
+
+	if (response.ok) {
+		const {trip} = await response.json();
+		dispatch(updateTrip(trip,tripDetail));
+		return null;
+	} else if (response.status < 500) {
+		const data = await response.json();
+		if (data.errors) {
+			return data.errors;
+		}
+	} else {
+		return ["An error occurred. Please try again."];
+	}
+}
+
+//update an expense
+export const updateExpense = (tripId,tripDetail,expenseId,name,expenseDate,splitType,splitTypeInfo,category,total,usersInvolved) => async (dispatch) => {
+	const response = await fetch(`/api/trips/${tripId}/expense/${expenseId}/edit`, {
+		method: "PUT",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify({
+			name,
+			"expense_date":expenseDate,
+			"split_type":splitType,
+			"split_type_info":splitTypeInfo,
+			category,
+			total,
+			"users_id":usersInvolved
+		}),
+	});
+
+	if (response.ok) {
+		const {trip} = await response.json();
+		dispatch(updateTrip(trip,tripDetail));
+		return null;
+	} else if (response.status < 500) {
+		const data = await response.json();
+		if (data.errors) {
+			return data.errors;}
+		} else {
+			return ["An error occurred. Please try again."];
+		}
+}
+
+//delete an expense
+export const deleteExpense = (tripDetail,expenseId) => async (dispatch) => {
+	try {
+        const res = await fetch(`/api/expenses/${expenseId}/delete`, {
+            method: "DELETE"
+        })
+        if (res.ok) {
+			const {trip} = await res.json();
+            dispatch(updateTrip(trip,tripDetail));
+            return trip
+        } else {
+            const data = await res.json();
+            console.log("There was an error removing expense")
+            return data
+        }
+    } catch (error) {
+        console.error('An error occurred', error);
+        return ['An error occurred'];
+    }
+
+}
+
+//settle up
+export const settleUp = (tripDetail,tripId) => async (dispatch) => {
+	try {
+        const res = await fetch(`/api/trips/${tripId}/settle`, {
+            method: "PUT"
+        })
+        if (res.ok) {
+			const {trip} = await res.json();
+            dispatch(updateTrip(trip,tripDetail));
+        } else {
+            const data = await res.json();
+            console.log("There was an error removing expense")
+            return data
+        }
+    } catch (error) {
+        console.error('An error occurred', error);
+        return ['An error occurred'];
+    }
+}
+
 
 export default function reducer(state = initialState, action) {
 	let newState
