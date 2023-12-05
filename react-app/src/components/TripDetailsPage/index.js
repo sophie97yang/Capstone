@@ -57,7 +57,7 @@ const TripDetails = ({type}) => {
     return (
         <div className='trip-details'>
             <div className='trip-detail-left'>
-            <Link to='/trips' className='breadcrumb'>{'<'} All Trips </Link>
+           <h2><Link to='/trips' className='breadcrumb'> All Trips </Link> {'<'} {trip_details.name}</h2>
             <div className='trip-detail-universal'>
            <img src={trip_details.image} alt={trip_details.name} className='trip-detail-image'></img>
 

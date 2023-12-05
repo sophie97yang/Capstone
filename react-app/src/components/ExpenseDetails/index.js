@@ -31,7 +31,7 @@ function ExpenseDetail() {
     }
     return (
         <div className='expense-details'>
-           <h2> <Link to={`/trips/${trip.trip.id}/expenses`} className='breadcrumb'> {trip.trip.name}{'<'} </Link> Expense Details </h2>
+           <h2> <Link to={`/trips/${trip.trip.id}/expenses`} className='breadcrumb'> {trip.trip.name}{'<'} </Link> About {expense.name} </h2>
            <div className='expense-top-header'>
                 <img src={category_images[expense.category]} alt={expense.category}></img>
                 <h2>{expense.name}</h2>

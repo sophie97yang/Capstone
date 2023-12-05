@@ -59,13 +59,16 @@ const AllTrips = () => {
 
     return (
         <div>
-            <h1><Link to='/' className='breadcrumb'>Home</Link> {`>`} My Trips</h1>
+            <h2><Link to='/' className='breadcrumb'>Home</Link> {`<`} My Trips</h2>
             <div>
                 <button onClick={(e)=> {
                     e.preventDefault();
                     history.push('/trips/new')
                 }}>Create a New Trip</button>
-                <button>Something else here</button>
+                <button onClick={(e)=> {
+                    e.preventDefault();
+                    history.push('/bookings')
+                }}>Explore places to go</button>
             </div>
            { trips?.map(trip=> (
             <div key={trip.id}>
