@@ -9,11 +9,10 @@ function DeleteModal({trip}) {
     const history=useHistory();
     const {closeModal} = useModal();
 
-    const handleDelete = (e) => {
+    const handleDelete =async (e) => {
         e.preventDefault();
         console.log(trip);
-        dispatch(deleteTrip(trip.trip.id,trip.id)).then(closeModal).catch(res=>res);
-        dispatch(authenticate());
+        dispatch(deleteTrip(trip.trip.id,trip.id)).then(closeModal).then(()=> dispatch(authenticate())).catch(res=>res);
         history.push('/trips')
     }
 

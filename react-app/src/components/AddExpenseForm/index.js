@@ -23,7 +23,7 @@ function AddExpenseForm ({trip}) {
     const {closeModal} = useModal();
 
     const categories=['General','Food and Drink','Transportation','Entertainment']
-    // console.log(splitTypeInfo,usersInvolved,checkSplit,total)
+    console.log(splitTypeInfo,usersInvolved,checkSplit,total)
 
     useEffect(()=> {
         let totalAssigned=0
@@ -63,6 +63,10 @@ function AddExpenseForm ({trip}) {
         //usersinvolved does not match up with splittype info throw error
         if (usersInvolved[0]==='All' && splitType!=='Equal' && Object.values(splitTypeInfo).length!==trip.trip.users.length) errorsList.checkSplit = 'You must allocate your expense to all people involved.'
         if (usersInvolved[0]!=='All' && splitType!=='Equal' && Object.values(splitTypeInfo).length!==usersInvolved.length) errorsList.checkSplit = 'You must allocate your expense to all people involved.'
+        //no inputs for splits can be negative
+        Object.values(splitTypeInfo).forEach(val=> {
+            if (Number(val)<=0) errorsList.splitTypeError = 'Expense allocated must be greater than $0.00'
+        })
 
         if (Object.values(errorsList).length) {
             setErrors(errorsList);
@@ -227,6 +231,7 @@ function AddExpenseForm ({trip}) {
                             <p>Total: {checkSplit}% </p>
                             <p>Total: {100-checkSplit}% left </p>
                             {errors.checkSplit ? <p className='errors'>{errors.checkSplit}</p>: <p className='errors'></p>}
+                            {errors.splitTypeError ? <p className='errors'>{errors.splitTypeError}</p>: <p className='errors'></p>}
                         </div>
                     )
                 }
@@ -266,6 +271,7 @@ function AddExpenseForm ({trip}) {
                             <p>Total: ${checkSplit} </p>
                             <p>Total: ${(total-checkSplit).toFixed(2)} left </p>
                             {errors.checkSplit ? <p className='errors'>{errors.checkSplit}</p>: <p className='errors'></p>}
+                            {errors.splitTypeError ? <p className='errors'>{errors.splitTypeError}</p>: <p className='errors'></p>}
                         </div>
                     )
                         }

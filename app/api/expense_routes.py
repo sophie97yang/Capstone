@@ -21,8 +21,10 @@ def delete_expense(id):
     # #check if there is already an existing expense relationship between two users in trip - THERE SHOULD ALWAYS BE A RELATIONSHIP
     # relationship_one = BetweenUserExpense.query.filter_by(user_one_id=current_user.id,user_two_id=,trip_id=trip.id).first()
     # relationship_two= BetweenUserExpense.query.filter_by(user_one_id=,user_two_id=current_user.id,trip_id=trip.id).first()
-    relationship_one = [relationship for relationship in trip.between_user_expenses if relationship.user_one_id==current_user.id]
-    relationship_two = [relationship for relationship in trip.between_user_expenses if relationship.user_two_id==current_user.id]
+    relationship_one = [relationship for relationship in trip.between_user_expenses if relationship.user_one_id==current_user.id and not(relationship.user_one_id==current_user.id and relationship.user_two_id==current_user.id) and not relationship.owed==0]
+    relationship_two = [relationship for relationship in trip.between_user_expenses if relationship.user_two_id==current_user.id and not(relationship.user_one_id==current_user.id and relationship.user_two_id==current_user.id) and not relationship.owes==0]
+    print('RELATIONSHIPONEEEEE',relationship_one)
+    print('RELATIONSHIPTWOOO',relationship_two)
     for relationship in relationship_one:
             #user_one=payer,user_two=user involved in expense
             #user_one now is not owed the cost of the expense for the other user
@@ -32,7 +34,7 @@ def delete_expense(id):
     for relationship in relationship_two:
             #user_one=user involved in expense, user_two=payer
             #user_one now does not owe the cost of the expense for that user
-            expense_detail = ExpenseDetail.query.filter_by(user_id=relationship.user_two_id,expense_id=id).first()
+            expense_detail = ExpenseDetail.query.filter_by(user_id=relationship.user_one_id,expense_id=id).first()
             relationship.owes-=expense_detail.price
 
     trip = Trip.query.get(expense.trip_id)

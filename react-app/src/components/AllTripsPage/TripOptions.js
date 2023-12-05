@@ -41,7 +41,7 @@ function TripOptions({trip}) {
             <OpenModalButton
               buttonText="Invite"
               onItemClick={closeMenu}
-              modalComponent={<InviteOthers trip={trip}/>}
+              modalComponent={<InviteOthers tripId={trip.id}/>}
             />
           </li>
 

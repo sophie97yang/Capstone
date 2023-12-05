@@ -1,9 +1,10 @@
 import {useParams} from 'react-router-dom';
 import {useSelector} from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link,useHistory } from 'react-router-dom';
 import OpenModalButton from '../OpenModalButton';
 import InviteOthers from '../AllTripsPage/InviteOthersModal';
 import UpdateTripModal from '../UpdateTripForm/Modal';
+import DeleteModal from '../AllTripsPage/DeleteModal';
 import Expense from './Expense';
 import Itinerary from './Itinerary';
 import './TripDetails.css'
@@ -11,6 +12,7 @@ import './TripDetails.css'
 const TripDetails = ({type}) => {
     const {id} = useParams();
     const user = useSelector(state=>state.session.user);
+    const history=useHistory();
     let trip_found;
 
     user?.trips && ( Object.values(user?.trips).forEach(trip=> {
@@ -19,6 +21,25 @@ const TripDetails = ({type}) => {
             return
         }
     }))
+    if (!trip_found){
+        history.push('/404');
+        return;
+    }
+    const images=['https://images.unsplash.com/photo-1522878129833-838a904a0e9e?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    'https://images.unsplash.com/photo-1433838552652-f9a46b332c40?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    'https://images.unsplash.com/photo-1475503572774-15a45e5d60b9?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8MTR8fHxlbnwwfHx8fHw%3D',
+    'https://images.unsplash.com/photo-1515859005217-8a1f08870f59?q=80&w=2820&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    'https://images.unsplash.com/photo-1482192505345-5655af888cc4?q=80&w=2728&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    'https://images.unsplash.com/photo-1532274402911-5a369e4c4bb5?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=2673&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    'https://images.unsplash.com/photo-1493246507139-91e8fad9978e?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8NDV8fHxlbnwwfHx8fHw%3D',
+    'https://images.unsplash.com/photo-1519451241324-20b4ea2c4220?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8NDd8fHxlbnwwfHx8fHw%3D',
+    'https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8NTZ8fHxlbnwwfHx8fHw%3D',
+    'https://images.unsplash.com/photo-1508739773434-c26b3d09e071?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8NTV8fHxlbnwwfHx8fHw%3D',
+    'https://images.unsplash.com/photo-1440778303588-435521a205bc?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8Njd8fHxlbnwwfHx8fHw%3D',
+    'https://images.unsplash.com/photo-1505778276668-26b3ff7af103?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8ODF8fHxlbnwwfHx8fHw%3D'
+    ]
+    const choice = Math.floor(Math.random()*images.length)
 
     const trip_details = trip_found.trip
     console.log('between_user_expenses',trip_details.between_user_expenses)
@@ -45,32 +66,43 @@ const TripDetails = ({type}) => {
          })
 
 
-
-
-
          group_balances[user.user.id]=relationship_info
          total_info[user.user.id]=total
          settled[user.user.id] = settled_expenses.length ? settled_expenses : null
     })
 
     console.log('group_balances',group_balances,'total',total_info,'settled',settled)
+    const options={}
+    options.timeZone = "UTC";
     return (
         <div className='trip-details'>
             <div className='trip-detail-left'>
-           <h2><Link to='/trips' className='breadcrumb'> All Trips </Link> {'<'} {trip_details.name}</h2>
+           <h2><Link to='/trips' className='breadcrumb'> All Trips </Link> {'>'} {trip_details.name}</h2>
             <div className='trip-detail-universal'>
-           <img src={trip_details.image} alt={trip_details.name} className='trip-detail-image'></img>
+           <img src={trip_details.image ? trip_details.image : images[choice] } alt={trip_details.name} className='trip-detail-image'></img>
 
            <OpenModalButton modalComponent={<UpdateTripModal trip={trip_found}/>} buttonText={`${trip_details.name}`} />
 
-            <p><i className="fa-solid fa-calendar-day"/> {new Date(trip_details.start_date).toLocaleDateString()} - {new Date(trip_details.end_date).toLocaleDateString()}</p>
+            <p><i className="fa-solid fa-calendar-day"/> {new Date(trip_details.start_date).toLocaleDateString('en-US',options)} - {new Date(trip_details.end_date).toLocaleDateString('en-US',options)}</p>
             <p><i className="fa-solid fa-location-dot"/> {trip_details.location[0]}, {trip_details.location[1]}</p>
 
             <i className="fa-solid fa-user-plus"/>
             <OpenModalButton
               buttonText="Invite"
-              modalComponent={<InviteOthers trip={trip_found}/>}
+              modalComponent={<InviteOthers tripId={trip_found.id}/>}
             />
+
+           { trip_found.creator ?
+           <>
+            <i className="fa-solid fa-trash-can"/>
+            <OpenModalButton
+              buttonText="Delete"
+              modalComponent={<DeleteModal trip={trip_found} />}
+            />
+            </>
+            :
+            <></>
+          }
             </div>
 
             <div>

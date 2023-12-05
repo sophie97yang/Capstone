@@ -16,8 +16,10 @@ const UpdateTripModal = ({trip}) =>{
     const [name, setName] = useState(trip.trip.name);
     const [description, setDescription] = useState(trip.trip.description ? trip.trip.description : "");
     const [location,setLocation]=useState(trip.trip.location.join(','));
-    const [start_date, setStartDate] = useState(new Date(trip.trip.start_date).toLocaleDateString('en-CA'));
-    const [end_date, setEndDate] = useState(new Date(trip.trip.end_date).toLocaleDateString('en-CA'));
+    const options={}
+    options.timeZone = "UTC";
+    const [start_date, setStartDate] = useState(new Date(trip.trip.start_date).toLocaleDateString('en-CA',options));
+    const [end_date, setEndDate] = useState(new Date(trip.trip.end_date).toLocaleDateString('en-CA',options));
     const [newImage, setImage] = useState(null);
     const [imageLoading, setImageLoading] = useState(false);
 

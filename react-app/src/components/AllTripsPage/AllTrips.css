@@ -3,8 +3,38 @@
     min-height:250px;
 }
 
-.invitemodal {
+.invite-modal {
     max-height:600px;
     width:700px;
-    overflow-wrap: normal;
+    overflow:scroll
+}
+
+.all-trips {
+    margin:0px auto;
+    width:950px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+}
+
+.individual-trip {
+    border:1px black solid;
+    padding:20px;
+    width:800px;
+    margin-bottom:20px;
+    border-radius: 10px;
+}
+
+.all-trips-buttons{
+    margin-bottom:20px;
+    display:flex;
+    justify-content: space-between;
+}
+
+.breadcrumb-container {
+    display:flex;
+    width:950px
+}
+.breadcrumb {
+    align-self: flex-start;
 }

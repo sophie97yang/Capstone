@@ -5,7 +5,7 @@ import {authenticate,addUsers } from "../../store/session";
 import { useState } from "react";
 
 
-function InviteOthers({trip}) {
+function InviteOthers({tripId}) {
     const dispatch=useDispatch();
     const history=useHistory();
     const [email1,setEmail1] = useState('')
@@ -14,13 +14,16 @@ function InviteOthers({trip}) {
     const [error,setError] = useState({})
     const [hasSubmitted,setSubmitted]=useState(false)
     const user = useSelector(state=>state.session.user)
+    console.log(user)
+    console.log(tripId)
 
     const {closeModal} = useModal();
 
-    trip = user.trips[trip.id]
+    const trip = user.trips[tripId]
+    console.log(trip)
 
     //if user with email isn't found, no action is made
-    const handleSubmit = (e) => {
+    const handleSubmit =async (e) => {
         e.preventDefault();
         setSubmitted(false)
         if (!email1) {
@@ -31,7 +34,7 @@ function InviteOthers({trip}) {
         if (res.errors) {
             return ['Error adding users']
         } else {
-            dispatch(authenticate());
+            await dispatch(authenticate());
             setSubmitted(true);
             setEmail1('')
             setEmail2('')
@@ -76,12 +79,13 @@ function InviteOthers({trip}) {
             <button onClick={handleSubmit}>Invite</button>
         </form>
 
-        {hasSubmitted ? <p className='success'>Collaborators successfully added. <button onClick={(e)=>
+        {hasSubmitted ? <p className='success'>Collaborators successfully added. If user added does not have a SplitTrip account, they will have to Sign Up first. <button onClick={(e)=>
         {
             e.preventDefault();
-            history.push('/trips')
+            history.push(`/trips/${trip.trip.id}/expenses`)
+            dispatch(authenticate());
             closeModal()
-        }}>Go to your trips</button></p>: <p className='success'></p>}
+        }}>Go to {trip.trip.name}</button></p>: <p className='success'></p>}
 
         <div>
             <h3>Collaborators</h3>
