@@ -18,8 +18,9 @@ class Trip(db.Model):
     simplify = db.Column(db.Boolean, default=False)
 
     expenses = db.relationship('Expense',back_populates='trip',cascade="all, delete")
-    users = db.relationship('TripDetail',back_populates='trip',cascade="all, delete")
+    users = db.relationship('TripDetail',back_populates='trip',cascade="all, delete",order_by="TripDetail.user_id")
     bookings = db.relationship('Itinerary',back_populates='trip')
+    between_user_expenses = db.relationship('BetweenUserExpense',back_populates='trip',cascade="all,delete")
 
     def to_dict(self):
         return {

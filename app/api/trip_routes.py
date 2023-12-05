@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify,request
 from flask_login import login_required,current_user
-from ..models import Trip,db,User,TripDetail,Expense,ExpenseDetail,ExpenseUpdateDetail
+from ..models import Trip,db,User,TripDetail,Expense,ExpenseDetail,ExpenseUpdateDetail,BetweenUserExpense
 from ..forms.trip_form import TripForm
 from ..forms.add_user_form import AddUserForm
 from ..forms.expense_form import ExpenseForm
@@ -186,8 +186,8 @@ def create_expense(id):
         expense_detail_list = []
         # if users involved = All - iterate through all of trips users and create an expense detail
         if (form.data['users_id']=='All'):
-            #users come in reverse order
-            index=len(trip.users)-1
+            #users come in reg order
+            index=0
             for trip_detail in trip.users:
                 if split_type=='Equal':
                     price=float(form.data['total'])/len(trip.users)
@@ -195,11 +195,36 @@ def create_expense(id):
                     split_info = form.data['split_type_info'].split(',')
                     print('SPLIT_INFOO',split_info)
                     price=float(split_info.pop(index))
-                    index-=1
+                    index+=1
                 elif split_type=='Percentages':
                     split_info = form.data['split_type_info'].split(',')
                     price=(int(split_info.pop(index))/100)*float(form.data['total'])
-                    index-=1
+                    index+=1
+                #ADD/UPDATE EXPENSE RELATIONSHIP BETWEEN THE TWO USERS
+                #check if there is already an existing expense relationship between two users in trip
+                relationship_one = BetweenUserExpense.query.filter_by(user_one_id=current_user.id,user_two_id=trip_detail.user.id,trip_id=trip.id).first()
+                relationship_two= BetweenUserExpense.query.filter_by(user_one_id=trip_detail.user.id,user_two_id=current_user.id,trip_id=trip.id).first()
+                            # if a relationship is found
+                if relationship_one or relationship_two:
+                    if relationship_one:
+                    #user_one=payer,user_two=user involved in expense
+                    #user_one now is owed $
+                        relationship_one.owed+=price
+                    elif relationship_two:
+                    #user_one=user involved in expense, user_two=payer
+                    #user_one now owes money $
+                        relationship_two.owes+=price
+            #if there is no existing relationship,create one
+                else:
+                #user_one=payer,user_two=user involved in expense
+                #user one now is owed $
+                    relationship=BetweenUserExpense(user_one_id=current_user.id,
+                                                user_two_id=trip_detail.user.id,
+                                                trip_id=trip.id,
+                                                owed= price
+                                                )
+                    db.session.add(relationship)
+
                 expense_detail = ExpenseDetail(user_id=trip_detail.user.id,price=price)
                 expense_detail_list.append(expense_detail)
         # else:
@@ -218,6 +243,30 @@ def create_expense(id):
                     split_info = form.data['split_type_info'].split(',')
                     price=(int(split_info.pop(index))/100)*float(form.data['total'])
                     index+=1
+                #ADD/UPDATE EXPENSE RELATIONSHIP BETWEEN THE TWO USERS
+                #check if there is already an existing expense relationship between two users in trip
+                relationship_one = BetweenUserExpense.query.filter_by(user_one_id=current_user.id,user_two_id=int(user),trip_id=trip.id).first()
+                relationship_two= BetweenUserExpense.query.filter_by(user_one_id=int(user),user_two_id=current_user.id,trip_id=trip.id).first()
+                            # if a relationship is found
+                if relationship_one or relationship_two:
+                    if relationship_one:
+                    #user_one=payer,user_two=user involved in expense
+                    #user_one now is owed $
+                        relationship_one.owed+=price
+                    elif relationship_two:
+                    #user_one=user involved in expense, user_two=payer
+                    #user_one now owes money $
+                        relationship_two.owes+=price
+            #if there is no existing relationship,create one
+                else:
+                #user_one=payer,user_two=user involved in expense
+                #user one now is owed $
+                    relationship=BetweenUserExpense(user_one_id=current_user.id,
+                                                user_two_id=int(user),
+                                                trip_id=trip.id,
+                                                owed= price
+                                                )
+                    db.session.add(relationship)
                 expense_detail = ExpenseDetail(user_id=int(user),price=price)
                 expense_detail_list.append(expense_detail)
         #attach all of expense details to expense
@@ -227,6 +276,8 @@ def create_expense(id):
         db.session.commit()
         return {"trip":trip.to_dict()}
     return {"errors":form.errors},400
+
+
 
 #UPDATE AN EXPENSE
 @trip_routes.route('/<int:id>/expense/<int:expenseId>/edit',methods=['PUT'])
@@ -255,16 +306,25 @@ def update_expense(id,expenseId):
         expense.category=form.data['category']
         expense.total=form.data['total']
 
+        #REMOVE THIS EXPENSE FOR EVERY USER ORIGINALLY INVOLVED - THIS NEW PRICE WILL GET ADDED BACK LATER
+        trip = Trip.query.get(id)
+        for user in expense.users:
+            relationship_one = [relationship for relationship in trip.between_user_expenses if relationship.user_one_id==expense.payer_id and relationship.user_two_id==user.user_id]
+            relationship_two = [relationship for relationship in trip.between_user_expenses if relationship.user_one_id==user.user_id and relationship.user_two_id==expense.payer_id]
+            if len(relationship_one):
+                relationship_one[0].owed-=user.price
+            elif len(relationship_two):
+                relationship_two[0].owes-=user.price
+
         #UPDATE EXPENSE DETAILS FOR USERS INVOLVED
         # CHECK IF EXPENSE DETAIL EXISTS
         # IF NOT CREATE A NEW ONE
-        trip = Trip.query.get(id)
         split_info = form.data['split_type_info']
         split_type = form.data['split_type']
         expense_detail_list = []
         # if users involved = All - iterate through all of trips users and create an expense detail
         if (form.data['users_id']=='All'):
-            index=len(trip.users)-1
+            index=0
             for trip_detail in trip.users:
                 if split_type=='Equal':
                     price=float(form.data['total'])/len(trip.users)
@@ -272,11 +332,36 @@ def update_expense(id,expenseId):
                     split_info = form.data['split_type_info'].split(',')
                     print('SPLIT_INFOO',split_info)
                     price=float(split_info.pop(index))
-                    index-=1
+                    index+=1
                 elif split_type=='Percentages':
                     split_info = form.data['split_type_info'].split(',')
                     price=(int(split_info.pop(index))/100)*float(form.data['total'])
-                    index-=1
+                    index+=1
+                #ADD/UPDATE EXPENSE RELATIONSHIP BETWEEN THE TWO USERS
+                #check if there is already an existing expense relationship between two users in trip -> LOOKING BETWEEN EXPENSE PAYER AND USERS INVOLVED
+                relationship_one = BetweenUserExpense.query.filter_by(user_one_id=expense.payer_id,user_two_id=trip_detail.user.id,trip_id=trip.id).first()
+                relationship_two= BetweenUserExpense.query.filter_by(user_one_id=trip_detail.user.id,user_two_id=expense.payer_id,trip_id=trip.id).first()
+                            # if a relationship is found
+                if relationship_one or relationship_two:
+                    if relationship_one:
+                    #user_one=payer,user_two=user involved in expense
+                    #user_one now is owed $
+                        relationship_one.owed+=price
+                    elif relationship_two:
+                    #user_one=user involved in expense, user_two=payer
+                    #user_one now owes money $
+                        relationship_two.owes+=price
+            #if there is no existing relationship,create one
+                else:
+                #user_one=payer,user_two=user involved in expense
+                #user one now is owed $
+                    relationship=BetweenUserExpense(user_one_id=expense.payer_id,
+                                                user_two_id=int(user),
+                                                trip_id=trip.id,
+                                                owed= price
+                                                )
+                    db.session.add(relationship)
+
                 #check if expense detail already exists
                 user_exists=False
                 detail_found=None
@@ -291,9 +376,37 @@ def update_expense(id,expenseId):
                 else:
                     expense_detail = ExpenseDetail(user_id=trip_detail.user.id,price=price)
                     expense_detail_list.append(expense_detail)
-        # else:
+        # else-SELECT USERS
         else:
             users_involved = form.data['users_id'].split(',')
+            # # IF USERS INVOLVED IS LESS THAN EXPENSE.USERS (AKA A USER HAS BEEN REMOVED FROM THE EXPENSE),
+            # # WE NEED TO REMOVE THAT EXPENSE FROM BETWEEN_USER_EXPENSE RECORD
+            # # THIS INCLUDES IF THE UPDATE CHANGES FROM ALL USERS TO SELECT USERS
+            # # THIS ALSO MEANS THAT THE PRICE CHANGES FOR OTHER USERS. ADJUST ACCORDINGLY
+            # if len(users_involved)<len(expense.users):
+            #     for user in expense.users:
+            #         # if str(user.user_id) not in users_involved:
+            #             #FIND EXPENSE RECORD
+            #             #adjust prices for everyone else - remove old price from this record
+            #         relationship_one = [relationship for relationship in trip.between_user_expenses if relationship.user_one_id==expense.payer_id and relationship.user_two_id==user.user_id]
+            #         relationship_two = [relationship for relationship in trip.between_user_expenses if relationship.user_one_id==user.user_id and relationship.user_two_id==expense.payer_id]
+            #         if len(relationship_one):
+            #             relationship_one[0].owed-=user.price
+            #         elif len(relationship_two):
+            #             relationship_two[0].owes-=user.price
+            # #if USERS INVOLVED IS GREATER THAN EXPENSE.USERS (AKA A USER HAS BEEN ADDED TO THE EXPENSE)
+            # #WE NEED TO REMOVE EXPENSE ACCORDINGLY AS THE NEW PRICE WILL GET ADDED LATER
+            # else:
+            #     for user in users_involved:
+            #         user_database = User.query.get(int(user))
+            #         if user_database in expense.users:
+            #             relationship_one = [relationship for relationship in trip.between_user_expenses if relationship.user_one_id==expense.payer_id and relationship.user_two_id==int(user)]
+            #             relationship_two = [relationship for relationship in trip.between_user_expenses if relationship.user_one_id==int(user) and relationship.user_two_id==expense.payer_id]
+            #             if len(relationship_one):
+            #                 relationship_one[0].owed-=user.price
+            #             elif len(relationship_two):
+            #                 relationship_two[0].owes-=user.price
+
             index=0
             for user in users_involved:
                 if split_type=='Equal':
@@ -307,7 +420,31 @@ def update_expense(id,expenseId):
                     split_info = form.data['split_type_info'].split(',')
                     price=(int(split_info.pop(index))/100)*float(form.data['total'])
                     index+=1
-                 #check if expense detail already exists
+                #ADD/UPDATE EXPENSE RELATIONSHIP BETWEEN THE TWO USERS
+                #check if there is already an existing expense relationship between two users in trip
+                relationship_one = BetweenUserExpense.query.filter_by(user_one_id=expense.payer_id,user_two_id=int(user),trip_id=trip.id).first()
+                relationship_two= BetweenUserExpense.query.filter_by(user_one_id=int(user),user_two_id=expense.payer_id,trip_id=trip.id).first()
+                # if a relationship is found
+                if relationship_one or relationship_two:
+                    if relationship_one:
+                    #user_one=payer,user_two=user involved in expense
+                    #user_one now is owed $
+                        relationship_one.owed+=price
+                    elif relationship_two:
+                    #user_one=user involved in expense, user_two=payer
+                    #user_one now owes money $
+                        relationship_two.owes+=price
+            #if there is no existing relationship,create one
+                else:
+                #user_one=payer,user_two=user involved in expense
+                #user one now is owed $
+                    relationship=BetweenUserExpense(user_one_id=expense.payer_id,
+                                                user_two_id=int(user),
+                                                trip_id=trip.id,
+                                                owed= price
+                                                )
+                    db.session.add(relationship)
+                #check if expense detail already exists
                 user_exists=False
                 detail_found=None
                 for detail in expense.users:

@@ -1,4 +1,4 @@
-from app.models import db, Expense,ExpenseDetail, environment, SCHEMA
+from app.models import db, Expense,ExpenseDetail,BetweenUserExpense, environment, SCHEMA
 from sqlalchemy.sql import text
 from faker import Faker
 from random import choice,sample,randint
@@ -43,7 +43,7 @@ def seed_expenses(users,trips):
     expense_list=[]
     for i in name_category:
         trip = choice(trips)
-        user = choice(trip.users).user
+        payer = choice(trip.users).user
 
         name = i[0]
         expense_date=fake.date_between_dates(date_start=trip.start_date, date_end=trip.end_date)
@@ -56,11 +56,35 @@ def seed_expenses(users,trips):
             total=choice(prices)
         expense = Expense(name=name,expense_date=expense_date,split_type=split_type,image=image,category=category,total=total)
         expense.trip=trip
-        expense.payer=user
+        expense.payer=payer
 
         users_involved = sample(trip.users,randint(3,len(trip.users)))
         expense_list_detail=[]
         for user in users_involved:
+            #check if there is already an existing expense relationship between two users in trip
+            relationship_one = BetweenUserExpense.query.filter_by(user_one_id=payer.id,user_two_id=user.user.id,trip_id=trip.id).first()
+            relationship_two= BetweenUserExpense.query.filter_by(user_one_id=user.user.id,user_two_id=payer.id,trip_id=trip.id).first()
+            # if a relationship is found
+            if relationship_one or relationship_two:
+                if relationship_one:
+                    #user_one=payer,user_two=user involved in expense
+                    #user_one now is owed $
+                    relationship_one.owed+=total/len(users_involved)
+                elif relationship_two:
+                    #user_one=user involved in expense, user_two=payer
+                    #user_one now owes money $
+                    relationship_two.owes+=total/len(users_involved)
+            #if there is no existing relationship,create one
+            else:
+                #user_one=payer,user_two=user involved in expense
+                #user one now is owed $
+                relationship=BetweenUserExpense(user_one_id=payer.id,
+                                                user_two_id=user.user.id,
+                                                trip_id=trip.id,
+                                                owed= total/len(users_involved)
+                                                )
+                db.session.add(relationship)
+
             expense_detail = ExpenseDetail(price=(total/len(users_involved)))
             expense_detail.user=user.user
             expense_list_detail.append(expense_detail)
@@ -77,6 +101,7 @@ def undo_expenses():
     if environment == "production":
         db.session.execute(f"TRUNCATE table {SCHEMA}.users RESTART IDENTITY CASCADE;")
     else:
+        db.session.execute(text("DELETE FROM expense_update_details"))
         db.session.execute(text("DELETE FROM expense_details"))
         db.session.execute(text("DELETE FROM expenses"))
 

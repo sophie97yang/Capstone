@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 4290d831b6a8
+Revision ID: b8709ff94c2e
 Revises: 
-Create Date: 2023-12-04 05:29:40.678001
+Create Date: 2023-12-04 16:48:31.221106
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '4290d831b6a8'
+revision = 'b8709ff94c2e'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -49,6 +49,18 @@ def upgrade():
     sa.Column('balance', sa.Float(), nullable=True),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('email')
+    )
+    op.create_table('between_user_expenses',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('user_one_id', sa.Integer(), nullable=True),
+    sa.Column('user_two_id', sa.Integer(), nullable=True),
+    sa.Column('trip_id', sa.Integer(), nullable=True),
+    sa.Column('owed', sa.Float(), nullable=True),
+    sa.Column('owes', sa.Float(), nullable=True),
+    sa.ForeignKeyConstraint(['trip_id'], ['trips.id'], ),
+    sa.ForeignKeyConstraint(['user_one_id'], ['users.id'], ),
+    sa.ForeignKeyConstraint(['user_two_id'], ['users.id'], ),
+    sa.PrimaryKeyConstraint('id')
     )
     op.create_table('expenses',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -116,6 +128,7 @@ def downgrade():
     op.drop_table('trip_details')
     op.drop_table('itineraries')
     op.drop_table('expenses')
+    op.drop_table('between_user_expenses')
     op.drop_table('users')
     op.drop_table('trips')
     op.drop_table('bookings')

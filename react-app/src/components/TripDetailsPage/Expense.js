@@ -2,6 +2,7 @@ import {useSelector} from 'react-redux';
 import OpenModalButton from '../OpenModalButton';
 import AddExpenseForm from '../AddExpenseForm';
 import { Link } from 'react-router-dom';
+import SettleUp from '../SettleUpModal';
 
 const Expense = ({trip}) => {
     const user = useSelector(state=>state.session.user)
@@ -38,11 +39,15 @@ const Expense = ({trip}) => {
              }
         }
         //filter out expense detail relavent to user
-        user_expense_detail[expense.id]=expense.details.filter(detail => detail.user.id===user.id)[0]
+        user_expense_detail[expense.id]={...expense.details.filter(detail => detail.user.id===user.id)[0]}
+        // console.log('before',user_expense_detail)
+        if (user_expense_detail[expense.id].id){
+             user_expense_detail[expense.id]['payer'] = expense.payer
+        }
     })
 
-    console.log(expense_by_year)
-    console.log(user_expense_detail)
+    // console.log(expense_by_year)
+    // console.log(user_expense_detail)
 
 
     return (
@@ -52,7 +57,12 @@ const Expense = ({trip}) => {
                      buttonText="Add Expense"
                      modalComponent={<AddExpenseForm trip={trip}/>}
                  />
-            <button>Settle Up</button>
+            <OpenModalButton
+                     buttonText="Settle Up"
+                     //userExpenses: expenses that the user owes in the trip
+                     //expensesOwn:expenses that the user has paid and owns
+                     modalComponent={<SettleUp userExpenses={user_expense_detail} expensesOwn={user.expenses_own.filter(expense=>expense.trip === trip.trip.id)}/>}
+                 />
             </div>
 
             {
@@ -78,10 +88,10 @@ const Expense = ({trip}) => {
 
 
                                          <div>
-                                           {user.id===expense.payer.id ? <p> You lent </p> : <>{ user_expense_detail[expense.id] ? <p>{expense.payer.first_name} lent</p>: 'not involved' }</>}
+                                           {user.id===expense.payer.id ? <p> You lent </p> : <>{ user_expense_detail[expense.id].id ? <p>{expense.payer.first_name} lent</p>: 'not involved' }</>}
 
                                            {user.id===expense.payer.id ? <p>{user_expense_detail[expense.id] ? `$ ${(expense.total-user_expense_detail[expense.id].price).toFixed(2)}`: `$ ${expense.total.toFixed(2)}`}</p>
-                                           : <p>{user_expense_detail[expense.id] ? `$ ${user_expense_detail[expense.id].price.toFixed(2)}`:''}</p>}
+                                           : <p>{user_expense_detail[expense.id].id ? `$ ${user_expense_detail[expense.id].price.toFixed(2)}`:''}</p>}
                                            </div>
                                         </div>
                                     ))
