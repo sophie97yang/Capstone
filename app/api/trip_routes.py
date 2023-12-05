@@ -106,6 +106,9 @@ def add_trip_users(id):
 
         email_1 = form.data['email_1']
         user_1 = User.query.filter_by(email=email_1).first()
+        for detail in trip.users:
+            if detail.user==user_1:
+                return {"errors":f"{user_1.first_name} is already a collaborator of this trip"},400
 
         if user_1:
             trip_detail_1 = TripDetail(settled=False,creator=False)
@@ -115,6 +118,9 @@ def add_trip_users(id):
 
         email_2 = form.data['email_2']
         user_2 = User.query.filter_by(email=email_2).first()
+        for detail in trip.users:
+            if detail.user==user_2:
+                return {"errors":f"{user_2.first_name} is already a collaborator of this trip"},400
         if user_2:
             trip_detail_2 = TripDetail(settled=False,creator=False)
             trip_detail_2.user=user_2
@@ -123,6 +129,9 @@ def add_trip_users(id):
 
         email_3 = form.data['email_3']
         user_3 = User.query.filter_by(email=email_3).first()
+        for detail in trip.users:
+            if detail.user==user_3:
+                return {"errors":f"{user_3.first_name} is already a collaborator of this trip"},400
         if user_3:
             trip_detail_3 = TripDetail(settled=False,creator=False)
             trip_detail_3.user=user_3

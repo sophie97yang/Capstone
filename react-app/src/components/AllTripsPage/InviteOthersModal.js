@@ -14,13 +14,11 @@ function InviteOthers({tripId}) {
     const [error,setError] = useState({})
     const [hasSubmitted,setSubmitted]=useState(false)
     const user = useSelector(state=>state.session.user)
-    console.log(user)
-    console.log(tripId)
 
     const {closeModal} = useModal();
 
     const trip = user.trips[tripId]
-    console.log(trip)
+
 
     //if user with email isn't found, no action is made
     const handleSubmit =async (e) => {
@@ -30,8 +28,9 @@ function InviteOthers({tripId}) {
             setError({'email1':'Invite at least one collaborator'});
             return
         } else {
-        const res=dispatch(addUsers(trip.trip.id,trip.id,email1,email2,email3)).catch(res=>res);
+        const res=await dispatch(addUsers(trip.trip.id,trip.id,email1,email2,email3));
         if (res.errors) {
+            setError({"email":`${res.errors}`})
             return ['Error adding users']
         } else {
             await dispatch(authenticate());
@@ -43,6 +42,7 @@ function InviteOthers({tripId}) {
     }
     }
 
+    console.log(error)
     return (
         <div className='invite-modal'>
             <button onClick={closeModal}><i className="fa-solid fa-xmark"></i></button>
@@ -77,6 +77,7 @@ function InviteOthers({tripId}) {
             />
         </label>
             <button onClick={handleSubmit}>Invite</button>
+            {error.email ? <p className='errors'>{error.email}</p>: <p className='errors'></p>}
         </form>
 
         {hasSubmitted ? <p className='success'>Collaborators successfully added. If user added does not have a SplitTrip account, they will have to Sign Up first. <button onClick={(e)=>
