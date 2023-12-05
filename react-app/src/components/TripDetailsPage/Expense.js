@@ -4,7 +4,7 @@ import AddExpenseForm from '../AddExpenseForm';
 import { Link } from 'react-router-dom';
 import SettleUp from '../SettleUpModal';
 
-const Expense = ({trip}) => {
+const Expense = ({trip,group_balances,total_info}) => {
     const user = useSelector(state=>state.session.user)
     const user_expense_detail = {};
     //images to display depending on expense category
@@ -46,8 +46,8 @@ const Expense = ({trip}) => {
         }
     })
 
-    // console.log(expense_by_year)
-    // console.log(user_expense_detail)
+    console.log(expense_by_year)
+    console.log(user_expense_detail)
 
 
     return (
@@ -61,7 +61,7 @@ const Expense = ({trip}) => {
                      buttonText="Settle Up"
                      //userExpenses: expenses that the user owes in the trip
                      //expensesOwn:expenses that the user has paid and owns
-                     modalComponent={<SettleUp userExpenses={user_expense_detail} expensesOwn={user.expenses_own.filter(expense=>expense.trip === trip.trip.id)}/>}
+                     modalComponent={<SettleUp group_balances={group_balances} total_info={total_info} trip={trip} />}
                  />
             </div>
 
@@ -90,7 +90,7 @@ const Expense = ({trip}) => {
                                          <div>
                                            {user.id===expense.payer.id ? <p> You lent </p> : <>{ user_expense_detail[expense.id].id ? <p>{expense.payer.first_name} lent</p>: 'not involved' }</>}
 
-                                           {user.id===expense.payer.id ? <p>{user_expense_detail[expense.id] ? `$ ${(expense.total-user_expense_detail[expense.id].price).toFixed(2)}`: `$ ${expense.total.toFixed(2)}`}</p>
+                                           {user.id===expense.payer.id ? <p>{user_expense_detail[expense.id].id ? `$ ${(expense.total-user_expense_detail[expense.id].price).toFixed(2)}`: `$ ${expense.total.toFixed(2)}`}</p>
                                            : <p>{user_expense_detail[expense.id].id ? `$ ${user_expense_detail[expense.id].price.toFixed(2)}`:''}</p>}
                                            </div>
                                         </div>

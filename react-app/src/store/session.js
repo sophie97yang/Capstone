@@ -242,6 +242,7 @@ export const addExpense = (tripId,tripDetail,name,expenseDate,splitType,splitTyp
 	}
 }
 
+//update an expense
 export const updateExpense = (tripId,tripDetail,expenseId,name,expenseDate,splitType,splitTypeInfo,category,total,usersInvolved) => async (dispatch) => {
 	const response = await fetch(`/api/trips/${tripId}/expense/${expenseId}/edit`, {
 		method: "PUT",
@@ -272,6 +273,7 @@ export const updateExpense = (tripId,tripDetail,expenseId,name,expenseDate,split
 		}
 }
 
+//delete an expense
 export const deleteExpense = (tripDetail,expenseId) => async (dispatch) => {
 	try {
         const res = await fetch(`/api/expenses/${expenseId}/delete`, {
@@ -291,6 +293,26 @@ export const deleteExpense = (tripDetail,expenseId) => async (dispatch) => {
         return ['An error occurred'];
     }
 
+}
+
+//settle up
+export const settleUp = (tripDetail,tripId) => async (dispatch) => {
+	try {
+        const res = await fetch(`/api/trips/${tripId}/settle`, {
+            method: "PUT"
+        })
+        if (res.ok) {
+			const {trip} = await res.json();
+            dispatch(updateTrip(trip,tripDetail));
+        } else {
+            const data = await res.json();
+            console.log("There was an error removing expense")
+            return data
+        }
+    } catch (error) {
+        console.error('An error occurred', error);
+        return ['An error occurred'];
+    }
 }
 
 

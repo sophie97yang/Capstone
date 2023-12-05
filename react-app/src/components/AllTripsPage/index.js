@@ -88,7 +88,6 @@ const AllTrips = () => {
                      buttonText="Add Expense"
                      modalComponent={<AddExpenseForm trip={trip}/>}
                  />
-                <button>Settle Up</button>
                 </div>
             </div>
             </div>

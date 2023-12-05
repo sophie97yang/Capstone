@@ -275,6 +275,10 @@ function AddExpenseForm ({trip}) {
                 : `You get back ${0}`}</p>
 
                 <button onClick={handleSubmit}>Save</button>
+                <button onClick={e=> {
+              e.preventDefault();
+              closeModal()
+            }}>Cancel</button>
 
             </form>
         </div>

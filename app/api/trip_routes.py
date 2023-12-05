@@ -478,3 +478,43 @@ def update_expense(id,expenseId):
         db.session.commit()
         return {"trip":trip.to_dict()}
     return {"errors":form.errors},400
+
+#settle a trip
+#changed trip detail for the user to settled and set settled date
+#change between user expenses for that user and all existing settlements to 0 owed, 0 owe
+@trip_routes.route('/<int:id>/settle',methods=['PUT'])
+@login_required
+def settlement(id):
+    trip = Trip.query.get(id)
+    if not trip:
+        return {"errors":"Trip not found"}
+    user_settlements = [relationship for relationship in trip.between_user_expenses if (relationship.user_one.id==current_user.id or relationship.user_two.id==current_user.id) and not (relationship.user_one.id==current_user.id and relationship.user_two.id==current_user.id)]
+    to_pay=[]
+    #FILTER JUST SETTLEMENTS THAT USER HAS TO PAY
+    for settlement in user_settlements:
+        # related_user= settlement.user_one.id == current_user.id ? settlement.user_two : settlement.user_one,
+        type=  "payer" if settlement.user_one.id==current_user.id and settlement.owed-settlement.owes>0  else "payee"
+        if type=='payee':
+            to_pay.append(settlement)
+
+
+    trip_detail = TripDetail.query.filter_by(user_id=current_user.id,trip_id=id).first()
+    if not trip_detail:
+        return {"errors":"Trip doesn't exist for the user"}
+    trip_detail.settled=True
+    trip_detail.settled_date= date.today()
+
+    #if user has to pay someone, those take priority in settlement
+    if len(to_pay):
+        for settlement in to_pay:
+            settlement.owed=0
+            settlement.owes=0
+        db.session.commit()
+        return {"trip":trip.to_dict()}
+    #if user doesn't, they can record all the payments that someone owes them - it's up to the related user to settle
+    else:
+        for settlement in user_settlements:
+            settlement.owed=0
+            settlement.owes=0
+        db.session.commit()
+        return {"trip":trip.to_dict()}

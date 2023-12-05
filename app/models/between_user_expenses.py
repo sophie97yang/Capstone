@@ -17,3 +17,12 @@ class BetweenUserExpense(db.Model):
     user_one = db.relationship('User', foreign_keys=[user_one_id])
     user_two = db.relationship('User', foreign_keys=[user_two_id])
     trip = db.relationship('Trip',back_populates='between_user_expenses')
+
+    def to_dict(self):
+        return {
+            "id":self.id,
+            "user_one":self.user_one.to_dict_simple(),
+            "user_two":self.user_two.to_dict_simple(),
+            "owed":self.owed,
+            "owes":self.owes
+        }
