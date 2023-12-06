@@ -10,18 +10,277 @@
 }
 
 .trip-detail-image {
-    max-width:450px;
+    width:600px;
     min-height:250px;
+    border-radius:10px;
 }
 
 .trip-details {
     display:flex;
     flex-direction:row;
-    width:800px;
+    width:950px;
     margin:0px auto;
 }
 
 .trip-detail-right {
-    background-color:rgb(231, 226, 226)
+    background-color:rgb(250, 250, 250);
+    margin:20px;
+    margin-top:80px;
+    flex-grow:1;
+    border-radius:10px;
 
+}
+
+.trip-detail-left> h2 {
+    display:flex;
+    width:950px;
+    font-size:20px;
+}
+.trip-detail-left{
+    width:600px;
+    margin:20px;
+    flex-grow:1
+}
+
+.update-trip-button {
+    position:relative;
+    top:-100px;
+    background-color:transparent;
+    color:white;
+    border-style:none;
+    font-size:30px;
+    font-weight:700;
+    cursor:pointer;
+}
+
+.update-trip-button:hover {
+    color:#57d9ae;
+}
+
+.trip-info-date {
+    position:relative;
+    top:-100px;
+    color:white;
+    left:30px
+}
+
+.trip-info-location {
+    position:relative;
+    top:-135px;
+    color:white;
+    left:400px
+}
+.trip-detail-universal {
+    height:400px
+}
+
+.invite-button-trip,.delete-button-trip {
+    position:relative;
+    bottom:500px;
+    left:450px;
+    color:white;
+    background-color:transparent;
+    border-style:none;
+    font-weight:bold;
+
+}
+
+.invite-button-trip:hover,.delete-button-trip:hover {
+    cursor:pointer;
+    color:#57d9ae;
+}
+
+.trip-detail-right h2 {
+    text-align:center;
+    padding:0px 50px;
+    display:inline-block;
+
+}
+.group-detail-top {
+    display:flex;
+    align-items:center;
+
+}
+
+.group-detail-top img {
+    margin:0px 10px;
+}
+
+.group-detail-top h3 {
+    font-size:20px;
+}
+
+.group-detail-balance {
+    color:grey;
+    font-weight:300;
+    margin-top:-10px;
+    text-align:center;
+
+}
+
+.trip-detail-right li {
+    list-style-type:none;
+    border:1px solid black;
+    padding:10px;
+    margin:10px 0px;
+    border-radius:10px;
+}
+
+.trip-detail-right ul {
+    margin-left:0px;
+    padding-left:0px;
+
+}
+
+.see-more {
+    background-color:transparent;
+    border:none;
+    text-align:center;
+    width:300px;
+
+}
+
+.see-more:hover {
+    cursor:pointer;
+}
+
+.display-details {
+    display:block;
+    transition: display 1s ease-out
+}
+
+.owes {
+    color:rgb(235, 155, 6);
+}
+.is-owed {
+    color:#57d9ae;
+}
+
+.trip-toggle {
+    padding:10px;
+}
+.trip-toggle a {
+    margin:10px;
+    width:70px;
+    font-size:20px;
+}
+.add-expense-button {
+    margin:10px;
+    width:150px;
+    height:50px;
+    border-radius:20px;
+    border-style:none;
+    background-color:rgb(234, 152, 0);
+    padding:10px;
+    margin-left:30px;
+}
+
+.settle-up-button {
+    margin:10px;
+    width:150px;
+    height:50px;
+    border-radius:20px;
+    border-style:none;
+    background-color:#57d9ae;
+    padding:10px;
+    margin-left:30px;
+}
+.add-expense-button:hover {
+    cursor:pointer;
+    background-color:#57d9ae
+}
+
+.settle-up-button:hover {
+    cursor:pointer;
+    background-color:rgb(234, 152, 0);
+}
+
+#year-expense-detail {
+    background-color:rgb(207, 205, 205);
+    padding:10px;
+    padding-left:30px;
+    border-radius:10px;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+    margin-top:0px;
+    margin-bottom:0px;
+    font-size:20px;
+    font-weight:300;
+}
+
+.yearly_expenses {
+    border:1px solid grey;
+    border-radius:10px;
+
+}
+
+.monthly_expenses {
+    border:1px solid grey;
+    border-radius:10px;
+    border-top-right-radius: 0px;
+    border-top-left-radius: 0px;
+    margin-top:0px;
+    padding:20px;
+
+}
+.monthly_expenses>h4 {
+    font-size:20px;
+    font-weight:300;
+    margin-bottom:5px;
+    margin-left:10px;
+}
+
+.expense-detail {
+    display:flex;
+    flex-direction:row;
+    justify-content: space-evenly;
+    align-items:center;
+    text-align:center;
+    border:1px solid grey;
+    margin:0px;
+}
+
+.expense-date {
+    font-size:20px;
+}
+
+.expense-detail a{
+    color:black;
+    font-size:20px;
+    font-weight:300;
+}
+.expense-detail a:hover {
+    color:#57d9ae;
+}
+.expense-detail img {
+    border-radius:5px;
+    width:75px;
+}
+
+.expense-detail h4 {
+    max-width:100px;
+}
+
+.grey-color {
+    color:grey;
+    font-size:18px;
+}
+
+.expense-price {
+    color:black;
+    font-weight:bold;
+    font-size:25px;
+}
+.green-color {
+    color:#57d9ae;
+    font-weight:bold;
+    font-size:25px;
+}
+.orange-color {
+    color:rgb(221, 145, 4);
+    font-weight:bold;
+    font-size:25px;
+}
+.payer-details,.you-details {
+    width:120px;
 }

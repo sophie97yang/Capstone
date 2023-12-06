@@ -93,7 +93,7 @@ console.log(bookings)
                             <h3>
                                 These places are waiting for you...
                             </h3>
-                            <h4>Access your upcoming trips here</h4>
+                            <h4>Access your past and upcoming trips here</h4>
                             <div className='landing-user-trips'>
                             {
                                 Object.values(user.trips).map(trip => (
@@ -108,7 +108,7 @@ console.log(bookings)
                             </div>
                         </>  :
                         <>
-                            <h3>You have no upcoming trips...</h3>
+                            <h3>You have not created or have been invited to any trips...</h3>
                             <h4>Unlock the potential of SplitTrip by <Link to='trips/new' id='create-trip-link'>creating a trip</Link>.</h4>
 
                         </>
