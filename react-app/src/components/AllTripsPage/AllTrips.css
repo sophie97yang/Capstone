@@ -2,6 +2,11 @@
     max-width:450px;
     min-height:250px;
 }
+.my_trips-left {
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+}
 
 .invite-modal {
     max-height:600px;
@@ -20,21 +25,123 @@
 .individual-trip {
     border:1px black solid;
     padding:20px;
-    width:800px;
+    width:950px;
     margin-bottom:20px;
     border-radius: 10px;
+    display:flex;
+}
+
+.individual-trip img{
+    border-radius:10px;
+    margin-right:20px;
+
+}
+
+.countdown {
+    position:relative;
+    color:white;
+    font-weight:bold;
+    top:-60px;
+    left:20px;
+    height:0px;
 }
 
 .all-trips-buttons{
-    margin-bottom:20px;
+    margin:0px 30px;
     display:flex;
     justify-content: space-between;
 }
 
 .breadcrumb-container {
     display:flex;
-    width:950px
+    width:950px;
+    font-size:20px;
+    margin-bottom:0px;
 }
 .breadcrumb {
     align-self: flex-start;
+
+}
+
+.all-trips {
+    width:950px;
+}
+
+.all-trips-buttons button {
+    margin:10px;
+    width:150px;
+    height:50px;
+    border-radius:20px;
+    border-style:none;
+    background-color:rgb(242, 237, 237);
+    padding:10px;
+    margin-left:30px;
+
+}
+
+.all-trips-buttons button:hover {
+    background-color:#57D9AE;
+    transition: background-color 0.5s
+}
+
+.trip-option-button {
+    position:relative;
+    background-color:transparent;
+    color:white;
+    font-weight:bold;
+    left:-60px;
+    top:5px;
+    border-style:none;
+
+}
+
+.trip-option-button:hover {
+    cursor:pointer;
+}
+
+.trip-options {
+    position:absolute;
+    background-color:white;
+    border:1px solid black;
+    border-radius:10px;
+}
+
+.trip-options li {
+    list-style-type: none;
+}
+
+.my_trips-right a {
+    color:black;
+}
+
+.my_trips-right a:hover {
+    color:#57D9AE;
+}
+
+
+.trip-options button {
+    width:100px;
+    height:30px;
+    border-radius:20px;
+    border-style:none;
+    background-color:rgb(242, 237, 237);
+    margin:10px;
+    cursor:pointer;
+
+}
+
+.action-buttons button {
+    width:150px;
+    height:50px;
+    border-radius:20px;
+    border-style:none;
+    background-color:rgb(242, 163, 18);
+    padding:10px;
+
+}
+
+.action-buttons button:hover {
+    background-color:#57D9AE;
+    transition: background-color 0.5s;
+    cursor:pointer;
 }
