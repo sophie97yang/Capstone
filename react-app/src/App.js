@@ -10,6 +10,7 @@ import CreateTripForm from "./components/CreateTripForm";
 import TripDetails from "./components/TripDetailsPage";
 import ExpenseDetail from "./components/ExpenseDetails";
 import LandingPage from "./components/LandingPage";
+import Explore from "./components/Explore";
 
 function App() {
   const dispatch = useDispatch();
@@ -28,6 +29,9 @@ function App() {
           </Route>
           <Route path="/signup">
             <SignupFormPage />
+          </Route>
+          <Route path='/explore/:city'>
+            <Explore />
           </Route>
           <Route path='/trips/new'>
             <CreateTripForm />

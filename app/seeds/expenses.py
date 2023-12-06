@@ -99,7 +99,7 @@ def seed_expenses(users,trips):
 
 def undo_expenses():
     if environment == "production":
-        db.session.execute(f"TRUNCATE table {SCHEMA}.users RESTART IDENTITY CASCADE;")
+        db.session.execute(f"TRUNCATE table {SCHEMA}.expenses RESTART IDENTITY CASCADE;")
     else:
         db.session.execute(text("DELETE FROM expense_update_details"))
         db.session.execute(text("DELETE FROM expense_details"))
