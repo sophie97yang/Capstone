@@ -56,42 +56,44 @@ const Expense = ({trip,group_balances,total_info}) => {
             <OpenModalButton
                      buttonText="Add Expense"
                      modalComponent={<AddExpenseForm trip={trip}/>}
+                     className={"add-expense-button"}
                  />
             <OpenModalButton
                      buttonText="Settle Up"
                      //userExpenses: expenses that the user owes in the trip
                      //expensesOwn:expenses that the user has paid and owns
                      modalComponent={<SettleUp group_balances={group_balances} total_info={total_info} trip={trip} />}
+                     className={"settle-up-button"}
                  />
             </div>
 
             {
                 Object.keys(expense_by_year).map(year => (
                     <div key={year} className='yearly_expenses'>
-                        <h4>{year}</h4>
+                        <h4 id="year-expense-detail">{year}</h4>
                         {
                              Object.keys(expense_by_year[year]).map(month => (
                                 <div key={month} className='monthly_expenses'>
-                                <h4>{month}</h4>
+                                <h4>{month.toUpperCase()}</h4>
                                 {
                                     expense_by_year[year][month].map(expense => (
                                         <div key={expense.id} className='expense-detail'>
-                                            <p>{month} {new Date(expense.expense_date).getDate()}</p>
+                                            <p className='expense-date'>{month.toUpperCase().slice(0,3)} {new Date(expense.expense_date).getDate()}</p>
                                             <img src={category_images[expense.category]} alt={expense.category}></img>
                                             <h4><Link to={`/trips/${trip.id}/expenses/${expense.id}`}>{expense.name}</Link></h4>
 
 
-                                            <div>
-                                            {user.id===expense.payer.id ? <p> You paid </p> : <p>{expense.payer.first_name} {expense.payer.last_name} paid</p>}
-                                            <p>$ {expense.total.toFixed(2)}</p>
+                                            <div className='payer-details'>
+                                            {user.id===expense.payer.id ? <p className='grey-color'> You paid </p> : <p className='grey-color'>{expense.payer.first_name} {expense.payer.last_name} paid</p>}
+                                            <p className='expense-price'>$ {expense.total.toFixed(2)}</p>
                                             </div>
 
 
-                                         <div>
-                                           {user.id===expense.payer.id ? <p> You lent </p> : <>{ user_expense_detail[expense.id].id ? <p>{expense.payer.first_name} lent</p>: 'not involved' }</>}
+                                         <div className='you-details'>
+                                           {user.id===expense.payer.id ? <p className='grey-color'> You lent </p> : <>{ user_expense_detail[expense.id].id ? <p className='grey-color'>{expense.payer.first_name} lent you</p>: <p className='grey-color'>not involved</p> }</>}
 
-                                           {user.id===expense.payer.id ? <p>{user_expense_detail[expense.id].id ? `$ ${(expense.total-user_expense_detail[expense.id].price).toFixed(2)}`: `$ ${expense.total.toFixed(2)}`}</p>
-                                           : <p>{user_expense_detail[expense.id].id ? `$ ${user_expense_detail[expense.id].price.toFixed(2)}`:''}</p>}
+                                           {user.id===expense.payer.id ? <p className='green-color'>{user_expense_detail[expense.id].id ? `$ ${(expense.total-user_expense_detail[expense.id].price).toFixed(2)}`: `$ ${expense.total.toFixed(2)}`}</p>
+                                           : <p className='orange-color'>{user_expense_detail[expense.id].id ? `$ ${user_expense_detail[expense.id].price.toFixed(2)}`:''}</p>}
                                            </div>
                                         </div>
                                     ))

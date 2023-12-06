@@ -1,6 +1,7 @@
 import {useParams} from 'react-router-dom';
 import {useSelector} from 'react-redux';
 import { Link,useHistory } from 'react-router-dom';
+import {useState} from 'react';
 import OpenModalButton from '../OpenModalButton';
 import InviteOthers from '../AllTripsPage/InviteOthersModal';
 import UpdateTripModal from '../UpdateTripForm/Modal';
@@ -13,6 +14,7 @@ const TripDetails = ({type}) => {
     const {id} = useParams();
     const user = useSelector(state=>state.session.user);
     const history=useHistory();
+    const [hidden,setHidden] = useState('hidden')
     let trip_found;
 
     user?.trips && ( Object.values(user?.trips).forEach(trip=> {
@@ -81,23 +83,26 @@ const TripDetails = ({type}) => {
             <div className='trip-detail-universal'>
            <img src={trip_details.image ? trip_details.image : images[choice] } alt={trip_details.name} className='trip-detail-image'></img>
 
-           <OpenModalButton modalComponent={<UpdateTripModal trip={trip_found}/>} buttonText={`${trip_details.name}`} />
+           <OpenModalButton modalComponent={<UpdateTripModal trip={trip_found}/>} buttonText={`${trip_details.name}`} className='update-trip-button' />
 
-            <p><i className="fa-solid fa-calendar-day"/> {new Date(trip_details.start_date).toLocaleDateString('en-US',options)} - {new Date(trip_details.end_date).toLocaleDateString('en-US',options)}</p>
-            <p><i className="fa-solid fa-location-dot"/> {trip_details.location[0]}, {trip_details.location[1]}</p>
+            <p className="trip-info-date"><i className="fa-solid fa-calendar-day"/> {new Date(trip_details.start_date).toLocaleDateString('en-US',options)} - {new Date(trip_details.end_date).toLocaleDateString('en-US',options)}</p>
+            <p className="trip-info-location"><i className="fa-solid fa-location-dot"/> {trip_details.location[0]}, {trip_details.location[1]}</p>
 
-            <i className="fa-solid fa-user-plus"/>
+            <i className="fa-solid fa-user-plus invite-button-trip"/>
             <OpenModalButton
               buttonText="Invite"
-              modalComponent={<InviteOthers tripId={trip_found.id}/>}
+              modalComponent={<InviteOthers tripId={trip_found.id}
+              />}
+              className='invite-button-trip'
             />
 
            { trip_found.creator ?
            <>
-            <i className="fa-solid fa-trash-can"/>
+            <i className="fa-solid fa-trash-can delete-button-trip"/>
             <OpenModalButton
               buttonText="Delete"
               modalComponent={<DeleteModal trip={trip_found} />}
+              className="delete-button-trip"
             />
             </>
             :
@@ -105,8 +110,9 @@ const TripDetails = ({type}) => {
           }
             </div>
 
-            <div>
+            <div className="trip-toggle">
                 <Link to={`/trips/${id}/itineraries`} className={type==='itinerary' ? 'td-active' : 'td-passive'}>Itinerary</Link>
+                <span> | </span>
                 <Link to={`/trips/${id}/expenses`}  className={type==='expense' ? 'td-active' : 'td-passive'}>Expenses</Link>
             </div>
             {
@@ -121,13 +127,26 @@ const TripDetails = ({type}) => {
                     type==='expense' ?
                     <div>
                         <h2>Group Balances</h2>
+                        <button className="see-more"
+                                onClick={(e)=> {
+                                    e.preventDefault();
+                                    if (hidden==="hidden") {
+                                        setHidden("display-details")
+                                    } else {
+                                        setHidden("hidden")
+                                    }
+                                }}
+                        > {hidden==="hidden" ?<i className="fa-solid fa-angle-down fa-2xl"></i> : <i className="fa-solid fa-angle-up fa-2xl"></i>} </button>
                         {
                             trip_details.users.map(user=> (
                                 <div key={user.user.id}>
+                                <div className='group-detail-top'>
+                                <img src='https://s3.amazonaws.com/splitwise/uploads/user/default_avatars/avatar-teal22-100px.png' alt='profile' className='expense-profile'></img>
                                 <h3>{user.user.first_name} {user.user.last_name}</h3>
-                               {total_info[user.user.id] && total_info[user.user.id]!==0 ? <h4>{(total_info[user.user.id] >0 ? `gets back $ ${total_info[user.user.id].toFixed(2)}`: `owes $ ${Math.abs(total_info[user.user.id].toFixed(2))}`)}</h4>: <h4>Settled Up</h4>}
+                                </div>
+                               {total_info[user.user.id] && total_info[user.user.id]!==0 ? <h4 className='group-detail-balance'>{(total_info[user.user.id] >0 ? <span className='is-owed'>{`gets back $ ${total_info[user.user.id].toFixed(2)}`}</span>: <span className='owes'>{`owes $ ${Math.abs(total_info[user.user.id].toFixed(2))}`}</span>)}</h4>: <h4 className='group-detail-balance'>Settled Up</h4>}
                                 { settled[user.user.id] ?
-                                    <ul>
+                                    <ul className={hidden}>
                                         {
                                             settled[user.user.id].map(settlement => (
                                                 <li key={settlement.id}>  {user.user.first_name} {user.user.last_name[0]} is settled up with {settlement.user.first_name} {settlement.user.last_name[0]}. </li>
@@ -137,11 +156,11 @@ const TripDetails = ({type}) => {
                                     <></>
                                 }
                                 {
-                                     <ul>
+                                     <ul className={hidden}>
                                    {group_balances[user.user.id] ? group_balances[user.user.id].map(detail => (
                                     <div key={detail.id}>
                                     { detail.type!=='settled' ?
-                                       <li>
+                                       <li className={detail.type==='payee' ? "owes" : "is-owed"}>
                                         {user.user.first_name} {user.user.last_name[0]}. {detail.type==='payee' ? "owes" : "is owed"} ${detail.settlement} {detail.type==='payee' ? "to" : "by"} {detail.user.first_name}  {detail.user.last_name[0]}.
                                        </li> :<></>
 
