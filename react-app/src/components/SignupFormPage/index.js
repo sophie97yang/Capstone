@@ -5,6 +5,7 @@ import { signUp } from "../../store/session";
 import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from "../LoginFormModal";
 import './SignupForm.css';
+import logo from '../../assets/images/logo-signup.png'
 
 function SignupFormPage() {
   const dispatch = useDispatch();
@@ -66,18 +67,20 @@ function SignupFormPage() {
   };
 
   return (
-    <>
-      <h1>INTRODUCE YOURSELF</h1>
-      <p>Already a member?<OpenModalButton
+    <div className='sign-up-page'>
+      <h1>Introduce Yourself.</h1>
+      <p className='redirection'>Already a member?<OpenModalButton
               buttonText="Log In"
               onButtonClick={()=> {history.push('/')}}
               modalComponent={<LoginFormModal />}
             />
         </p>
+      <div className='signup-layout'>
+      <img src={logo} alt='owl'></img>
       <form onSubmit={handleSubmit}>
 
         <div id='signup_first-half'>
-         <h2> Hi there! My name is </h2>
+         <h2> Hi there! My name is... </h2>
 
           <label>
             First Name
@@ -100,9 +103,9 @@ function SignupFormPage() {
          </label>
         </div>
 
-        <div id='signup-second_half' className={!hidden ? '':'hidden'}>
+        <div id='signup-second_half' className={!hidden ? 'block':'hidden'}>
         <div>
-          <h2>I'm joining from</h2>
+          <h2>I'm joining from...</h2>
 
         <label>
             City
@@ -174,9 +177,9 @@ function SignupFormPage() {
         </label>
         </div>
 
-
+        <h2> This is how to contact me ... </h2>
         <label>
-          <h2> This is my email address</h2>
+          Email
           <input
             type="text"
             value={email}
@@ -185,8 +188,9 @@ function SignupFormPage() {
           {errors.email ? <p className='errors'>{errors.email}</p>: <p className='errors'></p>}
         </label>
 
+        <h2> This is my password ... </h2>
         <label>
-        <h2> This is my password</h2>
+          Password
           <input
             type="password"
             value={password}
@@ -205,11 +209,12 @@ function SignupFormPage() {
         </label>
         {errors.confirmPassword ? <p className='errors'>{errors.confirmPassword}</p>: <p className='errors'></p>}
 
-        <button type="submit">Sign Up</button>
+        <button type="submit" className='action-button-ls'>Sign Up</button>
 
         </div>
       </form>
-    </>
+      </div>
+    </div>
   );
 }
 

@@ -41,19 +41,21 @@ function ProfileButton({ user }) {
 
   return (
     <>
-      <button onClick={openMenu}>
-        <i className="fas fa-user-circle" />
+      <button onClick={openMenu} className='profile-button'>
+        <i className="fas fa-user-circle fa-2xl" />
       </button>
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
           <>
-            <li>Hi {user.first_name}!</li>
+            <li id='user-info'>Hi {user.first_name}!</li>
             <li><button onClick={(e)=> {
               e.preventDefault();
               history.push('/trips');
               closeMenu();
             }}>Trips</button></li>
+
             <li>Bookings</li>
+
             <li>
               <button onClick={handleLogout}>Log Out</button>
             </li>

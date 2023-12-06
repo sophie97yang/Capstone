@@ -9,7 +9,7 @@ import AllTrips from "./components/AllTripsPage";
 import CreateTripForm from "./components/CreateTripForm";
 import TripDetails from "./components/TripDetailsPage";
 import ExpenseDetail from "./components/ExpenseDetails";
-import LandingPage from "./components/LandingPage";
+import LandingPage from "./components/LandingPage/LandingPage";
 import Explore from "./components/Explore";
 
 function App() {
@@ -52,7 +52,7 @@ function App() {
           <h2>404 Not Found</h2>
         </Route>
           <Route path='/'>
-            <LandingPage />
+            <LandingPage isLoaded={isLoaded}/>
           </Route>
         </Switch>
 

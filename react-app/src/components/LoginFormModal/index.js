@@ -39,17 +39,18 @@ function LoginFormModal() {
   }
 
   return (
-    <div id='login-modal'>
+    <div id='login-modal' className='login-page'>
       <h1>Welcome back.</h1>
-      <img src={logo} alt='logo' className="logo"></img>
-      <p>Not a member yet? <OpenModalButton
+      <p className='redirection'>Not a member yet? <OpenModalButton
               buttonText="Sign Up"
               onButtonClick={()=> {history.push('/')}}
               modalComponent={<SignupFormModal />}
             />
       </p>
-
+      <div className="login-layout">
+      <img src={logo} alt='logo' className="logo"></img>
       <form onSubmit={handleSubmit}>
+      <h2>Log in to access the best of SplitTrip</h2>
         <label>
           Email
           <input
@@ -68,12 +69,16 @@ function LoginFormModal() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
+            id="password-input"
           />
           {errors.password ? <p className='errors'>{errors.password}</p>: <p className='errors'></p>}
         </label>
-        <button type="submit">Log In</button>
-        <button onClick={handleDemo}>Log in as Demo User</button>
+        <div className="action-buttons">
+        <button type="submit" className='action-button-ls'>Log In</button>
+        <button onClick={handleDemo}className='action-button-ls'>Log in as Demo User</button>
+        </div>
       </form>
+      </div>
     </div>
   );
 }
