@@ -1,0 +1,91 @@
+#login-page {
+    width:950px;
+    margin:20px auto;
+    padding:20px;
+    border-radius:10px;
+    border:1px solid #57D9AE;
+
+}
+
+.login-layout {
+    display:flex;
+}
+
+#login-page img {
+    width:400px;
+    max-height:400px;
+}
+
+.redirection {
+    color:grey;
+    font-style: italic;
+    margin-left:30px;
+}
+.redirection button {
+    background-color:white;
+    border-style:none;
+    font-size:16px;
+    color:rgb(232, 151, 0);
+    cursor:pointer;
+}
+.redirection button:hover {
+    color:#57D9AE
+}
+#login-page>h1 {
+    margin-bottom:10px;
+    margin-left:30px;
+}
+
+
+#login-page input {
+    width:250px;
+    height:30px;
+    border-radius:10px;
+    border:1px solid grey;
+    margin-left:20px;
+    padding-left:10px;
+}
+
+#login-page input:hover {
+    border-color:#57D9AE;
+    border-style:outset;
+}
+
+.action-button-ls {
+    width:100px;
+    height:50px;
+    border-radius:10px;
+    border-style:none;
+    background-color:rgb(255, 149, 0);
+    padding:10px;
+    margin:10px;
+    margin-left:30px;
+
+}
+
+#login-page label {
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    margin:20px;
+}
+
+.action-button-ls:hover {
+    background-color:#57D9AE;
+    transition: background-color 0.5s
+}
+#login-page form {
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+}
+
+.action-buttons {
+    display:flex;
+    align-items:center;
+}
+
+.label-text {
+    width:75px;
+}

@@ -82,7 +82,7 @@ def seed_trips(users):
 
 def undo_trips():
     if environment == "production":
-        db.session.execute(f"TRUNCATE table {SCHEMA}.users RESTART IDENTITY CASCADE;")
+        db.session.execute(f"TRUNCATE table {SCHEMA}.trips RESTART IDENTITY CASCADE;")
     else:
         db.session.execute(text("DELETE FROM between_user_expenses"))
         db.session.execute (text("DELETE FROM trip_details"))

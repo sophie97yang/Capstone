@@ -2,6 +2,7 @@ from flask.cli import AppGroup
 from .users import seed_users, undo_users
 from .trips import seed_trips,undo_trips
 from .expenses import seed_expenses,undo_expenses
+from .bookings import seed_bookings,undo_bookings
 
 from ..models import db, environment, SCHEMA
 
@@ -23,6 +24,7 @@ def seed():
     users = seed_users()
     trips = seed_trips(users)
     seed_expenses(users,trips)
+    seed_bookings()
 
     # Add other seed functions here
 
@@ -30,6 +32,7 @@ def seed():
 # Creates the `flask seed undo` command
 @seed_commands.command('undo')
 def undo():
+    undo_bookings()
     undo_expenses()
     undo_trips()
     undo_users()

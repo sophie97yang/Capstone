@@ -3,7 +3,10 @@ import { useDispatch } from "react-redux";
 import {useHistory} from 'react-router-dom';
 import { useModal } from "../../context/Modal";
 import { signUp } from "../../store/session";
+import OpenModalButton from "../OpenModalButton";
+import LoginFormModal from "../LoginFormModal";
 import "./SignupForm.css";
+import logo from '../../assets/images/logo-signup.png'
 //this modal will get accesssed ONLY if member comes from login page
 function SignupFormModal() {
 	const dispatch = useDispatch();
@@ -57,11 +60,19 @@ function SignupFormModal() {
 	};
 
 	return (
-		<>
-		<h1>INTRODUCE YOURSELF</h1>
+		<div className='sign-up-page' id='modal'>
+		<div>
+		<h1>Introduce Yourself.</h1>
+		<p className='redirection'>Already a member?<OpenModalButton
+              buttonText="Log In"
+              onButtonClick={()=> {history.push('/')}}
+              modalComponent={<LoginFormModal />}
+            />
+        </p>
+		<img src={logo} alt='owl'></img>
+		</div>
 		<form onSubmit={handleSubmit} id='signup-modal'>
-		   <h2> Hi there! My name is </h2>
-
+		   <h2> Hi there! My name is... </h2>
 			<label>
 			  First Name
 			<input
@@ -83,7 +94,7 @@ function SignupFormModal() {
 		   </label>
 
 		  <div>
-			<h2>I'm joining from</h2>
+			<h2>I'm joining from ...</h2>
 
 		  <label>
 			  City
@@ -155,9 +166,9 @@ function SignupFormModal() {
 		  </label>
 		  </div>
 
-
+		  <h2> This is how to contact me...</h2>
 		  <label>
-			<h2> This is my email address</h2>
+			Email
 			<input
 			  type="text"
 			  value={email}
@@ -166,8 +177,9 @@ function SignupFormModal() {
 			{errors.email ? <p className='errors'>{errors.email}</p>: <p className='errors'></p>}
 		  </label>
 
+		  <h2> This is my password...</h2>
 		  <label>
-		  <h2> This is my password</h2>
+			Password
 			<input
 			  type="password"
 			  value={password}
@@ -186,9 +198,9 @@ function SignupFormModal() {
 		  </label>
 		  {errors.confirmPassword ? <p className='errors'>{errors.confirmPassword}</p>: <p className='errors'></p>}
 
-		  <button type="submit">Sign Up</button>
+		  <button type="submit" className='action-button-ls'>Sign Up</button>
 		</form>
-	  </>
+	  </div>
 	);
   }
 

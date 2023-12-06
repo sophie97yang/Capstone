@@ -37,19 +37,23 @@ function LoginFormPage() {
   }
 
   return (
-    <div id='login-modal'>
+    <div id='login-page'>
       <h1>Welcome back.</h1>
-      <img src={logo} alt='logo' className="logo"></img>
-      <p>Not a member yet? <OpenModalButton
+      <p className="redirection">Not a member yet? <OpenModalButton
               buttonText="Sign Up"
               onButtonClick={()=> {history.push('/')}}
               modalComponent={<SignupFormModal />}
             />
       </p>
 
+      <div className="login-layout">
+      <img src={logo} alt='logo' className="logo"></img>
       <form onSubmit={handleSubmit}>
+        <h2>Log In to access the best of SplitTrip</h2>
         <label>
+          <p className="label-text">
           Email
+          </p>
           <input
             type="text"
             value={email}
@@ -60,7 +64,9 @@ function LoginFormPage() {
         </label>
 
         <label>
+          <p className="label-text">
           Password
+          </p>
           <input
             type="password"
             value={password}
@@ -69,9 +75,12 @@ function LoginFormPage() {
           />
           {errors.password ? <p className='errors'>{errors.password}</p>: <p className='errors'></p>}
         </label>
-        <button type="submit">Log In</button>
-        <button onClick={handleDemo}>Log in as Demo User</button>
+        <div className='action-buttons'>
+        <button type="submit" className='action-button-ls'>Log In</button>
+        <button onClick={handleDemo} className='action-button-ls'>Log In as Demo User</button>
+        </div>
       </form>
+      </div>
     </div>
   );
 }

@@ -4,35 +4,39 @@ import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import './Navigation.css';
 import logo from '../../assets/images/logo-nav.png';
+import SearchComponent from '../LandingPage/SearchComponent';
 
 function Navigation({ isLoaded }){
 	const sessionUser = useSelector(state => state.session.user);
 	const history = useHistory()
 	return (
 		<nav>
-			<li>
+			<li className='logo-nav'>
 				<NavLink exact to="/"><img src={logo} alt='logo'/></NavLink>
 			</li>
-			{isLoaded && (
+			<li className='search-bar-nav'>
+					<SearchComponent />
+			</li>
+			{isLoaded &&
 				sessionUser?
-				<li>
+				<li className='action-button-nav'>
 					<ProfileButton user={sessionUser} />
 				</li> :
 				<div className='auth-action-buttons'>
-				<li>
+				<li className='action-button-nav'>
 					<button onClick={(e)=> {
               			e.preventDefault();
               			history.push('/login');
-            		}}>Log in</button>
+            		}} id='login-button'>Log in</button>
 				</li>
-				<li>
+				<li className='action-button-nav'>
 					<button onClick={(e)=> {
               			e.preventDefault();
               			history.push('/signup');
-            		}}>Sign Up</button>
+            		}}id='signup-button'>Sign Up</button>
 				</li>
 				</div>
-			)}
+			}
 
 		</nav>
 	);

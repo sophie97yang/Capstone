@@ -9,7 +9,8 @@ import AllTrips from "./components/AllTripsPage";
 import CreateTripForm from "./components/CreateTripForm";
 import TripDetails from "./components/TripDetailsPage";
 import ExpenseDetail from "./components/ExpenseDetails";
-import LandingPage from "./components/LandingPage";
+import LandingPage from "./components/LandingPage/LandingPage";
+import Explore from "./components/Explore";
 
 function App() {
   const dispatch = useDispatch();
@@ -28,6 +29,9 @@ function App() {
           </Route>
           <Route path="/signup">
             <SignupFormPage />
+          </Route>
+          <Route path='/explore/:city'>
+            <Explore />
           </Route>
           <Route path='/trips/new'>
             <CreateTripForm />
@@ -48,7 +52,7 @@ function App() {
           <h2>404 Not Found</h2>
         </Route>
           <Route path='/'>
-            <LandingPage />
+            <LandingPage isLoaded={isLoaded}/>
           </Route>
         </Switch>
 
