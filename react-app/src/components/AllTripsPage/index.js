@@ -59,7 +59,7 @@ const AllTrips = () => {
 
     return (
         <div className='all-trips'>
-            <h2 className='breadcrumb-container'><Link to='/' className='breadcrumb'>Home</Link> {`>`} My Trips</h2>
+            <h2 className='breadcrumb-container'><Link to='/' className='breadcrumb'>Home </Link> {`  >`}  My Trips</h2>
             <div className='all-trips-buttons'>
                 <button onClick={(e)=> {
                     e.preventDefault();
@@ -74,7 +74,7 @@ const AllTrips = () => {
             <div key={trip.id} className='individual-trip'>
             <div className='my_trips-left'>
             <img src={trip.trip.image?trip.trip.image:images[choice]} alt={trip.trip.name}></img>
-            {trip.until>0 ? <p>In {trip.until} days</p>:<p></p>}
+            {trip.until>0 ? <p className='countdown'>In {trip.until} days</p>:<p className='countdown'>Past Trip</p>}
             </div>
             <div className='my_trips-right'>
                 <TripOptions trip={trip} />

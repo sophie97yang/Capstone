@@ -98,8 +98,10 @@ console.log(bookings)
                             {
                                 Object.values(user.trips).map(trip => (
                                     <div key={trip.id} className='populate-landing-page'>
+                                        <Link to={`/trips/${trip.trip.id}/itineraries`}>
                                         <img src={trip.trip.image ? trip.trip.image : "https://www.travelandleisure.com/thmb/p1Dh0uzZPUk8lQQq2oMhVMUQESk=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/lofoten-islands-norway-MOSTBEAUTIFUL0921-cd0b88063a8b4a26871a51764db0fcae.jpg"}></img>
-                                        <Link to={`/trips/${trip.trip.id}/itineraries`}>Your trip to {trip.trip.location[0]}</Link>
+                                        <h4>Your trip to {trip.trip.location[0]}</h4>
+                                        </Link>
                                     </div>
                                 ))
                             }
@@ -119,8 +121,10 @@ console.log(bookings)
                             {
                                 booking_choices.map(booking => (
                                     <div className='populate-landing-page'>
-                                        <img src={booking.image1} alt={booking.name}></img>
-                                        <Link to={`/explore/${booking.city}`}><h4>{booking.name}</h4></Link>
+                                         <Link to={`/explore/${booking.city}`}>
+                                            <img src={booking.image1} alt={booking.name}></img>
+                                            <h4>{booking.name}</h4>
+                                        </Link>
                                     </div>
                                 ))
                             }

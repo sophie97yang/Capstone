@@ -6,6 +6,7 @@
 .random-places-landing, .landing-user-trips, .explore-choices {
     display:flex;
     justify-content:center;
+    flex-wrap:wrap;
 }
 
 .landing-user-trips>div {

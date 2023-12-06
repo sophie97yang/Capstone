@@ -32,8 +32,8 @@ function TripOptions({trip}) {
 
   return (
     <>
-      <button onClick={openMenu}>
-        <i className="fa-solid fa-ellipsis"/>
+      <button onClick={openMenu} className='trip-option-button'>
+        <i className="fa-solid fa-ellipsis fa-2xl"/>
       </button>
       <ul className={ulClassName} ref={ulRef}>
         <li>
