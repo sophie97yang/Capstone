@@ -81,7 +81,8 @@
 
 .all-trips-buttons button:hover {
     background-color:#57D9AE;
-    transition: background-color 0.5s
+    transition: background-color 0.5s;
+    cursor:pointer;
 }
 
 .trip-option-button {
@@ -143,5 +144,167 @@
 .action-buttons button:hover {
     background-color:#57D9AE;
     transition: background-color 0.5s;
+    cursor:pointer;
+}
+
+.owe {
+    color:rgb(224, 147, 4);
+}
+
+.owed {
+    color:#57D9AE;
+}
+
+.all-trips button:hover {
+    cursor:pointer;
+}
+
+
+.invite-modal img{
+    width:250px;
+}
+
+.close-modal {
+    background-color:white;
+    border-style:none;
+    border-radius:10px;
+    padding:20px;
+    position:sticky;
+}
+
+.close-modal:hover {
+    cursor:pointer;
+    color:#57D9AE;
+}
+
+.invite-modal-top,.collaborators {
+    margin-left:50px;
+    margin-right:50px;
+}
+.invite-modal form {
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    width:400px;
+    margin:0px auto;
+}
+
+.invite-modal label {
+    margin-right:20px;
+}
+
+.invite-modal-form div {
+    margin:10px;
+}
+
+#collaborator-one {
+    margin-bottom:-28px;
+}
+
+.invite-modal input {
+    width:200px;
+    height:30px;
+    border-radius:10px;
+    border:1px solid grey;
+    padding-left:10px;
+    padding-right:10px;
+}
+
+.action-button-io {
+    width:100px;
+    height:50px;
+    border-radius:10px;
+    border-style:none;
+    background-color:#57D9AE;
+    padding:10px;
+    margin-top:20px;
+}
+
+.action-button-io:hover {
+    cursor:pointer;
+}
+
+.invite-modal-top {
+    display:flex;
+    flex-direction:column;
+}
+
+.invite-left h2 {
+    font-size:30px
+}
+
+.invite-left {
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+
+
+}
+.invite-right {
+    padding:25px;
+    padding-left:30px;
+    padding-top:10px;
+    font-style: italic;
+}
+
+.collaborators {
+    border-top:1px solid grey;
+}
+
+.collaborators h3 {
+    padding:10px 25px 0px 30px;
+    font-style:italic;
+}
+
+.collaborators li {
+    list-style-type: none;
+}
+
+.collaborators-detail {
+    display:flex;
+    justify-content:center;
+}
+
+.user-collaborator {
+    font-weight:bold;
+    font-size:16px;
+}
+
+.owner,.editor {
+    padding-left:5px;
+}
+
+.owner {
+    color:#57D9AE
+}
+.editor {
+    color:rgb(222, 145, 2)
+}
+
+.success {
+    margin-left:50px;
+    margin-right:50px;
+    border:1px solid grey;
+    border-radius:10px;
+    padding:10px;
+    height:60px;
+
+}
+
+#hidden {
+    border:none;
+}
+
+.success button {
+    display:block;
+    margin:0px auto;
+    border:none;
+    border-radius:5px;
+    margin-top:5px;
+    background-color:rgb(255, 244, 240)
+}
+
+.success button:hover {
     cursor:pointer;
 }

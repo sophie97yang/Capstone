@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { createTrip } from "../../store/session";
 import { Link } from "react-router-dom";
+import logo from '../../assets/images/create-trip-logo.png';
 import './CreateTrip.css'
 
 const CreateTripForm = () => {
@@ -102,11 +103,15 @@ const CreateTripForm = () => {
       };
 
       return (
-        <>
+        <div className='create-trip'>
+          <div className='create-trip-left'>
           <h2 className="add-trip-title"> <Link to='/trips' className='breadcrumb'> My Trips </Link> {'>'} Create a Trip</h2>
-          <form className="trip-form" onSubmit={handleSubmit} encType="multipart/form-data">
+          <h2 className='ct-heading'>Let's Go Somewhere.</h2>
+          <img src={logo} alt='flying-owl'></img>
+          </div>
+          <form id="trip-form" onSubmit={handleSubmit} encType="multipart/form-data">
             <div id="create-trip_first">
-              <label>My trip shall be called...
+              <label>My trip shall be called...</label>
               <input
                 type="text"
                 placeholder="Trip Name"
@@ -115,11 +120,12 @@ const CreateTripForm = () => {
                 className=""
               />
               {errors.name ? <p className='errors'>{errors.name}</p>: <p className='errors'></p>}
-              </label>
             </div>
 
             <div id='create-trip-second_half' className={!hidden ? '':'hidden'}>
-            <label>Description
+
+            <div>
+            <label>Description </label>
               <textarea
                 type="textarea"
                 placeholder="Description of Trip (i.e.Sean and Sophie's 50th Anniversary)"
@@ -128,9 +134,10 @@ const CreateTripForm = () => {
                 className="description-field"
               />
             {errors.description ? <p className='errors'>{errors.description}</p>: <p className='errors'></p>}
-            </label>
+            </div>
 
-            <label>Destination
+            <div>
+            <label>Destination </label>
             <select value={location} onChange={(e) => setLocation(e.target.value)}>
                 <option value=''>Select a Destination</option>
                 {locations.map(location => (
@@ -138,37 +145,41 @@ const CreateTripForm = () => {
                 ))}
             </select>
             {errors.location ? <p className='errors'>{errors.location}</p>: <p className='errors'></p>}
-            </label>
+            </div>
 
-            <label>Start Date
+            <div>
+            <label>Start Date </label>
             <input
                 type="date"
                 onChange={(e)=> setStartDate(e.target.value)}
             />
             {errors.start_date ? <p className='errors'>{errors.start_date}</p>: <p className='errors'></p>}
-            </label>
-
-            <label>End Date
+            </div>
+            <div>
+            <label>End Date </label>
             <input
                 type="date"
                 onChange={(e)=> setEndDate(e.target.value)}
             />
             {errors.end_date ? <p className='errors'>{errors.end_date}</p>: <p className='errors'></p>}
-            </label>
+            </div>
 
-            <label>Image
+            <div id='image-input'>
+            <label>Image</label>
               <input
                 type="file"
                 accept="image/*"
                 onChange={(e) => setImage(e.target.files[0])}
              />
-            </label>
+             </div>
 
-            <button type="submit">Create Trip</button>
+            <div>
+            <button type="submit" className="action-button-ls">Create Trip</button>
+            </div>
             {imageLoading && <p>Loading...</p>}
            </div>
           </form>
-        </>
+        </div>
       )
 }
 

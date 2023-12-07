@@ -84,7 +84,8 @@ const AllTrips = () => {
                 <p><i className="fa-solid fa-location-dot"/> {trip.trip.location[0]}, {trip.trip.location[1]}</p>
                 </div>
                 <div className='my-trips-expenses'>
-                <p>{parseInt(trip.owe)<0 ? `You owe:$ ${-1*Number(trip.owe)}`: `You are owed:${trip.owe}` }</p> <p>You lent:${trip.lent} </p>
+                <p>{parseInt(trip.owe)<=0 ? <span className='owe'>{`You owe: $${(-1*Number(trip.owe)).toFixed(2)}`}</span>: <span className='owed'>{`You are owed: $${Number(trip.owe).toFixed(2)}`}</span> }</p>
+                <p>You lent: ${trip.lent} </p>
                 </div>
                 <div className='action-buttons'>
                 <OpenModalButton
