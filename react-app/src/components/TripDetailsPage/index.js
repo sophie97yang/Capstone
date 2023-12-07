@@ -83,7 +83,7 @@ const TripDetails = ({type}) => {
             <div className='trip-detail-universal'>
            <img src={trip_details.image ? trip_details.image : images[choice] } alt={trip_details.name} className='trip-detail-image'></img>
 
-           <OpenModalButton modalComponent={<UpdateTripModal trip={trip_found}/>} buttonText={`${trip_details.name}`} className='update-trip-button' />
+           <OpenModalButton modalComponent={<UpdateTripModal trip={trip_found}/>} buttonText={`${trip_details.name}`} className='update-trip-button' /><i className="fa-regular fa-pen-to-square update-trip-button fa-sm" id='dont-change'></i>
 
             <p className="trip-info-date"><i className="fa-solid fa-calendar-day"/> {new Date(trip_details.start_date).toLocaleDateString('en-US',options)} - {new Date(trip_details.end_date).toLocaleDateString('en-US',options)}</p>
             <p className="trip-info-location"><i className="fa-solid fa-location-dot"/> {trip_details.location[0]}, {trip_details.location[1]}</p>

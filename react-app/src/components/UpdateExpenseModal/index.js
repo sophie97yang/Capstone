@@ -144,8 +144,10 @@ function UpdateExpenseModal ({trip,expense}) {
     return (
         <div className='update-expense-modal'>
              <button onClick={closeModal} className='close-modal' id='update-trip-close'><i className="fa-solid fa-xmark fa-2xl"></i></button>
+            <div>
             <h2>Update your Expense</h2>
             <img src={logo} alt='money-owl'></img>
+            </div>
             <form className='add-expense-form'>
                 <div className='choosing-users'>
                 <p>Who is Involved?</p>
@@ -179,7 +181,7 @@ function UpdateExpenseModal ({trip,expense}) {
                         }}
                         id="multiple-users"
                         >
-                        <option value={''}>Select Users Below</option>
+                        <option value={''} disabled className='disabled-option'>Select Users Below</option>
                        {trip.trip.users.map(user =>  (
                        <option value={[user.user.id,user.user.first_name]} key={user.user.id}>{user.user.first_name} {user.user.last_name[0]}.</option>
                        ))}

@@ -55,7 +55,11 @@ function ProfileButton({ user }) {
               closeMenu();
             }}>Trips</button></li>
 
-            <li>Bookings</li>
+            <li><button onClick={(e)=> {
+              e.preventDefault();
+              history.push('/bookings');
+              closeMenu();
+            }}>Bookings</button></li>
 
             <li>
               <button onClick={handleLogout}>Log Out</button>
