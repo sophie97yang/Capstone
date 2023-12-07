@@ -4,6 +4,7 @@ import './AddExpense.css'
 import { addExpense, authenticate } from '../../store/session';
 import {useModal} from '../../context/Modal';
 import {useHistory} from 'react-router-dom';
+import logo from '../../assets/images/add-expense.png'
 
 function AddExpenseForm ({trip}) {
     const dispatch = useDispatch();
@@ -107,19 +108,28 @@ function AddExpenseForm ({trip}) {
 
     return (
         <div className='add-expense-modal'>
-            <h2>Add an Expense</h2>
+            <div>
+            <h2>Add an Expense.</h2>
+            <img src={logo} alt='money-owl'></img>
+            </div>
             <form className='add-expense-form'>
+                {/* <h3>Split expenses with anyone and everyone...</h3> */}
+
+                <div className='choosing-users'>
                 <p>Who is involved?</p>
-                <label className='keep-min'> All Users
+                <div className='keep-min'>
+                <label id='users-checkbox'> All Users  </label>
                     <input
                         type='checkbox'
                         value={allUsers}
                         defaultChecked={true}
                         onChange={()=> setDefine(!allUsers)}
+                        id='checkbox'
                     />
-                </label>
+                </div>
 
-                <label className={!allUsers ?'user-choice' : 'user-choices hidden'}> Select Users:
+               <div  className={!allUsers ?'user-choices' : 'user-choices hidden'}>
+                <label> Select Users: </label>
                     <select
                         multiple={true}
                         value={usersInvolved}
@@ -128,16 +138,20 @@ function AddExpenseForm ({trip}) {
                             const values = options.map(option => option.value);
                             setUsers(values);
                         }}
+                        id="multiple-users"
                         >
                         <option value={''}>Select Users Below</option>
                        {trip.trip.users.map(user =>  (
                        <option value={[user.user.id,user.user.first_name]} key={user.user.id}>{user.user.first_name} {user.user.last_name[0]}.</option>
                        ))}
                     </select>
-                </label>
+                </div>
+                </div>
 
+                <div>
                 <label>
                     Name
+                </label>
                 <input
                 type="text"
                 placeholder="ex. Uber to airport"
@@ -146,19 +160,22 @@ function AddExpenseForm ({trip}) {
                 className=""
               />
               {errors.name ? <p className='errors'>{errors.name}</p>: <p className='errors'></p>}
-                </label>
+              </div>
 
+                <div>
                 <label>
-                    Expense Date
+                    Expense Date</label>
                 <input
                 type="date"
                 onChange={(e)=> setExpenseDate(e.target.value)}
                 />
                 {errors.expenseDate ? <p className='errors'>{errors.expenseDate}</p>: <p className='errors'></p>}
-                </label>
+                </div>
 
+                <div>
                 <label>
                     Category
+                </label>
                 <select value={category} onChange={(e) => setCategory(e.target.value)}>
                     {categories.map(cat => (
                         <option value={cat} key={cat}>
@@ -166,21 +183,26 @@ function AddExpenseForm ({trip}) {
                         </option>
                     ))}
                 </select>
-                </label>
+                <p className='errors'></p>
+                </div>
 
 
+                <div>
                 <label>
-                    Total: $
+                    Total: ($)
+                </label>
                 <input
                 type="number"
                 onChange={(e)=> setTotal(Number(e.target.value).toFixed(2))}
-                placeholder='0.00'
+                placeholder='$0.00'
                 />
                 {errors.total ? <p className='errors'>{errors.total}</p>: <p className='errors'></p>}
-                </label>
+                </div>
 
+                <div>
                 <label>
                     Paid by you and split:
+                </label>
                 <select value={splitType} onChange={(e) => setSplitType(e.target.value)}>
                     <option value='Equal'>
                         Equally
@@ -195,15 +217,18 @@ function AddExpenseForm ({trip}) {
                     </option>
                 </select>
                 {errors.splitType ? <p className='errors'>{errors.splitType}</p>: <p className='errors'></p>}
-                </label>
+                </div>
+
                 {splitType==='Percentages' && (
-                        <div>
+                        <div className="split-type-info">
                             <p>Split by Percentage</p>
                             {
                                 allUsers ?
                                 trip.trip.users.map(user =>  (
+                                    <div className='info-details'>
                                         <label key={user.user.id} >
                                             {user.user.first_name}
+                                        </label>
                                             <input
                                             type='number'
                                             min={0}
@@ -212,11 +237,14 @@ function AddExpenseForm ({trip}) {
                                                 newInfo[user.user.id]=e.target.value
                                                 setSplitTypeInfo(newInfo)
                                             }}/>
-                                        </label>
+                                    </div>
+
                                 )):
                                 usersInvolved.map(user =>  (
+                                <div className='info-details'>
                                     <label key={user.split(',')[0]} >
                                         {user.split(',')[1]}
+                                    </label>
                                         <input
                                         type='number'
                                         min={0}
@@ -225,11 +253,11 @@ function AddExpenseForm ({trip}) {
                                             newInfo[parseInt(user.split(',')[0])]=e.target.value
                                             setSplitTypeInfo(newInfo)
                                         }}/>
-                                    </label>
+                                </div>
                             ))
                             }
                             <p>Total: {checkSplit}% </p>
-                            <p>Total: {100-checkSplit}% left </p>
+                            <p> {100-checkSplit}% left </p>
                             {errors.checkSplit ? <p className='errors'>{errors.checkSplit}</p>: <p className='errors'></p>}
                             {errors.splitTypeError ? <p className='errors'>{errors.splitTypeError}</p>: <p className='errors'></p>}
                         </div>
@@ -237,13 +265,15 @@ function AddExpenseForm ({trip}) {
                 }
 
                 {splitType==='Exact' && (
-                        <div>
+                        <div className="split-type-info">
                             <p>Split by Exact Amounts</p>
                             {
                                 allUsers ?
                                 trip.trip.users.map(user =>  (
+                                    <div>
                                         <label key={user.user.id} >
                                             {user.user.first_name}
+                                        </label>
                                             <input
                                             type='number'
                                             step={0.01}
@@ -252,11 +282,14 @@ function AddExpenseForm ({trip}) {
                                                 newInfo[user.user.id]=e.target.value
                                                 setSplitTypeInfo(newInfo)
                                             }}/>
-                                        </label>
+                                    </div>
+
                                 )):
                                 usersInvolved.map(user =>  (
+                                    <div>
                                     <label key={user.split(',')[0]} >
                                         {user.split(',')[1]}
+                                    </label>
                                         <input
                                         type='number'
                                         step={0.01}
@@ -265,11 +298,12 @@ function AddExpenseForm ({trip}) {
                                             newInfo[parseInt(user.split(',')[0])]=e.target.value
                                             setSplitTypeInfo(newInfo)
                                         }}/>
-                                    </label>
+                                    </div>
+
                             ))
                             }
                             <p>Total: ${checkSplit} </p>
-                            <p>Total: ${(total-checkSplit).toFixed(2)} left </p>
+                            <p> ${(total-checkSplit).toFixed(2)} left </p>
                             {errors.checkSplit ? <p className='errors'>{errors.checkSplit}</p>: <p className='errors'></p>}
                             {errors.splitTypeError ? <p className='errors'>{errors.splitTypeError}</p>: <p className='errors'></p>}
                         </div>
@@ -278,13 +312,17 @@ function AddExpenseForm ({trip}) {
 
 
                 <p>{splitType==='Equal' ? <>{allUsers ? `$ ${(total/trip.trip.users.length).toFixed(2)} per person`:  `$ ${(total/usersInvolved.length).toFixed(2)} per person`}</>
-                : `You get back ${0}`}</p>
+                : `You get back $ ${0}`}</p>
 
-                <button onClick={handleSubmit}>Save</button>
+                <div id='expense-action-buttons'>
+                <button onClick={handleSubmit} id='save-button'>Save</button>
                 <button onClick={e=> {
               e.preventDefault();
               closeModal()
-            }}>Cancel</button>
+            }}
+            id='cancel-button'
+            >Cancel</button>
+                </div>
 
             </form>
         </div>

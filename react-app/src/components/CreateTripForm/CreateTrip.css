@@ -9,8 +9,12 @@
     margin-bottom:0px;
 }
 
-.create-trip {
+.create-trip>div {
     display:flex;
+    margin:25px;
+    border:1px solid grey;
+    padding:20px;
+    border-radius:10px;
 }
 
 .create-trip img {

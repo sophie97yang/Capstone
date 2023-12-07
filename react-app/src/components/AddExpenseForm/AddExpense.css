@@ -1,8 +1,9 @@
 .add-expense-modal {
-    width:600px;
+    width:800px;
     min-height:600px;
-    max-height:700px;
-    overflow:scroll
+    max-height:600px;
+    overflow:scroll;
+    display:flex;
 }
 
 .add-expense-modal .hidden {
@@ -15,4 +16,143 @@
 
 .user-choice {
     height:fit-content
+}
+
+.add-expense-modal img{
+    width:300px;
+
+}
+
+.add-expense-modal>div {
+    margin:30px;
+    display:flex;
+    flex-direction:column;
+    border-right:1px solid grey;
+    /* justify-content:center;
+    align-items:center;
+} */
+}
+
+.add-expense-modal h2{
+    font-size:30px;
+}
+
+.add-expense-form {
+    margin:30px;
+    flex-grow:1;
+}
+
+.add-expense-form>h3 {
+    margin-top:30px;
+    font-size:20px;
+    text-align:center;
+
+}
+
+.add-expense-form input {
+    width:250px;
+    height:30px;
+    border-radius:10px;
+    border:1px solid grey;
+    margin-left:20px;
+    padding-left:10px;
+    padding-right:10px;
+    margin-top:10px;
+}
+
+.add-expense-form input:hover,.add-expense-form select:hover {
+    border-color:#57D9AE;
+    border-style:outset;
+}
+
+.add-expense-form select {
+    width:270px;
+    height:35px;
+    border-radius:10px;
+    border:1px solid grey;
+    margin-left:20px;
+    padding-left:10px;
+    padding-right:10px;
+    margin-top:10px;
+}
+
+#checkbox {
+    display:inline-block;
+    width:20px;
+    height:20px;
+}
+
+#users-checkbox {
+    display:inline-block;
+    margin-left:30px;
+}
+
+.keep-min {
+    height:50px;
+    display:flex;
+    align-items:center;
+
+}
+
+.user-choices {
+    margin-left:50px;
+}
+.choosing-users {
+    height:250px;
+}
+
+#multiple-users {
+    height:100px;
+    padding:10px;
+}
+
+.choosing-users p{
+    font-size:18px;
+    font-weight:bold;
+    margin-bottom:0px;
+}
+
+.add-expense-form>div {
+    display:flex;
+    flex-direction:column;
+}
+
+.split-type-info {
+    border:1px solid #57D9AE;
+    border-radius:10px;
+    padding:10px;
+}
+
+.split-type-info>p {
+    font-style:italic;
+}
+
+#save-button {
+    width:100px;
+    height:50px;
+    border-radius:10px;
+    border-style:none;
+    padding:10px;
+    background-color:rgb(255, 149, 0);
+
+}
+
+#expense-action-buttons {
+    display:flex;
+    flex-direction:row;
+
+}
+
+#cancel-button {
+    width:100px;
+    height:50px;
+    border-radius:10px;
+    border-style:none;
+    padding:10px;
+    background-color:rgb(226, 225, 225);
+    margin-left:30px;
+}
+
+#expense-action-buttons button:hover {
+    cursor:pointer;
 }

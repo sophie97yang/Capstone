@@ -104,8 +104,9 @@ const CreateTripForm = () => {
 
       return (
         <div className='create-trip'>
-          <div className='create-trip-left'>
           <h2 className="add-trip-title"> <Link to='/trips' className='breadcrumb'> My Trips </Link> {'>'} Create a Trip</h2>
+          <div>
+          <div className='create-trip-left'>
           <h2 className='ct-heading'>Let's Go Somewhere.</h2>
           <img src={logo} alt='flying-owl'></img>
           </div>
@@ -179,6 +180,7 @@ const CreateTripForm = () => {
             {imageLoading && <p>Loading...</p>}
            </div>
           </form>
+          </div>
         </div>
       )
 }
