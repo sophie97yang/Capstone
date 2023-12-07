@@ -39,7 +39,7 @@
 
 }
 
-.settle-up-modal button {
+.settle-action-buttons button {
     width:100px;
     height:50px;
     border-radius:10px;
@@ -49,7 +49,7 @@
     margin:20px;
 }
 
-.settle-up-modal button:hover {
+.settle-action-buttons button:hover {
     cursor:pointer;
 }
 

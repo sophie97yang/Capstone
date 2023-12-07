@@ -56,7 +56,7 @@ const TripDetails = ({type}) => {
            return {
             "id":relationship.id,
             "user":relationship.user_one.id===user.user.id ? relationship.user_two : relationship.user_one,
-            "type": relationship.owed===0 && relationship.owes===0 ? 'settled' : relationship.user_one.id===user.user.id && relationship.owed-relationship.owes>0 && relationship.owed-relationship.owes!==0 ? "payer" : "payee",
+            "type": relationship.owed===0 && relationship.owes===0 ? 'settled' :( relationship.user_one.id===user.user.id && relationship.owed-relationship.owes>0 && relationship.owed-relationship.owes!==0) || (relationship.user_one.id!==user.user.id && relationship.owed-relationship.owes<0 && relationship.owed-relationship.owes!==0) ? "payer" : "payee",
             "settlement":Math.abs(relationship.owed-relationship.owes).toFixed(2)
         }
          })
@@ -88,7 +88,7 @@ const TripDetails = ({type}) => {
             <p className="trip-info-date"><i className="fa-solid fa-calendar-day"/> {new Date(trip_details.start_date).toLocaleDateString('en-US',options)} - {new Date(trip_details.end_date).toLocaleDateString('en-US',options)}</p>
             <p className="trip-info-location"><i className="fa-solid fa-location-dot"/> {trip_details.location[0]}, {trip_details.location[1]}</p>
 
-            <i className="fa-solid fa-user-plus invite-button-trip"/>
+            <i className="fa-solid fa-user-plus invite-button-trip" id='dont-change'/>
             <OpenModalButton
               buttonText="Invite"
               modalComponent={<InviteOthers tripId={trip_found.id}
@@ -98,7 +98,7 @@ const TripDetails = ({type}) => {
 
            { trip_found.creator ?
            <>
-            <i className="fa-solid fa-trash-can delete-button-trip"/>
+            <i className="fa-solid fa-trash-can delete-button-trip" id='dont-change'/>
             <OpenModalButton
               buttonText="Delete"
               modalComponent={<DeleteModal trip={trip_found} />}

@@ -4,6 +4,8 @@ import '../AddExpenseForm/AddExpense.css'
 import { authenticate, updateExpense } from '../../store/session';
 import {useModal} from '../../context/Modal';
 import {useHistory} from 'react-router-dom';
+import "./UpdateExpense.css"
+import logo from '../../assets/images/add-expense.png'
 
 function UpdateExpenseModal ({trip,expense}) {
     // console.log('EXPENSE',expense,'TRIP',trip)
@@ -100,10 +102,11 @@ function UpdateExpenseModal ({trip,expense}) {
         if (usersInvolved[0]==='All' && splitType!=='Equal' && Object.values(splitTypeInfo).length!==trip.trip.users.length) errorsList.checkSplit = 'You must allocate your expense to all people involved.'
         if (usersInvolved[0]!=='All' && splitType!=='Equal' && Object.values(splitTypeInfo).length!==usersInvolved.length) errorsList.checkSplit = 'You must allocate your expense to all people involved.'
         //no inputs for splits can be negative
+        if (splitTypeInfo) {
         Object.values(splitTypeInfo).forEach(val=> {
             if (Number(val)<=0) errorsList.splitTypeError = 'Expense allocated must be greater than $0.00'
         })
-
+    }
         if (Object.values(errorsList).length) {
             setErrors(errorsList);
             return;
@@ -139,11 +142,16 @@ function UpdateExpenseModal ({trip,expense}) {
     }
 
     return (
-        <div className='add-expense-modal'>
-            <h2>Update an Expense</h2>
+        <div className='update-expense-modal'>
+             <button onClick={closeModal} className='close-modal' id='update-trip-close'><i className="fa-solid fa-xmark fa-2xl"></i></button>
+            <h2>Update your Expense</h2>
+            <img src={logo} alt='money-owl'></img>
             <form className='add-expense-form'>
+                <div className='choosing-users'>
                 <p>Who is Involved?</p>
-                <label className='keep-min'> All Users
+                <div className='keep-min'>
+                <label > All Users </label>
+
                     <input
                         type='checkbox'
                         value={allUsers}
@@ -153,10 +161,13 @@ function UpdateExpenseModal ({trip,expense}) {
                             setSplitTypeInfo({})
                             setCheckSplit(0)
                         }}
+                        id='checkbox'
                     />
-                </label>
+                </div>
 
-                <label className={!allUsers ?'user-choice' : 'user-choices hidden'}> Select Users:
+
+                <div  className={!allUsers ?'user-choices' : 'user-choices hidden'}>
+                <label className='select-users'> Select Users: </label>
                     <select
                         multiple={true}
                         value={usersInvolved}
@@ -166,16 +177,20 @@ function UpdateExpenseModal ({trip,expense}) {
                             setUsers(values);
                             setSplitTypeInfo({})
                         }}
+                        id="multiple-users"
                         >
                         <option value={''}>Select Users Below</option>
                        {trip.trip.users.map(user =>  (
                        <option value={[user.user.id,user.user.first_name]} key={user.user.id}>{user.user.first_name} {user.user.last_name[0]}.</option>
                        ))}
                     </select>
-                </label>
+                </div>
+                </div>
 
+               <div>
                 <label>
                     Name
+                </label>
                 <input
                 type="text"
                 placeholder="ex. Uber to airport"
@@ -184,20 +199,24 @@ function UpdateExpenseModal ({trip,expense}) {
                 className=""
               />
               {errors.name ? <p className='errors'>{errors.name}</p>: <p className='errors'></p>}
-                </label>
+              </div>
 
+                <div>
                 <label>
                     Expense Date
+                </label>
                 <input
                 type="date"
                 onChange={(e)=> setExpenseDate(e.target.value)}
                 value={expenseDate}
                 />
                 {errors.expenseDate ? <p className='errors'>{errors.expenseDate}</p>: <p className='errors'></p>}
-                </label>
+                </div>
 
+                <div>
                 <label>
                     Category
+                </label>
                 <select value={category} onChange={(e) => setCategory(e.target.value)}>
                     {categories.map(cat => (
                         <option value={cat} key={cat}>
@@ -205,21 +224,26 @@ function UpdateExpenseModal ({trip,expense}) {
                         </option>
                     ))}
                 </select>
-                </label>
+                <p className='errors'></p>
+                </div>
 
 
+                <div>
                 <label>
-                    Total: $
+                    Total: ($)
+                </label>
                 <input
                 type="number"
                 onChange={(e)=> setTotal(Number(e.target.value))}
                 value={total}
                 />
                 {errors.total ? <p className='errors'>{errors.total}</p>: <p className='errors'></p>}
-                </label>
+                </div>
 
+                <div>
                 <label>
                     Paid by you and split:
+                </label>
                 <select value={splitType} onChange={(e) =>{
                     setSplitType(e.target.value)
                     setSplitTypeInfo({})
@@ -238,15 +262,18 @@ function UpdateExpenseModal ({trip,expense}) {
                     </option>
                 </select>
                 {errors.splitType ? <p className='errors'>{errors.splitType}</p>: <p className='errors'></p>}
-                </label>
+                </div>
+
                 {splitType==='Percentages' && (
-                        <div>
-                            <p>Split by Percentage</p>
+                        <div className="split-type-info" id='update-split-type-info'>
+                            <p className='split-type'>Split by Percentage</p>
                             {
                                 allUsers ?
                                 trip.trip.users.map(user =>  (
-                                        <label key={user.user.id} >
+                                    <div className='info-details' key={user.user.id}>
+                                        <label>
                                             {user.user.first_name}
+                                        </label>
                                             <input
                                             type='number'
                                             min={0}
@@ -256,10 +283,12 @@ function UpdateExpenseModal ({trip,expense}) {
                                                 newInfo[user.user.id]=e.target.value
                                                 setSplitTypeInfo(newInfo)
                                             }}/>
-                                        </label>
+
+                                    </div>
                                 )):
                                 usersInvolved.map(user =>  (
-                                    <label key={user.split(',')[0]} >
+                                    <div key={user.split(',')[0]} className='info-details'>
+                                    <label  >
                                         {user.split(',')[1]}
                                         <input
                                         type='number'
@@ -271,10 +300,13 @@ function UpdateExpenseModal ({trip,expense}) {
                                             setSplitTypeInfo(newInfo)
                                         }}/>
                                     </label>
+                                    </div>
                             ))
                             }
+                            <div id='split-info-details'>
                             <p>Total: {checkSplit}% </p>
-                            <p>Total: {100-checkSplit}% left </p>
+                            <p> {100-checkSplit}% left </p>
+                            </div>
                             {errors.checkSplit ? <p className='errors'>{errors.checkSplit}</p>: <p className='errors'></p>}
                             {errors.splitTypeError ? <p className='errors'>{errors.splitTypeError}</p>: <p className='errors'></p>}
                         </div>
@@ -282,12 +314,13 @@ function UpdateExpenseModal ({trip,expense}) {
                 }
 
                 {splitType==='Exact' && (
-                        <div>
-                            <p>Split by Exact Amounts</p>
+                        <div className="split-type-info" id='update-split-type-info'>
+                            <p className='split-type'>Split by Exact Amounts</p>
                             {
                                 allUsers ?
                                 trip.trip.users.map(user =>  (
-                                        <label key={user.user.id} >
+                                    <div key={user.user.id} className='info-details'>
+                                        <label  >
                                             {user.user.first_name}
                                             <input
                                             type='number'
@@ -299,9 +332,11 @@ function UpdateExpenseModal ({trip,expense}) {
                                                 setSplitTypeInfo(newInfo)
                                             }}/>
                                         </label>
+                                    </div>
                                 )):
                                 usersInvolved.map(user =>  (
-                                    <label key={user.split(',')[0]} >
+                                    <div key={user.split(',')[0]} className='info-details'>
+                                    <label  >
                                         {user.split(',')[1]}
                                         <input
                                         type='number'
@@ -313,10 +348,13 @@ function UpdateExpenseModal ({trip,expense}) {
                                             setSplitTypeInfo(newInfo)
                                         }}/>
                                     </label>
+                                    </div>
                             ))
                             }
+                            <div id='split-info-details'>
                             <p>Total: ${checkSplit} </p>
-                            <p>Total: ${(total-checkSplit).toFixed(2)} left </p>
+                            <p> ${(total-checkSplit).toFixed(2)} left </p>
+                            </div>
                             {errors.checkSplit ? <p className='errors'>{errors.checkSplit}</p>: <p className='errors'></p>}
                             {errors.splitTypeError ? <p className='errors'>{errors.splitTypeError}</p>: <p className='errors'></p>}
                         </div>
@@ -324,13 +362,19 @@ function UpdateExpenseModal ({trip,expense}) {
                         }
 
 
-                <p>{splitType==='Equal' ? <>{allUsers ? `$ ${(total/trip.trip.users.length).toFixed(2)} per person`:  `$ ${(total/usersInvolved.length).toFixed(2)} per person`}</>
+                <p className='owe-details'>{splitType==='Equal' ? <>{allUsers ? `$ ${(total/trip.trip.users.length).toFixed(2)} per person`:  `$ ${(total/usersInvolved.length).toFixed(2)} per person`}</>
                 : `You get back ${0}`}</p>
 
-                <button onClick={handleSubmit}>Save</button>
+                <div id='update-expense-action-buttons'>
+                <button onClick={handleSubmit}
+                id='update-save-button'
+                >Save</button>
                 <button onClick={(e=> {
                     e.preventDefault();
-                    closeModal()})}>Cancel</button>
+                    closeModal()})}
+                    id='update-cancel-button'
+                    >Cancel</button>
+                </div>
 
             </form>
         </div>

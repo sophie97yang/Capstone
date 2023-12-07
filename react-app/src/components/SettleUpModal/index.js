@@ -32,6 +32,7 @@ function SettleUp({group_balances,total_info,trip}) {
 
     return (
         <div className='settle-up-modal'>
+        <button onClick={closeModal} className='close-modal' id='update-trip-close'><i className="fa-solid fa-xmark fa-2xl"></i></button>
         <h2>Settle Up</h2>
         <img src={settleup} alt='settle-up'></img>
         <p>You are settling these expenses:</p>

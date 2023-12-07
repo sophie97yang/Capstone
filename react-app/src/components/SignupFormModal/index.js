@@ -60,8 +60,9 @@ function SignupFormModal() {
 	};
 
 	return (
-		<div className='sign-up-page' id='modal'>
-		<div>
+		<div className='sign-up-page' id='su-modal'>
+		<button onClick={closeModal} className='close-modal' id='update-trip-close'><i className="fa-solid fa-xmark fa-2xl"></i></button>
+		<div className='modal-left'>
 		<h1>Introduce Yourself.</h1>
 		<p className='redirection'>Already a member?<OpenModalButton
               buttonText="Log In"

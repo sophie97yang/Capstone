@@ -65,10 +65,11 @@ function AddExpenseForm ({trip}) {
         if (usersInvolved[0]==='All' && splitType!=='Equal' && Object.values(splitTypeInfo).length!==trip.trip.users.length) errorsList.checkSplit = 'You must allocate your expense to all people involved.'
         if (usersInvolved[0]!=='All' && splitType!=='Equal' && Object.values(splitTypeInfo).length!==usersInvolved.length) errorsList.checkSplit = 'You must allocate your expense to all people involved.'
         //no inputs for splits can be negative
+        if (splitTypeInfo) {
         Object.values(splitTypeInfo).forEach(val=> {
             if (Number(val)<=0) errorsList.splitTypeError = 'Expense allocated must be greater than $0.00'
         })
-
+    }
         if (Object.values(errorsList).length) {
             setErrors(errorsList);
             return;
@@ -108,6 +109,7 @@ function AddExpenseForm ({trip}) {
 
     return (
         <div className='add-expense-modal'>
+             <button onClick={closeModal} className='close-modal' id='update-trip-close'><i className="fa-solid fa-xmark fa-2xl"></i></button>
             <div>
             <h2>Add an Expense.</h2>
             <img src={logo} alt='money-owl'></img>
@@ -225,8 +227,8 @@ function AddExpenseForm ({trip}) {
                             {
                                 allUsers ?
                                 trip.trip.users.map(user =>  (
-                                    <div className='info-details'>
-                                        <label key={user.user.id} >
+                                    <div className='info-details' key={user.user.id}>
+                                        <label  >
                                             {user.user.first_name}
                                         </label>
                                             <input
@@ -241,8 +243,8 @@ function AddExpenseForm ({trip}) {
 
                                 )):
                                 usersInvolved.map(user =>  (
-                                <div className='info-details'>
-                                    <label key={user.split(',')[0]} >
+                                <div className='info-details'  key={user.split(',')[0]}>
+                                    <label >
                                         {user.split(',')[1]}
                                     </label>
                                         <input
@@ -270,8 +272,8 @@ function AddExpenseForm ({trip}) {
                             {
                                 allUsers ?
                                 trip.trip.users.map(user =>  (
-                                    <div>
-                                        <label key={user.user.id} >
+                                    <div key={user.user.id}  className='info-details' >
+                                        <label>
                                             {user.user.first_name}
                                         </label>
                                             <input
@@ -286,8 +288,8 @@ function AddExpenseForm ({trip}) {
 
                                 )):
                                 usersInvolved.map(user =>  (
-                                    <div>
-                                    <label key={user.split(',')[0]} >
+                                    <div key={user.split(',')[0]} className='info-details'>
+                                    <label  >
                                         {user.split(',')[1]}
                                     </label>
                                         <input

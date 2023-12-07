@@ -40,6 +40,7 @@ function LoginFormModal() {
 
   return (
     <div id='login-modal' className='login-page'>
+       <button onClick={closeModal} className='close-modal' id='update-trip-close'><i className="fa-solid fa-xmark fa-2xl"></i></button>
       <h1>Welcome back.</h1>
       <p className='redirection'>Not a member yet? <OpenModalButton
               buttonText="Sign Up"
