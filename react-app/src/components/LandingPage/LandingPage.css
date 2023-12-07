@@ -24,8 +24,10 @@
 }
 
 .headings>h1 {
-    font-size:45px;
+    font-size:65px;
+    font-weight:800;
     text-align:center;
+    margin-top:80px;
 }
 
 .headings>h2, .headings>p {

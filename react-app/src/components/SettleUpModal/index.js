@@ -57,8 +57,10 @@ function SettleUp({group_balances,total_info,trip}) {
             }
         </ul>
         }
+        <div className='settle-action-buttons'>
         <button onClick={handleSettle}>Record Cash  Payment</button>
-        <button>Cancel</button>
+        <button onClick={closeModal} id='settle-cancel'>Cancel</button>
+        </div>
         </div>
 
     )
