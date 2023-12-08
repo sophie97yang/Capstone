@@ -11,7 +11,7 @@ function ExpenseDetail() {
     // const [payerInvolved,setInvolve] = useState(false)
     const trip = user.trips[tripId]
     const expense = trip.trip.expenses.filter(expense=> expense.id===parseInt(expenseId))[0]
-    console.log(trip,expense)
+    console.log(trip,expense,expense.updates)
     //find payer expense detail
     const expense_details = [...expense.details]
     let payer_detail_index;
@@ -34,11 +34,14 @@ function ExpenseDetail() {
     return (
         <div className='expense-details'>
            <h2> <Link to={`/trips/${trip.trip.id}/expenses`} className='breadcrumb'> {trip.trip.name}</Link> {'<'} About {expense.name} </h2>
+
            <div className='expense-top-header'>
                 <img src={category_images[expense.category]} alt={expense.category}></img>
+                <div className='expense-top-right'>
                 <h2>{expense.name}</h2>
-                <h2>$ {expense.total.toFixed(2)}</h2>
+                <h2 id='expense-price'>$ {expense.total.toFixed(2)}</h2>
                 <p>Added by {expense.payer.first_name} {expense.payer.last_name[0]}. on {new Date(expense.expense_date).toLocaleDateString('en-US',options)}</p>
+                <div className='expense-buttons'>
                 <OpenModalButton
                 modalComponent={<UpdateExpenseModal trip={trip} expense={expense}/>}
                 buttonText='Edit Expense'/>
@@ -46,13 +49,18 @@ function ExpenseDetail() {
                 <OpenModalButton
                 modalComponent={<DeleteExpense trip={trip} expense={expense}/>}
                 buttonText='Delete Expense'/>}
+                </div>
+                </div>
            </div>
-           <div>
+           <div className='expense-bottom'>
             <div className='expense-detail-left'>
+            <div className='payer-info'>
             <img src='https://s3.amazonaws.com/splitwise/uploads/user/default_avatars/avatar-teal22-100px.png' alt='profile' className='expense-profile'></img>
-            {payer_detail.length ? `${payer_detail[0].user.first_name} paid $ ${expense.total.toFixed(2)} and owes $ ${payer_detail[0].price.toFixed(2)}`:
+            <p>{payer_detail.length ? `${payer_detail[0].user.first_name} paid $ ${expense.total.toFixed(2)} and owes $ ${payer_detail[0].price.toFixed(2)}`:
             `${expense.payer.first_name} paid $ ${expense.total.toFixed(2)}`}
+            </p>
             </div>
+
             {
                 expense_details.map(user=> (
                     <div key={user.user.id}>
@@ -61,7 +69,7 @@ function ExpenseDetail() {
                     </div>
                 ))
             }
-           </div>
+            </div>
            <div className="expense-detail-right">
             <p><i className="fa-solid fa-comment"></i> Notes</p>
             {expense.updates.length?
@@ -69,16 +77,16 @@ function ExpenseDetail() {
                     {expense.updates.map(update => (
                         <li key={update.id}>
                         {update.user.first_name} {update.user.last_name[0]} updated this transaction:
-                        <span>{update.update_type==='users' ? "A change was made to the users involved in the expense":<span>{
+                        <span className='update-expense-info'>{update.update_type==='users' ? " A change was made to the users involved in the expense.":<span>{
                             update.update_type==='total' ?
-                            `The ${update.update_type} was changed from $ ${Number(update.update_info.split(',')[0]).toFixed(2)} to $ ${Number(update.update_info.split(',')[1]).toFixed(2)}`:
-                        `The ${update.update_type} was changed from ${update.update_info.split(',')[0]} to ${update.update_info.split(',')[1]}`
+                            ` The ${update.update_type} was changed from $ ${Number(update.update_info.split(',')[0]).toFixed(2)} to $ ${Number(update.update_info.split(',')[1]).toFixed(2)}.`:
+                        ` The ${update.update_type!=='split_type' ? update.update_type :"expense distribution" } was changed from ${update.update_info.split(',')[0]} to ${update.update_info.split(',')[1]}.`
                         }</span>}</span>
                         </li>
                     ))}
                 </ul> :
                     <></>}
-
+          </div>
           </div>
         </div>
     )

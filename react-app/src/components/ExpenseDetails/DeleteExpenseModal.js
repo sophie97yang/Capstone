@@ -2,6 +2,7 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { useModal } from "../../context/Modal";
 import { deleteExpense,authenticate } from "../../store/session";
+import logo from '../../assets/images/delete.png'
 
 function DeleteExpense({trip,expense}) {
     const dispatch=useDispatch();
@@ -18,10 +19,15 @@ function DeleteExpense({trip,expense}) {
 
     return (
         <div className='delete-modal'>
+             <button onClick={closeModal} className='close-modal' id='update-trip-close'><i className="fa-solid fa-xmark fa-2xl"></i></button>
             <h2>Delete Expense?</h2>
-        <p>Once you delete an expense, it can't be restored. Are you sure you want to delete {expense.name}?</p>
-        <button onClick={handleDelete}>Delete</button>
-        <button onClick={closeModal}>Cancel</button>
+            <img src={logo} alt='owl-trash'></img>
+        <p>Once you delete an expense, it can't be restored.</p>
+        <p>Are you sure you want to delete {expense.name}?</p>
+        <div className='delete-action-buttons'>
+        <button onClick={handleDelete} className='delete-expense'>Delete</button>
+        <button onClick={closeModal} className='cancel-expense'>Cancel</button>
+        </div>
         </div>
     )
 

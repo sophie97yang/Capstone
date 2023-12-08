@@ -1,0 +1,92 @@
+.update-expense-modal {
+    width:700px;
+    max-height:600px;
+    overflow:scroll;
+    display:flex;
+    /* flex-direction:column; */
+    /* align-items:center; */
+    justify-content:flex-start;
+}
+
+.update-expense-modal img {
+    width:200px;
+    max-width:200px;
+    max-height:300px;
+    margin:0px auto;
+}
+
+.update-expense-modal>div {
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    border-right:1px solid grey;
+    margin-top:10px;
+}
+.update-expense-modal h2 {
+    font-size:30px;
+    text-align:center;
+    margin-top:60px;
+}
+#update-split-type-info {
+    padding-right:0px;
+}
+
+.split-type {
+    border-bottom:1px solid grey;
+    padding-bottom:5px;
+}
+
+#split-info-details {
+    font-style:italic;
+    border:1px solid grey;
+    margin:10px auto;
+    margin-top:50px;
+    max-width:500px;
+    min-width:230px;
+
+}
+#split-info-details p {
+    text-align:center;
+}
+.owe-details {
+    text-align:center;
+    color:orange;
+
+}
+
+.user-choices {
+    display:flex;
+    flex-direction:row;
+    align-items:center;
+}
+
+#update-expense-action-buttons button:hover {
+    cursor:pointer;
+}
+
+#update-expense-action-buttons {
+    display:flex;
+    flex-direction:row;
+    justify-content:center;
+
+}
+
+#update-cancel-button {
+    width:100px;
+    height:50px;
+    border-radius:10px;
+    border-style:none;
+    padding:10px;
+    background-color:rgb(226, 225, 225);
+    margin-left:30px;
+}
+
+#update-save-button {
+    width:100px;
+    height:50px;
+    border-radius:10px;
+    border-style:none;
+    padding:10px;
+    background-color:rgb(255, 149, 0);
+
+}

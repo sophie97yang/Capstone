@@ -4,9 +4,10 @@
 
 .add-trip-title {
     display:flex;
-    width:950px;
+    width:800px;
     font-size:20px;
     margin-bottom:0px;
+    margin-left:30px;
 }
 
 .create-trip>div {

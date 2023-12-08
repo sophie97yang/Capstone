@@ -1,14 +1,32 @@
 #signup-modal {
-    width:600px;
+    max-width:400px;
     max-height:600px;
     overflow: scroll;
 
 }
-#modal {
+#su-modal {
+    width:650px;
     border:none;
-    background-color:white
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius:10px;
+
 }
 
-#modal>h1 {
-    margin-left:50px;
+.modal-left {
+    width:200px;
+    flex-grow:1;
+}
+
+#su-modal h1 {
+    max-width:200px;
+}
+
+#su-modal .redirection {
+    margin-left:0px;
+}
+
+#su-modal img {
+    width:200px;
 }

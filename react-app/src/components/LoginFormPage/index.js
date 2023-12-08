@@ -60,8 +60,8 @@ function LoginFormPage() {
             onChange={(e) => setEmail(e.target.value)}
             required
           />
-          {errors.email ? <p className='errors'>{errors.email}</p>: <p className='errors'></p>}
         </label>
+        {errors.email ? <p className='errors' id="login-errors-email">{errors.email}</p>: <p className='errors' id="login-errors-email"></p>}
 
         <label>
           <p className="label-text">
@@ -73,8 +73,8 @@ function LoginFormPage() {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          {errors.password ? <p className='errors'>{errors.password}</p>: <p className='errors'></p>}
         </label>
+        {errors.password ? <p className='errors'id="login-errors-pass">{errors.password}</p>: <p className='errors' id="login-errors-pass"></p>}
         <div className='action-buttons'>
         <button type="submit" className='action-button-ls'>Log In</button>
         <button onClick={handleDemo} className='action-button-ls'>Log In as Demo User</button>

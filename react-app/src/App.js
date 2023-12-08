@@ -11,6 +11,7 @@ import TripDetails from "./components/TripDetailsPage";
 import ExpenseDetail from "./components/ExpenseDetails";
 import LandingPage from "./components/LandingPage/LandingPage";
 import Explore from "./components/Explore";
+import UserBookings from './components/UserBookingsPage'
 
 function App() {
   const dispatch = useDispatch();
@@ -47,6 +48,9 @@ function App() {
           </Route>
           <Route path='/trips'>
             <AllTrips />
+          </Route>
+          <Route path='/bookings'>
+            <UserBookings />
           </Route>
           <Route path='/404'>
           <h2>404 Not Found</h2>
