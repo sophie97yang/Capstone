@@ -1,0 +1,19 @@
+footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgb(180, 189, 188);
+    color: black;
+    padding: 50px 200px;
+    max-height:40px;
+    margin-left:0px;
+    margin-right:0px;
+}
+
+#footer-center {
+    text-align: center;
+}
+
+footer i {
+    margin-left:30px;
+}

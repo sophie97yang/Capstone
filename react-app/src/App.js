@@ -12,6 +12,7 @@ import ExpenseDetail from "./components/ExpenseDetails";
 import LandingPage from "./components/LandingPage/LandingPage";
 import Explore from "./components/Explore";
 import UserBookings from './components/UserBookingsPage'
+import Footer from "./components/Footer";
 
 function App() {
   const dispatch = useDispatch();
@@ -61,6 +62,7 @@ function App() {
         </Switch>
 
       )}
+      <Footer />
     </>
   );
 }

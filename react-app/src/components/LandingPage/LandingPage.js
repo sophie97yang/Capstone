@@ -3,7 +3,8 @@ import SearchComponent from './SearchComponent';
 import {Link} from 'react-router-dom';
 import { useEffect } from 'react';
 import { getBookings } from '../../store/booking';
-import './LandingPage.css'
+import './LandingPage.css';
+import logo from '../../assets/images/landing-page.png'
 
 function LandingPage ({isLoaded}) {
     const user = useSelector(state=>state.session.user);
@@ -61,13 +62,17 @@ console.log(booking_choices)
 console.log(bookings)
     return (
         <div className='landing-page'>
+            <div className='landing-top'>
             <div className='headings'>
             <h1>Where to?</h1>
             <h2>
                 SplitTrip is here for you from start to finish.
 
             </h2>
-            <p className='slogan'>Embark on Adventures, Share the Costs: Transform Your Travels with Seamless Expense Sharing at Every Destination.</p>
+            <p className='slogan'>Embark on Adventures, Share the Costs: </p>
+            <p className='slogan bottom'>Transform Your Travels with Seamless Expense Sharing at Every Destination.</p>
+            </div>
+            <img src={logo} alt='travel'></img>
             </div>
 
             <SearchComponent className='landing-page-search'/>

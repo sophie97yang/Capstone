@@ -67,7 +67,7 @@ const AllTrips = () => {
                 }}>Create a New Trip</button>
                 <button onClick={(e)=> {
                     e.preventDefault();
-                    history.push('/bookings')
+                    history.push('/explore/Aspen')
                 }}>Explore places to go</button>
             </div>
            { trips?.map(trip=> (
