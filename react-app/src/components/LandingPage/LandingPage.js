@@ -67,7 +67,7 @@ console.log(bookings)
                 SplitTrip is here for you from start to finish.
 
             </h2>
-            <p>Focus on the fun, and leave the stresses of planning and expensing to us.</p>
+            <p className='slogan'>Embark on Adventures, Share the Costs: Transform Your Travels with Seamless Expense Sharing at Every Destination.</p>
             </div>
 
             <SearchComponent className='landing-page-search'/>
