@@ -59,7 +59,7 @@ function SignupFormPage() {
         if (data) {
           setErrors(data)
         } else {
-          history.push('/trips')
+          history.push('/')
         }
     } else {
         setErrors({"confirmPassword":'Passwords must match'});
@@ -83,7 +83,7 @@ function SignupFormPage() {
          <h2> Hi there! My name is... </h2>
 
           <label>
-            First Name
+            First Name <span className='required'>*</span>
           <input
             type="text"
             value={firstName}
@@ -93,7 +93,7 @@ function SignupFormPage() {
           </label>
 
           <label>
-            Last Name
+            Last Name <span className='required'>*</span>
           <input
             type="text"
             value={lastName}
@@ -108,7 +108,7 @@ function SignupFormPage() {
           <h2>I'm joining from...</h2>
 
         <label>
-            City
+            City <span className='required'>*</span>
             <input
               type="text"
               value={city}
@@ -118,7 +118,7 @@ function SignupFormPage() {
         </label>
 
         <label>
-            State
+            State <span className='required'>*</span>
             <select value={state} onChange={(e) => setState(e.target.value)}>
               <option value="">Select a State</option>
               <option value="AL">Alabama</option>
@@ -179,7 +179,7 @@ function SignupFormPage() {
 
         <h2> This is how to contact me ... </h2>
         <label>
-          Email
+          Email <span className='required'>*</span>
           <input
             type="text"
             value={email}
@@ -190,7 +190,7 @@ function SignupFormPage() {
 
         <h2> This is my password ... </h2>
         <label>
-          Password
+          Password <span className='required'>*</span>
           <input
             type="password"
             value={password}

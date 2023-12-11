@@ -112,7 +112,7 @@ const CreateTripForm = () => {
           </div>
           <form id="trip-form" onSubmit={handleSubmit} encType="multipart/form-data">
             <div id="create-trip_first">
-              <label>My trip shall be called...</label>
+              <label>My trip shall be called...<span className='required'>*</span></label>
               <input
                 type="text"
                 placeholder="Trip Name"
@@ -138,7 +138,7 @@ const CreateTripForm = () => {
             </div>
 
             <div>
-            <label>Destination </label>
+            <label>Destination <span className='required'>*</span> </label>
             <select value={location} onChange={(e) => setLocation(e.target.value)}>
                 <option value=''>Select a Destination</option>
                 {locations.map(location => (
@@ -149,7 +149,7 @@ const CreateTripForm = () => {
             </div>
 
             <div>
-            <label>Start Date </label>
+            <label>Start Date <span className='required'>*</span> </label>
             <input
                 type="date"
                 onChange={(e)=> setStartDate(e.target.value)}
@@ -157,7 +157,7 @@ const CreateTripForm = () => {
             {errors.start_date ? <p className='errors'>{errors.start_date}</p>: <p className='errors'></p>}
             </div>
             <div>
-            <label>End Date </label>
+            <label>End Date <span className='required'>*</span> </label>
             <input
                 type="date"
                 onChange={(e)=> setEndDate(e.target.value)}

@@ -70,7 +70,7 @@ const AllTrips = () => {
                     history.push('/explore/Aspen')
                 }}>Explore places to go</button>
             </div>
-           { trips?.map(trip=> (
+           { trips.length ? trips.map(trip=> (
             <div key={trip.id} className='individual-trip'>
             <div className='my_trips-left'>
             <img src={trip.trip.image?trip.trip.image:images[choice]} alt={trip.trip.name}></img>
@@ -97,7 +97,15 @@ const AllTrips = () => {
             </div>
 
 
-           ))}
+           )) :
+           <div className='no-trips'>
+            <p>
+                It seems you haven't joined or created any trips yet.
+                Don't miss out on the adventure -
+                Create a trip, invite friends, and let the planning begin. Your next unforgettable experience awaits, and it all begins with a single click.
+            </p>
+
+           </div>}
         </div>
     )
 }
