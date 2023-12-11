@@ -1,4 +1,4 @@
-import { useParams,Link } from "react-router-dom";
+import { useParams,Link,useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 import OpenModalButton from "../OpenModalButton";
 import './ExpenseDetail.css'
@@ -7,11 +7,21 @@ import DeleteExpense from "./DeleteExpenseModal";
 
 function ExpenseDetail() {
     const {tripId,expenseId} = useParams();
+    const history=useHistory();
     const user = useSelector(state=>state.session.user)
     // const [payerInvolved,setInvolve] = useState(false)
-    const trip = user.trips[tripId]
-    const expense = trip.trip.expenses.filter(expense=> expense.id===parseInt(expenseId))[0]
-    console.log(trip,expense,expense.updates)
+    const trip = user.trips[tripId];
+    if (!trip) {
+        history.push('/404');
+        return null;
+
+    }
+    const expense = trip.trip.expenses.filter(expense=> expense.id===parseInt(expenseId))[0];
+    if (!expense) {
+        history.push('/404');
+        return null;
+    }
+
     //find payer expense detail
     const expense_details = [...expense.details]
     let payer_detail_index;

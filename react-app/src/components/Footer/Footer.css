@@ -4,14 +4,16 @@ footer {
     align-items: center;
     background-color: rgb(180, 189, 188);
     color: black;
-    padding: 50px 200px;
-    max-height:40px;
+    max-height:150px;
+    min-height:150px;
     margin-left:0px;
     margin-right:0px;
 }
 
 #footer-center {
     text-align: center;
+    max-height:150px;
+    min-height:150px
 }
 
 footer i {

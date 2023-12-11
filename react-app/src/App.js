@@ -13,6 +13,8 @@ import LandingPage from "./components/LandingPage/LandingPage";
 import Explore from "./components/Explore";
 import UserBookings from './components/UserBookingsPage'
 import Footer from "./components/Footer";
+import ProtectedRoute from "./components/ProtectedRoute";
+import PageNotFound from "./components/404/404";
 
 function App() {
   const dispatch = useDispatch();
@@ -35,29 +37,29 @@ function App() {
           <Route path='/explore/:city'>
             <Explore />
           </Route>
-          <Route path='/trips/new'>
+          <ProtectedRoute path='/trips/new'>
             <CreateTripForm />
-            </Route>
-          <Route exact path='/trips/:tripId/expenses/:expenseId'>
+            </ProtectedRoute>
+          <ProtectedRoute exact path='/trips/:tripId/expenses/:expenseId'>
             <ExpenseDetail />
-          </Route>
-          <Route exact path='/trips/:id/expenses'>
+          </ProtectedRoute>
+          <ProtectedRoute exact path='/trips/:id/expenses'>
             <TripDetails type='expense'/>
-          </Route>
-          <Route exact path='/trips/:id/itineraries'>
+          </ProtectedRoute>
+          <ProtectedRoute exact path='/trips/:id/itineraries'>
             <TripDetails type='itinerary'/>
-          </Route>
-          <Route path='/trips'>
+          </ProtectedRoute>
+          <ProtectedRoute path='/trips'>
             <AllTrips />
-          </Route>
+          </ProtectedRoute>
           <Route path='/bookings'>
             <UserBookings />
           </Route>
-          <Route path='/404'>
-          <h2>404 Not Found</h2>
-        </Route>
-          <Route path='/'>
+          <Route exact path='/'>
             <LandingPage isLoaded={isLoaded}/>
+          </Route>
+          <Route path='*'>
+          <PageNotFound />
           </Route>
         </Switch>
 
