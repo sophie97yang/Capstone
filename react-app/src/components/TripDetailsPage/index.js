@@ -81,7 +81,9 @@ const TripDetails = ({type}) => {
             <div className='trip-detail-left'>
            <h2><Link to='/trips' className='breadcrumb'> All Trips </Link> {'>'} {trip_details.name}</h2>
             <div className='trip-detail-universal'>
-           <img src={trip_details.image ? trip_details.image : images[choice] } alt={trip_details.name} className='trip-detail-image'></img>
+           <img src={trip_details.image ? trip_details.image : images[choice] } alt={trip_details.name} className='trip-detail-image'
+           onError={e => { e.currentTarget.src = "https://images.unsplash.com/photo-1522878129833-838a904a0e9e?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"}}
+           ></img>
 
            <OpenModalButton modalComponent={<UpdateTripModal trip={trip_found}/>} buttonText={`${trip_details.name}`} className='update-trip-button' /><i className="fa-regular fa-pen-to-square update-trip-button fa-sm" id='dont-change'></i>
 
