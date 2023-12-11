@@ -328,7 +328,7 @@ function AddExpenseForm ({trip}) {
 
 
                 <p>{splitType==='Equal' ? <>{allUsers ? `$ ${(total/trip.trip.users.length).toFixed(2)} per person`:  `$ ${(total/usersInvolved.length).toFixed(2)} per person`}</>
-                : `You get back $ ${0}`}</p>
+                : ''}</p>
 
                 <div id='expense-action-buttons'>
                 <button onClick={handleSubmit} id='save-button'>Save</button>

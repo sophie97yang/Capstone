@@ -365,7 +365,7 @@ function UpdateExpenseModal ({trip,expense}) {
 
 
                 <p className='owe-details'>{splitType==='Equal' ? <>{allUsers ? `$ ${(total/trip.trip.users.length).toFixed(2)} per person`:  `$ ${(total/usersInvolved.length).toFixed(2)} per person`}</>
-                : `You get back ${0}`}</p>
+                : ''}</p>
 
                 <div id='update-expense-action-buttons'>
                 <button onClick={handleSubmit}
