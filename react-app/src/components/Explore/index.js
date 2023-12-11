@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import {getBookings} from '../../store/booking';
 import { useEffect,useState } from "react";
 import './Explore.css'
-import OpenModalButton from "../OpenModalButton";
+// import OpenModalButton from "../OpenModalButton";
 // import { useEffect } from "react";
 // import { getHotels } from "../../store/booking";
 import {Link} from 'react-router-dom';

@@ -166,7 +166,7 @@ function AddExpenseForm ({trip}) {
 
                 <div>
                 <label>
-                    Name
+                    Name <span className='required'>*</span>
                 </label>
                 <input
                 type="text"
@@ -180,7 +180,7 @@ function AddExpenseForm ({trip}) {
 
                 <div>
                 <label>
-                    Expense Date</label>
+                    Expense Date <span className='required'>*</span></label>
                 <input
                 type="date"
                 onChange={(e)=> setExpenseDate(e.target.value)}
@@ -205,7 +205,7 @@ function AddExpenseForm ({trip}) {
 
                 <div>
                 <label>
-                    Total: ($)
+                    Total: ($) <span className='required'>*</span>
                 </label>
                 <input
                 type="number"
@@ -217,7 +217,7 @@ function AddExpenseForm ({trip}) {
 
                 <div>
                 <label>
-                    Paid by you and split:
+                    Paid by you and split: <span className='required'>*</span>
                 </label>
                 <select value={splitType} onChange={(e) => setSplitType(e.target.value)}>
                     <option value='Equal'>

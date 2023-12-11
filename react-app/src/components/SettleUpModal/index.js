@@ -47,21 +47,29 @@ function SettleUp({group_balances,total_info,trip}) {
             }
         </ul>:
         <ul>
-            {
+            {user_settlements.length ?
                 user_settlements.map(settlement=> (
                     <li key={settlement.id}>{
                         `${settlement.user.first_name} paid you $ ${settlement.settlement}`
                     }
                     </li>
                 ))
+                :
+                <li>
+                    You have no expenses to settle.
+                </li>
 
             }
         </ul>
         }
+        {to_pay.length || user_settlements.length ?
         <div className='settle-action-buttons'>
         <button onClick={handleSettle}>Record Cash  Payment</button>
         <button onClick={closeModal} id='settle-cancel'>Cancel</button>
         </div>
+        :
+        <></>
+        }
         </div>
 
     )

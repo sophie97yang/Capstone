@@ -308,3 +308,10 @@
 .success button:hover {
     cursor:pointer;
 }
+
+
+.no-trips {
+    min-height:500px;
+    margin-top:50px;
+    text-align:center;
+}

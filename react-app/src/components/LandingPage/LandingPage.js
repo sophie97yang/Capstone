@@ -113,7 +113,7 @@ console.log(bookings)
                             </div>
                         </>  :
                         <>
-                            <h3>You have not created or have been invited to any trips...</h3>
+                            <h3>Embark on a journey of your own creation!</h3>
                             <h4>Unlock the potential of SplitTrip by <Link to='trips/new' id='create-trip-link'>creating a trip</Link>.</h4>
 
                         </>
