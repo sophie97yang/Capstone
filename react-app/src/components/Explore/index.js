@@ -7,14 +7,19 @@ import './Explore.css'
 // import { useEffect } from "react";
 // import { getHotels } from "../../store/booking";
 import {Link} from 'react-router-dom';
+import CreateTripShortcut from "../CreateTripForm/CreateTripShortcut";
 function Explore () {
     const dispatch = useDispatch();
     const {city} = useParams();
-    const bookings = useSelector(state=>state.bookings.bookings)
-    const bookings_city = Object.values(bookings).filter(booking => booking.city===city)
+    const bookings = useSelector(state=>state.bookings.bookings);
+    const user = useSelector(state=>state.session.user);
+    const bookings_city = Object.values(bookings).filter(booking => booking.city===city);
+    const bookings_city_hotels = bookings_city.filter(booking=> booking.category==='Hotel');
+    const bookings_city_restaurants = bookings_city.filter(booking=> booking.category==='Restaurants');
+    const bookings_city_things = bookings_city.filter(booking=> booking.category==='Things To Do');
+
     const [filter,setFiltered] = useState('All')
     const [bookingsFilter,setBookings]=useState(bookings_city)
-    console.log(bookings_city)
 
     useEffect(()=> {
         dispatch(getBookings())
@@ -22,8 +27,9 @@ function Explore () {
 
     useEffect(()=> {
         if (filter!=='All') {
-        const bookings = bookings_city.filter(booking=>booking.category===filter)
-        setBookings(bookings)
+            if (filter==='Hotel') setBookings(bookings_city_hotels);
+            else if (filter==='Restaurants') setBookings(bookings_city_restaurants);
+            else setBookings(bookings_city_things);
         } else {
             setBookings(bookings_city)
         }
@@ -31,7 +37,7 @@ function Explore () {
 
     const locations = [{city:'Aspen',state:'CO',image:"https://www.travelandleisure.com/thmb/Yiq3rXHGmHnDrgzBsGmEvqjHxSo=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/aspen-colorado-lead-ASPENTG0122-3bd432152d1f4758b1b89fd8a3a231cc.jpg"},
     {city:'Miami',state:'FL',image:'https://www.mayflower.com/wp-content/uploads/2022/05/Miami-City-Guide_Header-scaled.jpg'},
-    {city:'Napa',state:'CA',image:"https://falstaff.b-cdn.net/core/5039223/napa-valley_5039223.jpg"},
+    {city:'Napa',state:'CA',image:"https://falstaff.b-cdn.net/core/5039223/napa-valley_5039223.jpg",header:"The valley's namesake city is a destination unto itself",about:"Gold and silver may have inspired the crowds that flocked to Napa in the 1800s, but liquid gold—Chardonnays, Cabernet Sauvignons and Pinot Noirs—fuels the modern migration. With an abundance of fine restaurants and inns, Napa has become a dream destination for wine-lovers. And this thriving, creative city has come into its own as a can't-miss stop on any wine-country vacation."},
     {city:'Boston',state:'MA',image:"https://content.r9cdn.net/rimg/dimg/8d/d4/5837febe-city-25588-16b90081d43.jpg"},
     {city:'Moab',state:'UT',image:"https://www.visittheusa.com/sites/default/files/styles/hero_l/public/images/hero_media_image/2017-07/92ce662af277a11b73ea3a6d451271fc.jpeg"},
     {city:'Jackson',state:'WY',image:"https://assets.vogue.com/photos/61d453c3069d2a61c3d376e1/master/w_2560%2Cc_limit/520395534"},
@@ -55,43 +61,134 @@ function Explore () {
     return (
         <div className='explore'>
         <h3 className='breadcrumb-container'><Link to='/' className='breadcrumb'>Home </Link> {`  >`} Explore {city}</h3>
-        <h2>Hello from {city}!</h2>
+        <h2><span className='explore-word'>Explore </span>{city}</h2>
         {bookingsFilter.length ?
             <>
         <div className='filter-buttons'>
             <button className={filter==='All'? "filter-button selected" : "filter-button"} onClick={(e)=> {
                 setFiltered('All');
             }}>All</button>
-            <button className={filter==='Hotels'? "filter-button selected" : "filter-button"} onClick={(e)=> {
+            <button className={filter==='Hotel'? "filter-button selected" : "filter-button"} onClick={(e)=> {
                 setFiltered('Hotel')
-            }}>Hotels</button>
+            }}>Hotels <i className="fa-solid fa-bed"></i></button>
             <button className={filter==='Things To Do'? "filter-button selected" : "filter-button"} onClick={(e)=> {
                 setFiltered('Things To Do')
-            }}>Things To Do</button>
+            }}>Things To Do <i className="fa-solid fa-ticket"></i></button>
             <button className={filter==='Restaurants'? "filter-button selected" : "filter-button"} onClick={(e)=> {
                 setFiltered('Restaurants')
-            }}>Restaurants</button>
+            }}>Restaurants <i className="fa-solid fa-utensils"></i></button>
         </div>
 
-        <div>
+        <div className='about-city'>
+        <img src={location_picture.image} alt={city}></img>
+        <h3>{location_picture.header}</h3>
+        <p>{location_picture.about}</p>
+        </div>
+
+        {user &&
+        <div className='plan-trip'>
+            <h2>Plan your trip to {city} </h2>
+            <CreateTripShortcut city={city} state={location_picture.state}/>
+
+        </div>}
+
+        <div className='explore-bookings'>
+            <h2>Essential {city}</h2>
+            <p> {filter!=='All' ?
+            <span>{filter==='Hotel' ?
+             <>
+             A mix of the charming, iconic, and modern.
+             </>
+            : <>
+            {
+                filter==='Things To Do' ?
+            <>
+            Places to see, ways to wander, and signature experiences that define {city}.
+            </>:
+            <>
+            Quintessential {city} bistros, bars, and beyond.
+            </>
+            }
+            </>}</span> :
+            <span>Stay,Do,Eat</span>
+            }</p>
+
+            {
+                filter==='All' ?
+                <>
+                <div className="explore-hotels">
+                <h2>Stay</h2>
+                <p>A mix of the charming, iconic, and modern.</p>
+                {bookings_city_hotels.map((booking)=> (
+                <div key={booking.id} className='booking-places'>
+                    <h3>{booking.name}</h3>
+                    <h3>{booking.rating}</h3>
+                    <h4>from ${booking.price.toFixed(2)}/night</h4>
+                    <div className='explore-images'>
+                        <img src={booking.image1} alt={booking.name}></img>
+                        <img src={booking.image2} alt={booking.name}></img>
+                        <img src={booking.image3} alt={booking.name}></img>
+                    </div>
+                </div>
+                ))}
+                </div>
+
+                <div className="explore-things">
+                <h2>Do</h2>
+                <p>Places to see, ways to wander, and signature experiences that define {city}.</p>
+                {bookings_city_things.map((booking)=> (
+                <div key={booking.id} className='booking-places'>
+                    <h3>{booking.name}</h3>
+                    <h3>{booking.rating}</h3>
+                    <h4>from ${booking.price.toFixed(2)}/person</h4>
+                    <div className='explore-images'>
+                        <img src={booking.image1} alt={booking.name}></img>
+                        <img src={booking.image2} alt={booking.name}></img>
+                        <img src={booking.image3} alt={booking.name}></img>
+                    </div>
+                </div>
+                ))}
+                </div>
+
+                <div className="explore-restaurants">
+                <h2>Eat</h2>
+                <p>Quintessential {city} bistros, bars, and beyond.</p>
+                {bookings_city_restaurants.map((booking)=> (
+                <div key={booking.id} className='booking-places'>
+                    <h3>{booking.name}</h3>
+                    <h3>{booking.rating}</h3>
+                    <h4>{booking.price===1000 ? '$$$' : <span>{booking.price===100 ? "$$": "$"}</span>}  •  {booking.features}</h4>
+                    <div className='explore-images'>
+                        <img src={booking.image1} alt={booking.name}></img>
+                        <img src={booking.image2} alt={booking.name}></img>
+                        <img src={booking.image3} alt={booking.name}></img>
+                    </div>
+                </div>
+                ))}
+                </div>
+
+                </>:
+            <>
             {bookingsFilter.map((booking)=> (
                 <div key={booking.id} className='booking-places'>
                     <h3>{booking.name}</h3>
-                    <h4>{booking.category}</h4>
-                    {booking.category==='Hotel' && <h4>Price per night: ${booking.price.toFixed(2)}</h4>}
+                    <h3>{booking.rating}</h3>
+                    {booking.category==='Hotel' && <h4>from ${booking.price.toFixed(2)}/night</h4>}
                     {booking.category==='Things To Do' && <h4>Price per person: ${booking.price.toFixed(2)}</h4>}
                     {booking.category==='Restaurants' && <h4>{booking.price===1000 ? '$$$' : <span>{booking.price===100 ? "$$": "$"}</span>}</h4>}
                     <div className='explore-images'>
                     <img src={booking.image1} alt={booking.name}></img>
                     <img src={booking.image2} alt={booking.name}></img>
                     <img src={booking.image3} alt={booking.name}></img>
-                    {/* <OpenModalButton buttonText="Add to your Trip's Itinerary"/> */}
                     </div>
-
                 </div>
             ))}
+            </>
+        }
         </div>
         </>:
+
+
         <div className='coming-soon'>
             <img src={location_picture.image} alt={location_picture.city}></img>
             <h2>Exciting Developments Underway: Unveiling Soon!

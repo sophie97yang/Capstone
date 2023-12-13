@@ -9,10 +9,14 @@ class Itinerary(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     trip_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("trips.id")))
     booking_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("bookings.id")))
+    user_id = db.Column(db.Integer,db.ForeignKey(add_prefix_for_prod("users.id")))
     booking_date = db.Column(db.Date)
+    booking_startdate = db.Column(db.Date)
+    booking_enddate = db.Column(db.Date)
+    booking_time = db.Column(db.String(15))
     expensed = db.Column(db.Boolean,default=False)
 
-    db.UniqueConstraint('user_id','booking_id',name="uix2")
+    db.UniqueConstraint('trip_id','booking_id',name="uix2")
     trip = db.relationship("Trip", back_populates="bookings")
     booking = db.relationship("Booking", back_populates="trips")
 

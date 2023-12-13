@@ -12,7 +12,17 @@ class Booking(db.Model):
     category = db.Column(db.String(50),nullable=False)
     city = db.Column(db.String(50),nullable=False)
     state= db.Column(db.String(50),nullable=False)
+    lat = db.Column(db.Float,nullable=False)
+    lng = db.Column(db.Float,nullable=False)
+    description =db.Column(db.String(500),nullable=False)
+    rating = db.Column(db.Float,nullable=False)
+    contact_info=db.Column(db.String(50),nullable=False)
+    website = db.Column(db.String(50))
+    features = db.Column(db.String(500))
     price= db.Column(db.Float)
+    opening_hour = db.Column(db.String(50))
+    closing_hour = db.Column(db.String(50))
+
     image1 = db.Column(db.String(255),nullable=False)
     image2 = db.Column(db.String(255),nullable=False)
     image3 = db.Column(db.String(255),nullable=False)
@@ -27,6 +37,13 @@ class Booking(db.Model):
             'city':self.city,
             'state':self.state,
             "price":self.price,
+            "description":self.description,
+            "rating":self.rating,
+            "contact_info":self.contact_info,
+            "website":self.website,
+            "features":self.features,
+            "opening_hour":self.opening_hour,
+            "closing_hour":self.closing_hour,
             "image1":self.image1,
             "image2":self.image2,
             "image3":self.image3,
