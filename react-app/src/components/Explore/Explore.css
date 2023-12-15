@@ -1,5 +1,5 @@
 .explore-images img {
-    width:250px;
+    width:350px;
     height:250px;
     margin:10px;
     border-radius:10px;
@@ -7,7 +7,7 @@
 
 .explore {
     margin:50px auto;
-    width:950px;
+    width:1000px;
 }
 
 .explore>h2 {
@@ -54,22 +54,26 @@
 }
 
 .booking-places {
-    border: 1px solid #57d9ae;
-    border-radius:10px;
-    padding:30px;
-    margin:20px 0px;
-    max-width:950px;
+    margin:20px;
+    max-width:400px;
+    max-height:400px;
 }
 
 .booking-places>h4 {
     font-weight:300;
+    margin-top:0px;
 }
 
-.explore-images {
+.booking-places>h3 {
+    margin-top:0px;
+    margin-bottom:0px;
+}
+
+/* .explore-images {
     display:flex;
     justify-content:center;
 
-}
+} */
 
 .selected {
     background-color:#57d9ae
@@ -101,4 +105,26 @@
 
 .about-city h3 {
     font-size:35px
+}
+
+.explore-hotels,.explore-things,.explore-restaurants {
+    display:flex;
+    flex-direction:row;
+}
+.bookings-div {
+    display:flex;
+    flex-direction:row;
+    flex-wrap:wrap;
+    flex-grow:2;
+}
+
+.about-explore-section {
+    max-width:125px;
+}
+.explore-things>.booking-places {
+    margin-left:0px;
+}
+
+.explore-images>button, .explore-images>.fa-heart {
+    position:absolute;
 }

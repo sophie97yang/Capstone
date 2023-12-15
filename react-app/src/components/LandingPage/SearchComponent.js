@@ -28,9 +28,7 @@ function SearchComponent ({className}) {
     let locations_match=[]
 
     if (searchInput.length > 0) {
-        locations_match = locations.filter((location) => {
-            return location.city.match(searchInput);
-        })
+        locations_match = locations.filter((location) => location.city.toLowerCase().includes(searchInput.toLowerCase()))
         if (hidden===true) {
         setHidden(false)
         }
