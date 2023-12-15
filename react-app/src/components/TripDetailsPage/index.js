@@ -121,7 +121,7 @@ const TripDetails = ({type}) => {
                 type==='expense' ?
                  <Expense trip={trip_found} group_balances={group_balances} total_info={total_info}/>
                 :
-                <Itinerary />
+                <Itinerary trip={trip_found}/>
             }
             </div>
             <div className='trip-detail-right'>

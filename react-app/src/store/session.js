@@ -315,6 +315,36 @@ export const settleUp = (tripDetail,tripId) => async (dispatch) => {
     }
 }
 
+//add an itinerary to trip
+export const addItinerary = (tripDetailId,tripId,bookingId,checkIn,checkOut,reservation,expensed,price) => async (dispatch) =>{
+	try {
+		const res = await fetch(`/api/trips/${tripId}/add_booking`, {
+			method:"POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				"booking_id":bookingId,
+				"booking_startdate":checkIn,
+				"booking_enddate":checkOut,
+				"booking_time":reservation,
+				expensed,
+				price
+			})
+		})
+        if (res.ok) {
+			const {trip} = await res.json();
+            dispatch(updateTrip(trip,tripDetailId));
+        } else {
+            const data = await res.json();
+            console.log("There was an error adding itinerary")
+            return data
+        }
+    } catch (e) {
+        console.error('An error occurred', e);
+        return ['An error occurred'];
+    }
+}
 
 export default function reducer(state = initialState, action) {
 	let newState

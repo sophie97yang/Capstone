@@ -1,16 +1,22 @@
-import {useSelector} from 'react-redux';
+import {useSelector,useDispatch} from 'react-redux';
 import {useState,useEffect} from 'react';
+import { addItinerary,authenticate } from '../../store/session';
+import { useHistory } from 'react-router-dom';
 
 function HotelReservation ({trip,booking}) {
     const [checkIn,setCheckIn] = useState();
     const [checkOut,setCheckOut] = useState();
     const [Rooms,setRooms] = useState(1);
     const [price,setPrice] = useState(0);
+    const [expensed,setExpensed] = useState(false);
     const [errors,setErrors] = useState({});
     const user = useSelector(state=>state.session.user);
+    const dispatch = useDispatch();
+    const history = useHistory();
+
     const tripToAdd = user.trips[trip];
-    console.log(tripToAdd);
-    const handleReservation = (e) => {
+
+    const handleReservation = async(e) => {
         e.preventDefault();
         const validateErrors = {};
         //check the check in and check out dates
@@ -27,6 +33,19 @@ function HotelReservation ({trip,booking}) {
             return;
 
         } else {
+            setErrors({})
+            const reservation = "00:00";
+            console.log(trip,trip.trip,booking);
+            const data = await dispatch(addItinerary(trip,tripToAdd.trip.id,booking.id,checkIn,checkOut,reservation,expensed,price));
+            if (data) {
+                setErrors(data);
+                console.log(data);
+                return;
+            } else {
+                dispatch(authenticate());
+                history.push(`/trips/${trip.trip.id}/itinerary`);
+             }
+
         }
     }
 
@@ -79,6 +98,13 @@ function HotelReservation ({trip,booking}) {
             <p>including taxes and fees</p>:
             ""
         }
+
+        <label>Expense this itinerary?</label>
+        <input
+        type="checkbox"
+        value= {expensed}
+        onChange={(e)=> setExpensed(!expensed)}
+        ></input>
 
         <button
         onClick={handleReservation}>Reserve</button>
