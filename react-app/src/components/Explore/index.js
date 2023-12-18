@@ -136,7 +136,7 @@ function Explore () {
                 <div key={booking.id} className='booking-places'>
                     <div className='explore-images'>
                         <img src={booking.image1} alt={booking.name}></img>
-                        <i class="fa-regular fa-heart"></i>
+                        <i className="fa-regular fa-heart"></i>
                         <OpenModalButton
                         buttonText={`Add to Trip Itinerary`}
                         modalComponent={<AddToItinerary booking={booking}/>}
@@ -160,7 +160,7 @@ function Explore () {
                 <div key={booking.id} className='booking-places'>
                     <div className='explore-images'>
                         <img src={booking.image1} alt={booking.name}></img>
-                        <i class="fa-regular fa-heart"></i>
+                        <i className="fa-regular fa-heart"></i>
                         <OpenModalButton
                         buttonText={`Add to Trip Itinerary`}
                         modalComponent={<AddToItinerary booking={booking}/>}

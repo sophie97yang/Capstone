@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import DateField,BooleanField,FloatField,IntegerField,StringField
-from wtforms.validators import DataRequired
+# from wtforms.validators import DataRequired
 # from datetime import datetime
 
 
@@ -10,5 +10,5 @@ class ItineraryForm(FlaskForm):
     booking_startdate=DateField("Booking Start Date")
     booking_enddate=DateField("Booking End Date")
     booking_time = StringField('Booking Time')
-    price = FloatField("Price",validators=[DataRequired()])
+    price = FloatField("Price")
     expensed = BooleanField('Expensed')

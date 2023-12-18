@@ -4,6 +4,8 @@ import './AddToItinerary.css'
 import OpenModalButton from "../OpenModalButton";
 import CreateTripShortcut from "../CreateTripForm/CreateTripShortcut";
 import HotelReservation from "./HotelReservation";
+import { useModal } from "../../context/Modal";
+import RestaurantThingReservation from "./RestaurantThingReservation";
 
 function AddToItinerary({booking}) {
     //map users current trips where end date hasn't passed
@@ -11,12 +13,13 @@ function AddToItinerary({booking}) {
     //if category is a hotel,
     const user = useSelector(state=>state.session.user);
     const [TripToAdd,SetTrip] = useState('');
+    const {closeModal} = useModal();
     const availableTrips = Object.values(user.trips).filter((trip)=> {
         return (new Date(trip.trip.end_date)>new Date() && trip.trip.location[0]===booking.city)
     })
-    console.log(TripToAdd);
     return (
         <div>
+             <button onClick={closeModal} className='close-modal' id='update-trip-close'><i className="fa-solid fa-xmark fa-2xl"></i></button>
             {availableTrips.length ?
             <div>
                 <h2>Select a Trip</h2>
@@ -28,7 +31,7 @@ function AddToItinerary({booking}) {
                 >
                     <option value='' disabled>Your Trips...</option>
                 {availableTrips.map(trip=> (
-                    <option value={trip.id}>{trip.trip.name}</option>
+                    <option value={trip.id} key={trip.id}>{trip.trip.name}</option>
                 ))}
                 </select>
 
@@ -36,12 +39,11 @@ function AddToItinerary({booking}) {
                 TripToAdd && (
                 <div>
                 {booking.category==='Hotel' ?
-                <HotelReservation trip={TripToAdd} booking={booking}/>
+                <HotelReservation trip={TripToAdd} booking={booking} closeModal={closeModal}/>
                 :
-                <div></div>}
-                </div>
-                )
+                <RestaurantThingReservation trip={TripToAdd} booking={booking} closeModal={closeModal}/>
                 }
+                </div>)}
             </div>
             :
             <div>

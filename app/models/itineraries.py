@@ -20,12 +20,17 @@ class Itinerary(db.Model):
     db.UniqueConstraint('trip_id','booking_id',name="uix2")
     trip = db.relationship("Trip", back_populates="bookings")
     booking = db.relationship("Booking", back_populates="trips")
+    user = db.relationship("User",back_populates="itineraries")
 
     def to_dict(self):
         return {
             'id': self.id,
             'booking_date': self.booking_date,
             'expensed':self.expensed,
-            "trip":self.trip.to_dict(),
-            "booking":self.booking.to_dict()
+            "booking_startdate":self.booking_startdate,
+            "booking_enddate":self.booking_enddate,
+            "booking_time":self.booking_time,
+            "total":self.total,
+            "booking":self.booking.to_dict(),
+            "creator":self.user.to_dict_simple()
         }

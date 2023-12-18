@@ -46,6 +46,5 @@ class Booking(db.Model):
             "closing_hour":self.closing_hour,
             "image1":self.image1,
             "image2":self.image2,
-            "image3":self.image3,
-            'trips_itinerary':[trip.to_dict() for trip in self.trips]
+            "image3":self.image3
         }

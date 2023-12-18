@@ -3,7 +3,7 @@ import {useState,useEffect} from 'react';
 import { addItinerary,authenticate } from '../../store/session';
 import { useHistory } from 'react-router-dom';
 
-function HotelReservation ({trip,booking}) {
+function HotelReservation ({trip,booking,closeModal}) {
     const [checkIn,setCheckIn] = useState();
     const [checkOut,setCheckOut] = useState();
     const [Rooms,setRooms] = useState(1);
@@ -13,6 +13,8 @@ function HotelReservation ({trip,booking}) {
     const user = useSelector(state=>state.session.user);
     const dispatch = useDispatch();
     const history = useHistory();
+    const options={}
+    options.timeZone = "UTC";
 
     const tripToAdd = user.trips[trip];
 
@@ -28,6 +30,23 @@ function HotelReservation ({trip,booking}) {
         if (new Date(checkOut) < new Date()) validateErrors.checkOut = "Check-Out cannot be in the past";
         //number of rooms cannot exceed number of guests involved in trip
         if (Rooms>tripToAdd.trip.users.length) validateErrors.Rooms = "Number of rooms cannot exceed the number of trip members";
+        if (Rooms<1) validateErrors.Rooms="You must reserve at least 1 room"
+
+        //check if there is already an existing reservation
+        const existingReservation= tripToAdd.trip.bookings_itinerary.filter(booking=> {
+            //reservation start date is between check in and check out
+            const instance1 = new Date(booking.booking_startdate).getTime()>= new Date(checkIn).getTime() && new Date(booking.booking_startdate).getTime()<= new Date(checkOut).getTime();
+            //reservation end date is between check in and check out
+            const instance2 = new Date(booking.booking_enddate).getTime()>= new Date(checkIn).getTime() && new Date(booking.booking_enddate).getTime()<= new Date(checkOut).getTime();
+            //check in is between reservation start and end date
+            const instance3 = new Date(checkIn).getTime()>= new Date(booking.booking_startdate).getTime() && new Date(checkIn).getTime()<= new Date(booking.booking_enddate).getTime();
+            //check out is between reservation start and end date
+            const instance4 = new Date(checkOut).getTime()>= new Date(booking.booking_startdate).getTime() && new Date(checkOut).getTime()<= new Date(booking.booking_enddate).getTime();
+            return (booking.booking.category==='Hotel' && (instance1||instance2||instance3||instance4))
+        });
+
+        if (existingReservation.length) validateErrors.existing_stay = `It looks like you already have a reservation at ${existingReservation[0].booking.name} from ${new Date(existingReservation[0].booking_startdate).toLocaleDateString('en-US',options)}-${new Date(existingReservation[0].booking_enddate).toLocaleDateString('en-US',options)}. Please try again.`;
+
         if (Object.values(validateErrors).length) {
             setErrors(validateErrors);
             return;
@@ -35,7 +54,6 @@ function HotelReservation ({trip,booking}) {
         } else {
             setErrors({})
             const reservation = "00:00";
-            console.log(trip,trip.trip,booking);
             const data = await dispatch(addItinerary(trip,tripToAdd.trip.id,booking.id,checkIn,checkOut,reservation,expensed,price));
             if (data) {
                 setErrors(data);
@@ -43,7 +61,8 @@ function HotelReservation ({trip,booking}) {
                 return;
             } else {
                 dispatch(authenticate());
-                history.push(`/trips/${trip.trip.id}/itinerary`);
+                history.push(`/trips/${tripToAdd.trip.id}/itineraries`);
+                closeModal();
              }
 
         }
@@ -92,10 +111,10 @@ function HotelReservation ({trip,booking}) {
             </div>
 
         <h2>View Prices for your Travel Dates</h2>
-        <p>$ {booking.price}</p>
+        <p>$ {booking.price} per night</p>
         <p>Total: $ {price}</p>
           {checkIn && checkOut ?
-            <p>including taxes and fees</p>:
+            <p title="assuming 14% tax">including taxes and fees</p>:
             ""
         }
 
@@ -105,9 +124,14 @@ function HotelReservation ({trip,booking}) {
         value= {expensed}
         onChange={(e)=> setExpensed(!expensed)}
         ></input>
+        {errors.existing_stay ? <p className='errors'>{errors.existing_stay}</p>: <p className='errors'></p>}
 
         <button
         onClick={handleReservation}>Reserve</button>
+
+        <button onClick={(e)=> {
+            e.preventDefault();
+            closeModal()}} id='settle-cancel'>Cancel</button>
         </form>
     )
 

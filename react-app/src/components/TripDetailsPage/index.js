@@ -44,7 +44,7 @@ const TripDetails = ({type}) => {
     const choice = Math.floor(Math.random()*images.length)
 
     const trip_details = trip_found.trip
-    console.log('between_user_expenses',trip_details.between_user_expenses)
+    // console.log('between_user_expenses',trip_details.between_user_expenses)
     //handle information for group balances
     const group_balances={}
     const total_info={}
@@ -73,7 +73,7 @@ const TripDetails = ({type}) => {
          settled[user.user.id] = settled_expenses.length ? settled_expenses : null
     })
 
-    console.log('group_balances',group_balances,'total',total_info,'settled',settled)
+    // console.log('group_balances',group_balances,'total',total_info,'settled',settled)
     const options={}
     options.timeZone = "UTC";
     return (
