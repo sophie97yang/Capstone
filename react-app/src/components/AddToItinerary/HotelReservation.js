@@ -54,7 +54,7 @@ function HotelReservation ({trip,booking,closeModal}) {
         } else {
             setErrors({})
             const reservation = "00:00";
-            const data = await dispatch(addItinerary(trip,tripToAdd.trip.id,booking.id,checkIn,checkOut,reservation,expensed,price));
+            const data = await dispatch(addItinerary(trip,tripToAdd.trip.id,booking.id,checkIn,checkOut,reservation,expensed,price,Rooms));
             if (data) {
                 setErrors(data);
                 console.log(data);

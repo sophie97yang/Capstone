@@ -545,7 +545,8 @@ def add_booking(id):
             booking_enddate = form.data['booking_enddate'],
             booking_time = form.data['booking_time'],
             expensed = form.data['expensed'],
-            total= form.data['price']
+            total= form.data['price'],
+            people=form.data['people']
         )
         db.session.add(itinerary)
         trip.bookings.append(itinerary)

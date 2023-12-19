@@ -16,6 +16,7 @@ class Itinerary(db.Model):
     booking_time = db.Column(db.String(15))
     expensed = db.Column(db.Boolean,default=False)
     total = db.Column(db.Float)
+    people = db.Column(db.Integer)
 
     db.UniqueConstraint('trip_id','booking_id',name="uix2")
     trip = db.relationship("Trip", back_populates="bookings")
@@ -31,6 +32,7 @@ class Itinerary(db.Model):
             "booking_enddate":self.booking_enddate,
             "booking_time":self.booking_time,
             "total":self.total,
+            "people":self.people,
             "booking":self.booking.to_dict(),
             "creator":self.user.to_dict_simple()
         }

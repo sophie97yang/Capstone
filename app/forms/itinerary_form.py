@@ -12,3 +12,4 @@ class ItineraryForm(FlaskForm):
     booking_time = StringField('Booking Time')
     price = FloatField("Price")
     expensed = BooleanField('Expensed')
+    people = IntegerField('Individuals/Rooms')

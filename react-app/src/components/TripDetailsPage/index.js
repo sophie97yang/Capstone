@@ -9,6 +9,7 @@ import DeleteModal from '../AllTripsPage/DeleteModal';
 import Expense from './Expense';
 import Itinerary from './Itinerary';
 import './TripDetails.css'
+import Map from '../GoogleMaps';
 
 const TripDetails = ({type}) => {
     const {id} = useParams();
@@ -187,7 +188,7 @@ const TripDetails = ({type}) => {
                     </div>
                     :
                     <div>
-                        <h2>Google Maps</h2>
+                        <Map trip={trip_found}/>
                     </div>
                 }
 

@@ -316,7 +316,7 @@ export const settleUp = (tripDetail,tripId) => async (dispatch) => {
 }
 
 //add an itinerary to trip
-export const addItinerary = (tripDetailId,tripId,bookingId,checkIn,checkOut,reservation,expensed,price) => async (dispatch) =>{
+export const addItinerary = (tripDetailId,tripId,bookingId,checkIn,checkOut,reservation,expensed,price,people) => async (dispatch) =>{
 	try {
 		const res = await fetch(`/api/trips/${tripId}/add_booking`, {
 			method:"POST",
@@ -329,7 +329,8 @@ export const addItinerary = (tripDetailId,tripId,bookingId,checkIn,checkOut,rese
 				"booking_enddate":checkOut,
 				"booking_time":reservation,
 				expensed,
-				price
+				price,
+				people
 			})
 		})
         if (res.ok) {

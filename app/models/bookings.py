@@ -46,5 +46,7 @@ class Booking(db.Model):
             "closing_hour":self.closing_hour,
             "image1":self.image1,
             "image2":self.image2,
-            "image3":self.image3
+            "image3":self.image3,
+            "lat":self.lat,
+            "lng":self.lng
         }
