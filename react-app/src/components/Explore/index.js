@@ -1,12 +1,11 @@
 import { useDispatch,useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams,Link } from "react-router-dom";
 import {getBookings} from '../../store/booking';
 import { useEffect,useState } from "react";
 import './Explore.css'
 import OpenModalButton from "../OpenModalButton";
 // import { useEffect } from "react";
 // import { getHotels } from "../../store/booking";
-import {Link} from 'react-router-dom';
 import CreateTripShortcut from "../CreateTripForm/CreateTripShortcut";
 import AddToItinerary from "../AddToItinerary";
 function Explore () {
@@ -75,16 +74,16 @@ function Explore () {
         {bookingsFilter.length ?
             <>
         <div className='filter-buttons'>
-            <button className={filter==='All'? "filter-button selected" : "filter-button"} onClick={(e)=> {
+            <button className={filter==='All'? "filter-button selected-button" : "filter-button"} onClick={(e)=> {
                 setFiltered('All');
             }}>All</button>
-            <button className={filter==='Hotel'? "filter-button selected" : "filter-button"} onClick={(e)=> {
+            <button className={filter==='Hotel'? "filter-button selected-button" : "filter-button"} onClick={(e)=> {
                 setFiltered('Hotel')
             }}>Hotels <i className="fa-solid fa-bed"></i></button>
-            <button className={filter==='Things To Do'? "filter-button selected" : "filter-button"} onClick={(e)=> {
+            <button className={filter==='Things To Do'? "filter-button selected-button" : "filter-button"} onClick={(e)=> {
                 setFiltered('Things To Do')
             }}>Things To Do <i className="fa-solid fa-ticket"></i></button>
-            <button className={filter==='Restaurants'? "filter-button selected" : "filter-button"} onClick={(e)=> {
+            <button className={filter==='Restaurants'? "filter-button selected-button" : "filter-button"} onClick={(e)=> {
                 setFiltered('Restaurants')
             }}>Restaurants <i className="fa-solid fa-utensils"></i></button>
         </div>
@@ -137,12 +136,15 @@ function Explore () {
                     <div className='explore-images'>
                         <img src={booking.image1} alt={booking.name}></img>
                         <i className="fa-regular fa-heart"></i>
+                    {user ?
                         <OpenModalButton
                         buttonText={`Add to Trip Itinerary`}
                         modalComponent={<AddToItinerary booking={booking}/>}
                         />
+                        :<></>
+                    }
                     </div>
-                    <h3>{booking.name}</h3>
+                    <h3><Link to={`/bookings/${booking.id}`}>{booking.name}</Link></h3>
                     <h3>{booking.stars}</h3>
                     <h4>from ${booking.price.toFixed(2)}/night</h4>
                 </div>
@@ -161,12 +163,15 @@ function Explore () {
                     <div className='explore-images'>
                         <img src={booking.image1} alt={booking.name}></img>
                         <i className="fa-regular fa-heart"></i>
+                        {user ?
                         <OpenModalButton
                         buttonText={`Add to Trip Itinerary`}
                         modalComponent={<AddToItinerary booking={booking}/>}
                         />
+                        :<></>
+                    }
                     </div>
-                    <h3>{booking.name}</h3>
+                    <h3><Link to={`/bookings/${booking.id}`}>{booking.name}</Link></h3>
                     <h3>{booking.stars}</h3>
                     <h4>from ${booking.price.toFixed(2)}/person</h4>
                 </div>
@@ -184,12 +189,15 @@ function Explore () {
                 <div key={booking.id} className='booking-places'>
                     <div className='explore-images'>
                         <img src={booking.image1} alt={booking.name}></img>
+                        {user ?
                         <OpenModalButton
                         buttonText={`Add to Trip Itinerary`}
                         modalComponent={<AddToItinerary booking={booking}/>}
                         />
+                        :<></>
+                    }
                     </div>
-                    <h3>{booking.name}</h3>
+                    <h3><Link to={`/bookings/${booking.id}`}>{booking.name}</Link></h3>
                     <h3>{booking.stars}</h3>
                     <h4>{booking.price===1000 ? '$$$' : <span>{booking.price===100 ? "$$": "$"}</span>}  •  {booking.features}</h4>
                 </div>

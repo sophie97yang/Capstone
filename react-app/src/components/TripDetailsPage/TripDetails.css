@@ -293,3 +293,11 @@
 .payer-details,.you-details {
     width:120px;
 }
+
+.trip-info-location>a {
+    color:white;
+}
+.trip-info-location>a:hover {
+    color:#57d9ae;
+    cursor:pointer;
+}

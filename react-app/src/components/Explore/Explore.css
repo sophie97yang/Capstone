@@ -3,6 +3,7 @@
     height:250px;
     margin:10px;
     border-radius:10px;
+    object-fit: cover;
 }
 
 .explore {
@@ -75,7 +76,7 @@
 
 } */
 
-.selected {
+.selected-button {
     background-color:#57d9ae
 
 }

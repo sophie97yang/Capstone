@@ -7,7 +7,7 @@ import HotelReservation from "./HotelReservation";
 import { useModal } from "../../context/Modal";
 import RestaurantThingReservation from "./RestaurantThingReservation";
 
-function AddToItinerary({booking}) {
+function AddToItinerary({booking,detail}) {
     //map users current trips where end date hasn't passed
     //once user selects trip, load dates that are still left
     //if category is a hotel,
@@ -19,7 +19,7 @@ function AddToItinerary({booking}) {
     })
     return (
         <div>
-             <button onClick={closeModal} className='close-modal' id='update-trip-close'><i className="fa-solid fa-xmark fa-2xl"></i></button>
+             {!detail ?<button onClick={closeModal} className='close-modal' id='update-trip-close'><i className="fa-solid fa-xmark fa-2xl"></i></button>:""}
             {availableTrips.length ?
             <div>
                 <h2>Select a Trip</h2>
@@ -39,9 +39,9 @@ function AddToItinerary({booking}) {
                 TripToAdd && (
                 <div>
                 {booking.category==='Hotel' ?
-                <HotelReservation trip={TripToAdd} booking={booking} closeModal={closeModal}/>
+                <HotelReservation trip={TripToAdd} booking={booking} closeModal={closeModal} setTrip={SetTrip} detail={detail}/>
                 :
-                <RestaurantThingReservation trip={TripToAdd} booking={booking} closeModal={closeModal}/>
+                <RestaurantThingReservation trip={TripToAdd} booking={booking} closeModal={closeModal} setTrip={SetTrip} detail={detail}/>
                 }
                 </div>)}
             </div>
@@ -51,7 +51,7 @@ function AddToItinerary({booking}) {
                 <p>Either your trips have already passed or are not happening in {booking.city}.</p>
                 <OpenModalButton
                 buttonText={`Plan a trip to ${booking.city} now`}
-                modalComponent={<CreateTripShortcut city={booking.city} state={booking.state}/>}
+                modalComponent={<CreateTripShortcut city={booking.city} state={booking.state} closeModal={closeModal}/>}
                 />
             </div>
             }

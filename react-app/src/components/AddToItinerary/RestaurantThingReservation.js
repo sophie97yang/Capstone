@@ -2,7 +2,7 @@ import { useState,useEffect} from "react";
 import {useSelector,useDispatch} from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { addItinerary,authenticate } from '../../store/session';
-function RestaurantThingReservation ({trip,booking,closeModal}) {
+function RestaurantThingReservation ({trip,booking,closeModal,setTrip,detail}) {
     const [individuals,setIndividuals] = useState(2);
     const [reservationTime,setReservationTime]= useState();
     const [reservationDate,setReservationDate] = useState();
@@ -207,7 +207,14 @@ if (booking.category==="Restaurants"){
         <button onClick={handleReservation}>Reserve</button>
         <button onClick={(e)=> {
             e.preventDefault();
-            closeModal()}} id='settle-cancel'>Cancel</button>
+            closeModal();
+            setIndividuals(2);
+            setReservationTime();
+            setReservationDate('');
+            setPrice();
+            setErrors({});
+            if (detail) setTrip('');
+            }} id='settle-cancel'>Cancel</button>
 
     </form>
     )

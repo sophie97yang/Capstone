@@ -1,4 +1,6 @@
 import { useRef } from "react";
+import OpenModalButton from '../OpenModalButton';
+import AddExpenseFromItinerary from "./AddExpenseFromItinerary";
 
 const Itinerary = ({trip}) => {
     const refs = useRef([]);
@@ -41,8 +43,6 @@ const Itinerary = ({trip}) => {
         }
     })
 
-    console.log(attach_booking_to_date);
-
     const handleClick= (date) => {
         window.scrollTo({top: refs.current[date].offsetTop -100,
         behavior: "smooth"})
@@ -77,7 +77,10 @@ const Itinerary = ({trip}) => {
                                            <p>{booking.booking.features}</p>
                                            <p>{booking.booking.category==='Hotel' ? `Check-In:${new Date(booking.booking_startdate).toLocaleDateString('en-US',options)}`: `Reservation:${new Date(booking.booking_startdate).toLocaleDateString('en-US',options)} @ ${booking.booking_time}`}</p>
                                            <p>{booking.booking.category==='Hotel' ? `Check-Out:${new Date(booking.booking_enddate).toLocaleDateString('en-US',options)}`: ""}</p>
-                                           {!booking.expensed ? <button>Add Expense</button>: <button>View Expense</button>}
+                                           {!booking.expensed ? <OpenModalButton
+                                           buttonText="Add Expense"
+                                           modalComponent={<AddExpenseFromItinerary trip={trip} booking={booking}/>}
+                                           />: <button>View Expense</button>}
                                         </div>
                                     ))
                                 }

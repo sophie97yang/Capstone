@@ -1,15 +1,21 @@
 import {useSelector,useDispatch} from 'react-redux';
+import {useState} from 'react';
 import SearchComponent from './SearchComponent';
-import {Link} from 'react-router-dom';
+import {Link,useHistory} from 'react-router-dom';
 import { useEffect } from 'react';
 import { getBookings } from '../../store/booking';
 import './LandingPage.css';
-import logo from '../../assets/images/landing-page.png'
+import logo from '../../assets/images/landing-page.png';
+import { Carousel } from 'react-responsive-carousel';
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 
 function LandingPage ({isLoaded}) {
     const user = useSelector(state=>state.session.user);
     const bookings =  useSelector(state=>state.bookings.bookings);
+    const [locationChoices,setLocationChoices] = useState([]);
+    const [bookingChoices,setBookingChoices] = useState([]);
     const dispatch = useDispatch();
+    const history=useHistory();
 
     const locations = [{city:'Aspen',state:'CO',image:"https://www.travelandleisure.com/thmb/Yiq3rXHGmHnDrgzBsGmEvqjHxSo=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/aspen-colorado-lead-ASPENTG0122-3bd432152d1f4758b1b89fd8a3a231cc.jpg"},
     {city:'Miami',state:'FL',image:'https://www.mayflower.com/wp-content/uploads/2022/05/Miami-City-Guide_Header-scaled.jpg'},
@@ -36,30 +42,39 @@ function LandingPage ({isLoaded}) {
     },[dispatch])
 
     //populate 3 random choices of cities to explore
-    const location_choices = []
-    for (let i=0;i<3;i++) {
-        let choice_index = Math.floor(Math.random()*17);
-        if (location_choices.includes(locations[choice_index])) {
-            choice_index= Math.floor(Math.random()*17);
+    useEffect(()=> {
+        const location_choices = []
+        for (let i=0;i<3;i++) {
+            let choice_index = Math.floor(Math.random()*17);
+            if (location_choices.includes(locations[choice_index])) {
+                choice_index= Math.floor(Math.random()*17);
+            }
+            location_choices.push(locations[choice_index])
         }
-        location_choices.push(locations[choice_index])
-    }
+        if (!locationChoices.length) {
+        setLocationChoices(location_choices);
+        }
+    },[locationChoices])
+
 
     //populate 3 random choices of bookings to look at
-    const booking_choices =[]
-    if (Object.values(bookings).length) {
-    for (let i=0;i<3;i++) {
-        let choice_index = Math.floor(Math.random()*Object.values(bookings).length)+1;
-        if (booking_choices.includes(bookings[choice_index])) {
-            choice_index= Math.floor(Math.random()*Object.values(bookings).length)+1;
-            console.log(choice_index)
+    useEffect(()=> {
+        const booking_choices =[]
+        if (Object.values(bookings).length) {
+            for (let i=0;i<3;i++) {
+                let choice_index = Math.floor(Math.random()*Object.values(bookings).length)+1;
+                if (booking_choices.includes(bookings[choice_index])) {
+                    choice_index= Math.floor(Math.random()*Object.values(bookings).length)+1;
+                    console.log(choice_index)
+                }
+                booking_choices.push(bookings[choice_index])
+            }
         }
-        booking_choices.push(bookings[choice_index])
-    }
-}
+        if (!bookingChoices.length) {
+            setBookingChoices(booking_choices);
+        }
+    })
 
-console.log(booking_choices)
-console.log(bookings)
     return (
         <div className='landing-page'>
             <div className='landing-top'>
@@ -83,7 +98,7 @@ console.log(bookings)
                     <h3>Dream Your Next Trip</h3>
                     <h4>These are the top destinations for your next vacation</h4>
                     <div className='random-places-landing'>
-                        {location_choices.map(location => (
+                        {locationChoices.map(location => (
                             <Link to={`/explore/${location.city}`} key={location.city} className='populate-landing-page'>
                                 <img src={location.image} alt={location.city}></img>
                                 <h4>{location.city}, {location.state}</h4>
@@ -99,20 +114,20 @@ console.log(bookings)
                                 These places are waiting for you...
                             </h3>
                             <h4>Access your past and upcoming trips here</h4>
-                            <div className='landing-user-trips'>
+                            <Carousel className='landing-user-trips' showThumbs={false} centerMode={true} centerSlidePercentage={33} onClickItem={(index,item)=>history.push(`/trips/${item.key}/expenses`)} >
                             {
                                 Object.values(user.trips).map(trip => (
-                                    <div key={trip.id} className='populate-landing-page'>
-                                        <Link to={`/trips/${trip.trip.id}/expenses`}>
+                                    // <div key={trip.id} >
+                                        <div key={trip.trip.id} >
                                         <img src={trip.trip.image ? trip.trip.image : "https://www.travelandleisure.com/thmb/p1Dh0uzZPUk8lQQq2oMhVMUQESk=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/lofoten-islands-norway-MOSTBEAUTIFUL0921-cd0b88063a8b4a26871a51764db0fcae.jpg"} alt="trip"
                                         onError={e => { e.currentTarget.src = "https://images.unsplash.com/photo-1522878129833-838a904a0e9e?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"}}
                                         ></img>
                                         <h4>Your trip to {trip.trip.location[0]}</h4>
-                                        </Link>
-                                    </div>
+                                        </div>
+                                    // </div>
                                 ))
                             }
-                            </div>
+                            </Carousel>
                         </>  :
                         <>
                             <h3>Embark on a journey of your own creation!</h3>
@@ -126,7 +141,7 @@ console.log(bookings)
                             <h4>In the meantime.. Explore all of the things you can do</h4>
                             <div className='explore-choices'>
                             {
-                                booking_choices.map(booking => (
+                                bookingChoices.map(booking => (
                                     <div className='populate-landing-page' key={booking.name}>
                                          <Link to={`/explore/${booking.city}`}>
                                             <img src={booking.image1} alt={booking.name}></img>

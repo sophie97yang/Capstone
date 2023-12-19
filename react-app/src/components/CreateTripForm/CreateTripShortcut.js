@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { createTrip } from "../../store/session";
 
-const CreateTripShortcut = ({city,state}) => {
+const CreateTripShortcut = ({city,state,closeModal}) => {
     const dispatch = useDispatch();
     const history = useHistory();
 
@@ -47,6 +47,7 @@ const CreateTripShortcut = ({city,state}) => {
             setErrors(res.errors);
           } else {
             history.push(`/trips`);
+            closeModal();
             setSubmitted(true);
             return "success";
           }

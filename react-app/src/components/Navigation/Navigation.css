@@ -133,6 +133,9 @@ nav {
   position:absolute;
   background-color:white;
   margin-left:30px;
+  padding-left:0px;
+  max-height:400px;
+  overflow-y: scroll;
 }
 
 .populate-search {
@@ -142,18 +145,6 @@ nav {
   border-radius:10px;
   padding:10px;
 }
-.populate-search a {
-  color:black;
-  height: 50px;
-  overflow: scroll;
-
-}
-
-.populate-search a:hover {
-  background-color:rgb(218, 232, 244);
-  border-radius:10px;
-
-}
 
 #landing-page-search {
   width:600px;
@@ -162,4 +153,15 @@ nav {
 
 #landing-page-results {
   width:580px;
+  margin-left:70px;
+  padding-left:0px;
+}
+
+#landing-page-results>button {
+  width:580px;
+}
+
+.search-output li {
+  list-style-type:none;
+  padding-left:20px;
 }

@@ -1,62 +1,32 @@
 import {useState,useEffect} from 'react';
 import {useDispatch} from 'react-redux';
 import '../AddExpenseForm/AddExpense.css'
-import { authenticate, updateExpense } from '../../store/session';
+import { addExpense, authenticate} from '../../store/session';
 import {useModal} from '../../context/Modal';
 import {useHistory} from 'react-router-dom';
-import "./UpdateExpense.css"
+import "../UpdateExpenseModal/UpdateExpense.css"
 import logo from '../../assets/images/add-expense.png'
 
-function UpdateExpenseModal ({trip,expense}) {
-    // console.log('EXPENSE',expense,'TRIP',trip)
+function AddExpenseFromItinerary ({trip,booking}) {
+    const booking_category_maps = {"Hotel":"Transportation","Things to Do":"Entertainment","Restaurants":"Food and Drink"}
     const dispatch = useDispatch();
     const history = useHistory();
-    //check which users were involved
-    let initialUsers;
-    let defineAllUsers;
-    if (expense.details.length===trip.trip.users.length) {
-        initialUsers=['All']
-        defineAllUsers=true
-    } else {
-        const users=[];
-        expense.details.forEach(user=> users.push(`${user.user.id},${user.user.first_name}`));
-        initialUsers=users;
-        defineAllUsers = false;
 
-    }
-    // if split type is not equal, repopulate with old user prices
-    let initialSplits;
-    let initialCheck;
-    if (expense.split_type!=='Equal') {
-        const initialSplits_exact = {}
-       const splits = expense.split_type_info.split(',')
-       //come back in reverse order
-       expense.details.forEach(user=> initialSplits_exact[user.user.id] = splits.pop())
-       initialSplits = initialSplits_exact
-       initialCheck= expense.split_type==='Exact' ? expense.total : 100
-    }
-    // if (expense.split_type==='Percentages') {
-    //     const initialSplits_percent={}
-    //     const splits = expense.split_type_info.split(',')
-
-    // }
-    const [usersInvolved,setUsers] = useState(initialUsers);
-    const [allUsers,setDefine] = useState(defineAllUsers);
+    const [usersInvolved,setUsers] = useState(['All']);
+    const [allUsers,setDefine] = useState(true);
     const [errors, setErrors] = useState([]);
-    const [name, setName] = useState(expense.name);
+    const [name, setName] = useState(booking.booking.name);
     const options={}
     options.timeZone = "UTC";
-    const [expenseDate, setExpenseDate] = useState(new Date(expense.expense_date).toLocaleDateString('en-CA',options));
-    const [splitType, setSplitType] = useState(expense.split_type);
-    const [splitTypeInfo, setSplitTypeInfo] = useState(initialSplits);
-    const [category, setCategory] = useState(expense.category);
-    const [total, setTotal] = useState(expense.total);
-    const [checkSplit,setCheckSplit] = useState(initialCheck);
+    const [expenseDate, setExpenseDate] = useState(new Date(booking.booking_date).toLocaleDateString('en-CA',options));
+    const [splitType, setSplitType] = useState('Equal');
+    const [splitTypeInfo, setSplitTypeInfo] = useState({});
+    const [category, setCategory] = useState(booking_category_maps[booking.booking.category]);
+    const [total, setTotal] = useState(booking.total);
+    const [checkSplit,setCheckSplit] = useState(0);
     const {closeModal} = useModal();
 
-    console.log('checkSplit',checkSplit, 'splitTypeInfo',splitTypeInfo,'total',total,'usersInvolved',usersInvolved)
     const categories=['General','Food and Drink','Transportation','Entertainment']
-    // console.log(splitTypeInfo,usersInvolved,checkSplit,total)
 
     //anytime that splittypeinfo changes (user inputs prices for the splits), compare to the total
     useEffect(()=> {
@@ -79,7 +49,7 @@ function UpdateExpenseModal ({trip,expense}) {
         if (!name) errorsList.name = 'Name is required'
         //check if expense date is given and  in between trip start and end date
         if (!expenseDate) errorsList.expenseDate = 'Date is required'
-        if (new Date(expenseDate) < new Date(trip.trip.start_date) ||new Date(expenseDate) > new Date(trip.trip.end_date)  ) errorsList.expenseDate = 'Expense must be made during trip duration'
+        // if (new Date(expenseDate) < new Date(trip.trip.start_date) ||new Date(expenseDate) > new Date(trip.trip.end_date)  ) errorsList.expenseDate = 'Expense must be made during trip duration'
         //check if total is given and greater than 0
         if (total<=0) errorsList.total = 'You must expense more than 0 dollars'
         //if splittype is percentage and checksplit is !==100 error
@@ -115,14 +85,14 @@ function UpdateExpenseModal ({trip,expense}) {
             } else {
                 if (splitType!=='Equal') SplitTypeInfoSend = Object.values(splitTypeInfo).join(',')
             }
-            const data = await dispatch(updateExpense(trip.trip.id,trip.id,expense.id,name,expenseDate,splitType,SplitTypeInfoSend,category,total,UsersInfoSend))
+            const data = await dispatch(addExpense(trip.trip.id,trip.id,name,expenseDate,splitType,SplitTypeInfoSend,category,total,UsersInfoSend))
             if (data) {
                 setErrors(data);
                 console.log(data);
                 return;
             } else {
                 dispatch(authenticate())
-                history.push(`/trips/${trip.id}/expenses/${expense.id}`)
+                history.push(`/trips/${trip.id}/expenses`)
                 closeModal();
             }
         }
@@ -133,7 +103,7 @@ function UpdateExpenseModal ({trip,expense}) {
         <div className='update-expense-modal'>
              <button onClick={closeModal} className='close-modal' id='update-trip-close'><i className="fa-solid fa-xmark fa-2xl"></i></button>
             <div>
-            <h2>Update your Expense</h2>
+            <h2>Add an Expense</h2>
             <img src={logo} alt='money-owl'></img>
             </div>
             <form className='add-expense-form'>
@@ -371,4 +341,4 @@ function UpdateExpenseModal ({trip,expense}) {
     )
 }
 
-export default UpdateExpenseModal
+export default AddExpenseFromItinerary;

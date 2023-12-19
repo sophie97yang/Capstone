@@ -15,6 +15,7 @@ import UserBookings from './components/UserBookingsPage'
 import Footer from "./components/Footer";
 import ProtectedRoute from "./components/ProtectedRoute";
 import PageNotFound from "./components/404/404";
+import BookingDetails from "./components/Explore/BookingDetails";
 
 function App() {
   const dispatch = useDispatch();
@@ -52,6 +53,9 @@ function App() {
           <ProtectedRoute path='/trips'>
             <AllTrips />
           </ProtectedRoute>
+          <Route path='/bookings/:id'>
+            <BookingDetails />
+          </Route>
           <Route path='/bookings'>
             <UserBookings />
           </Route>
