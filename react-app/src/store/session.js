@@ -346,6 +346,26 @@ export const addItinerary = (tripDetailId,tripId,bookingId,checkIn,checkOut,rese
     }
 }
 
+//expense the itinerary
+export const ExpenseItinerary = (tripDetailId,tripId,itineraryId) => async (dispatch) => {
+	try {
+		const res = await fetch(`/api/trips/${tripId}/itineraries/${itineraryId}/expense`, {
+			method:"PUT"
+		})
+		if (res.ok) {
+			const {trip} = await res.json();
+            dispatch(updateTrip(trip,tripDetailId));
+        } else {
+            const data = await res.json();
+            console.log("There was an error expensing itinerary")
+            return data
+        }
+    } catch (error) {
+        console.error('An error occurred', error);
+        return ['An error occurred'];
+    }
+}
+
 export default function reducer(state = initialState, action) {
 	let newState
 	switch (action.type) {

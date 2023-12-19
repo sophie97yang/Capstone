@@ -553,3 +553,19 @@ def add_booking(id):
         return {"trip":trip.to_dict()}
     else:
         return {"errors":form.errors},400
+
+@trip_routes.route('/<int:id>/itineraries/<int:itid>/expense',methods=['PUT'])
+@login_required
+def expense_itinerary(id,itid):
+    trip = Trip.query.get(id)
+    itinerary = Itinerary.query.get(itid)
+
+    if trip is None:
+        return {'errors': "Trip doesn't exist"}, 404
+    if itinerary is None:
+        return {'errors': "Itinerary doesn't exist"}, 404
+
+    itinerary.expensed=True
+
+    db.session.commit()
+    return {"trip":trip.to_dict()}

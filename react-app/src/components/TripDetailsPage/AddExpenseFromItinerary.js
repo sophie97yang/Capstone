@@ -1,21 +1,21 @@
 import {useState,useEffect} from 'react';
 import {useDispatch} from 'react-redux';
 import '../AddExpenseForm/AddExpense.css'
-import { addExpense, authenticate} from '../../store/session';
+import { ExpenseItinerary, addExpense, authenticate} from '../../store/session';
 import {useModal} from '../../context/Modal';
 import {useHistory} from 'react-router-dom';
 import "../UpdateExpenseModal/UpdateExpense.css"
 import logo from '../../assets/images/add-expense.png'
 
 function AddExpenseFromItinerary ({trip,booking}) {
-    const booking_category_maps = {"Hotel":"Transportation","Things to Do":"Entertainment","Restaurants":"Food and Drink"}
+    const booking_category_maps = {"Hotel":"Transportation","Things To Do":"Entertainment","Restaurants":"Food and Drink"}
     const dispatch = useDispatch();
     const history = useHistory();
 
     const [usersInvolved,setUsers] = useState(['All']);
     const [allUsers,setDefine] = useState(true);
     const [errors, setErrors] = useState([]);
-    const [name, setName] = useState(booking.booking.name);
+    const [name, setName] = useState(booking.booking.name.slice(0,40));
     const options={}
     options.timeZone = "UTC";
     const [expenseDate, setExpenseDate] = useState(new Date(booking.booking_date).toLocaleDateString('en-CA',options));
@@ -49,7 +49,6 @@ function AddExpenseFromItinerary ({trip,booking}) {
         if (!name) errorsList.name = 'Name is required'
         //check if expense date is given and  in between trip start and end date
         if (!expenseDate) errorsList.expenseDate = 'Date is required'
-        // if (new Date(expenseDate) < new Date(trip.trip.start_date) ||new Date(expenseDate) > new Date(trip.trip.end_date)  ) errorsList.expenseDate = 'Expense must be made during trip duration'
         //check if total is given and greater than 0
         if (total<=0) errorsList.total = 'You must expense more than 0 dollars'
         //if splittype is percentage and checksplit is !==100 error
@@ -86,13 +85,15 @@ function AddExpenseFromItinerary ({trip,booking}) {
                 if (splitType!=='Equal') SplitTypeInfoSend = Object.values(splitTypeInfo).join(',')
             }
             const data = await dispatch(addExpense(trip.trip.id,trip.id,name,expenseDate,splitType,SplitTypeInfoSend,category,total,UsersInfoSend))
+
             if (data) {
                 setErrors(data);
                 console.log(data);
                 return;
             } else {
+                await dispatch(ExpenseItinerary(trip.id,trip.trip.id,booking.id))
                 dispatch(authenticate())
-                history.push(`/trips/${trip.id}/expenses`)
+                history.push(`/trips/${trip.trip.id}/expenses`)
                 closeModal();
             }
         }
