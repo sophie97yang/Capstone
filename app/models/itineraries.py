@@ -17,6 +17,7 @@ class Itinerary(db.Model):
     expensed = db.Column(db.Boolean,default=False)
     total = db.Column(db.Float)
     people = db.Column(db.Integer)
+    expense_id = db.Column(db.Integer,db.ForeignKey(add_prefix_for_prod("expenses.id")),nullable=True)
 
     db.UniqueConstraint('trip_id','booking_id',name="uix2")
     trip = db.relationship("Trip", back_populates="bookings")
@@ -34,5 +35,6 @@ class Itinerary(db.Model):
             "total":self.total,
             "people":self.people,
             "booking":self.booking.to_dict(),
-            "creator":self.user.to_dict_simple()
+            "creator":self.user.to_dict_simple(),
+            "expense_id":self.expense_id
         }

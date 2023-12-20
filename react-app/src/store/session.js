@@ -229,16 +229,16 @@ export const addExpense = (tripId,tripDetail,name,expenseDate,splitType,splitTyp
 	});
 
 	if (response.ok) {
-		const {trip} = await response.json();
+		const {trip,expense} = await response.json();
 		dispatch(updateTrip(trip,tripDetail));
-		return null;
+		return expense;
 	} else if (response.status < 500) {
 		const data = await response.json();
 		if (data.errors) {
-			return data.errors;
+			return data;
 		}
 	} else {
-		return ["An error occurred. Please try again."];
+		return {"errors":"An error occurred. Please try again."};
 	}
 }
 
@@ -348,9 +348,9 @@ export const addItinerary = (tripDetailId,tripId,bookingId,checkIn,checkOut,rese
 }
 
 //expense the itinerary
-export const ExpenseItinerary = (tripDetailId,tripId,itineraryId) => async (dispatch) => {
+export const ExpenseItinerary = (tripDetailId,tripId,itineraryId,expenseId) => async (dispatch) => {
 	try {
-		const res = await fetch(`/api/trips/${tripId}/itineraries/${itineraryId}/expense`, {
+		const res = await fetch(`/api/trips/${tripId}/itineraries/${itineraryId}/expense/${expenseId}`, {
 			method:"PUT"
 		})
 		if (res.ok) {

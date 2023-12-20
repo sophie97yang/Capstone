@@ -360,7 +360,7 @@
 }
 .booking-detail-it-right >img {
     width:250px;
-    height:200px;
+    height:250px;
     object-fit:cover;
     border-radius:5px;
 }
@@ -375,8 +375,33 @@
 
 .booking-detail-it-right {
     display:flex;
+    align-items:center;
 }
 
 .more-booking-right {
-    margin-left:10px;
+    margin-left:30px;
+}
+
+.view-expense-button {
+    margin:10px;
+    width:150px;
+    height:50px;
+    border-radius:20px;
+    border-style:none;
+    background-color:#57d9ae;
+    padding:10px;
+}
+
+.no-itinerary {
+    height:200px;
+    display:flex;
+    justify-content: center;
+    align-items:center;
+    border:2px solid grey;
+    border-radius:10px;
+}
+
+.no-itinerary>p {
+    text-align:center;
+    font-size:20px;
 }

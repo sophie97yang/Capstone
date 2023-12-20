@@ -55,9 +55,13 @@ nav {
   display:flex;
   max-height:200px;
   align-items:center;
-  justify-content:center;
-  width:950px;
+  justify-content:space-between;
   margin:0px auto;
+  position:sticky;
+  top:0px;
+  background-color:white;
+  padding-top:10px;
+  z-index:5;
 }
 
 .logo-nav,.search-bar-nav,.action-button-nav {

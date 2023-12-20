@@ -86,12 +86,13 @@ function AddExpenseFromItinerary ({trip,booking}) {
             }
             const data = await dispatch(addExpense(trip.trip.id,trip.id,name,expenseDate,splitType,SplitTypeInfoSend,category,total,UsersInfoSend))
 
-            if (data) {
-                setErrors(data);
-                console.log(data);
+            if (data.errors) {
+                setErrors(data.errors);
+                console.log(data.errors);
                 return;
             } else {
-                await dispatch(ExpenseItinerary(trip.id,trip.trip.id,booking.id))
+                const expense=data;
+                await dispatch(ExpenseItinerary(trip.id,trip.trip.id,booking.id,expense.id))
                 dispatch(authenticate())
                 history.push(`/trips/${trip.trip.id}/expenses`)
                 closeModal();

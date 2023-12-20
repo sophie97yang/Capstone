@@ -46,11 +46,11 @@ function SearchComponent ({className}) {
     return (
 <div className='search-bar'>
 {!className ? <i className="fa-solid fa-magnifying-glass fa-lg"></i>:<></>}
-{!className ? <></>:
+{/* {!className ? <></>:
 <select>
     <option>Cities</option>
 </select>
-}
+} */}
 <input
     type="search"
     placeholder="Search for places to go on your next trip..."

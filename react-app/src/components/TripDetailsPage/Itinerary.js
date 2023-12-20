@@ -1,6 +1,7 @@
 import { useRef,useState } from "react";
 import OpenModalButton from '../OpenModalButton';
 import AddExpenseFromItinerary from "./AddExpenseFromItinerary";
+import {useHistory,Link} from 'react-router-dom'
 
 const Itinerary = ({trip}) => {
     const refs = useRef([]);
@@ -9,7 +10,7 @@ const Itinerary = ({trip}) => {
     const daysOfWeek = {0:"Sunday",1:"Monday",2:"Tuesday",3:"Wednesday",4:"Thursday",5:"Friday",6:"Saturday"};
     const months = {0:"January",1:"February",2:"March",3:"April",4:"May",5:"June",6:"July",7:"August",8:"September",9:"October",10:"November",11:"December"}
     const dates_between=[];
-    console.log(trip);
+    const history = useHistory();
     let date = new Date(trip.trip.start_date);
     while (date<=new Date(trip.trip.end_date)) {
         dates_between.push(new Date(date));
@@ -87,8 +88,9 @@ const Itinerary = ({trip}) => {
 
                             }</h2>
                             <div className='booking-info hidden' id={visible===index ?"visible":""}>
-                                {
-                                    attach_booking_to_date[date]?.map((booking,index) => (
+                                {attach_booking_to_date[date] ?
+                                <>
+                                    {attach_booking_to_date[date].map((booking,index) => (
                                         <div key={booking.id} className="booking-detail-itinerary">
                                            <div className='booking-detail-it-left'>
                                            <h2>{index+1}</h2>
@@ -98,19 +100,29 @@ const Itinerary = ({trip}) => {
                                            <div className="booking-detail-it-right">
                                            <img src={booking.booking.image1} alt={booking.booking.name}></img>
                                            <div className='more-booking-right'>
-                                           <h3> {booking.booking.name}</h3>
+                                           <h3><Link to={`/bookings/${booking.booking.id}`}>{booking.booking.name}</Link></h3>
                                            <p>{booking.booking.category}</p>
                                            <p>{booking.booking.features}</p>
-                                           <p>{booking.booking.category==='Hotel' ? `Check-In:${new Date(booking.booking_startdate).toLocaleDateString('en-US',options)}`: `Reservation:${new Date(booking.booking_startdate).toLocaleDateString('en-US',options)} @ ${booking.booking_time}`}</p>
-                                           <p>{booking.booking.category==='Hotel' ? `Check-Out:${new Date(booking.booking_enddate).toLocaleDateString('en-US',options)}`: ""}</p>
+                                           {booking.booking.category==='Hotel' ? <p> <i className="fa-regular fa-calendar"></i> Check-In: {new Date(booking.booking_startdate).toLocaleDateString('en-US',options)}</p>:<p> <i class="fa-regular fa-clock"></i> Reservation:{new Date(booking.booking_startdate).toLocaleDateString('en-US',options)} at {booking.booking_time}</p> }
+                                           {booking.booking.category==='Hotel' ? <p> <i className="fa-regular fa-calendar"></i> Check-Out: {new Date(booking.booking_enddate).toLocaleDateString('en-US',options)}</p>: ""}
                                            {!booking.expensed ? <OpenModalButton
                                            buttonText="Add Expense"
                                            modalComponent={<AddExpenseFromItinerary trip={trip} booking={booking}/>}
-                                           />: <button>View Expense</button>}
+                                           />: <button onClick={(e)=> {
+                                            e.preventDefault();
+                                            history.push(`/trips/${trip.id}/expenses/${booking.expense_id}`)
+                                           }}
+                                           className="view-expense-button"
+                                           >View Expense</button>}
                                            </div>
                                            </div>
                                         </div>
                                     ))
+                                }
+                                </>:
+                                <div className='no-itinerary'>
+                                <p>Build your itinerary by exploring <Link to={`/explore/${trip.trip.location[0]}`}>{trip.trip.location[0]}</Link> now.</p>
+                                </div>
                                 }
 
                             </div>

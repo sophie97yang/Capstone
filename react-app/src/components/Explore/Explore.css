@@ -39,6 +39,11 @@
     margin-bottom:30px;
 }
 
+.filter-button {
+    background-color:white;
+    font-weight:500;
+}
+
 .filter-buttons button {
     width:250px;
     height:60px;
@@ -55,19 +60,27 @@
 }
 
 .booking-places {
-    margin:20px;
+    margin:10px;
     max-width:400px;
     max-height:400px;
+    text-align:left;
+    margin-right:20px;
 }
 
 .booking-places>h4 {
     font-weight:300;
     margin-top:0px;
+    padding-left:10px;
 }
 
 .booking-places>h3 {
     margin-top:0px;
     margin-bottom:0px;
+    padding-left:10px;
+
+}
+.booking-places a {
+    color:black;
 }
 
 /* .explore-images {
@@ -129,3 +142,87 @@
 .explore-images>button, .explore-images>.fa-heart {
     position:absolute;
 }
+
+.explore-images>button {
+    top:40px;
+    right:20px;
+    background-color:white;
+    border-style:none;
+    border:1.5px solid white;
+    width:100px;
+    border-radius:30px;
+    padding:10px;
+    padding-right:15px;
+    padding-left:35px;
+    font-size:15px;
+}
+
+.explore-images>button:hover {
+    cursor:pointer;
+    border:1px solid black;
+}
+
+.fa-heart {
+    top:70px;
+    right:90px;
+    z-index:2;
+    color:black;
+
+}
+
+.plan-trip{
+    border:1px solid grey;
+    border-radius:10px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    width:950px;
+  }
+
+  .shortcut-trip-form {
+    padding-top:10px;
+  }
+  .shortcut-trip-form>div{
+    display:flex;
+    flex-direction:column;
+    width:400px;
+
+  }
+
+  #shortcut-buttons {
+    align-items: center;
+  }
+
+  #shortcut-buttons>button {
+    margin-left:0px;
+  }
+
+  #shortcut-buttons>button:hover {
+    cursor:pointer;
+  }
+
+  .shortcut-trip-form input,.shortcut-trip-form select {
+    height:40px;
+    border-radius:10px;
+    border-style:none;
+    border:1px solid black;
+    padding-left:5px;
+  }
+
+  .shortcut-trip-form label {
+    margin-bottom:10px;
+    font-size:18px;
+
+  }
+
+  .explore-bookings h2 {
+    font-size:40px;
+  }
+
+  .about-explore-section p {
+    font-size:18px;
+  }
+
+  .about-explore-section {
+    margin-right:40px;
+  }

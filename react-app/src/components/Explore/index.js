@@ -8,6 +8,9 @@ import OpenModalButton from "../OpenModalButton";
 // import { getHotels } from "../../store/booking";
 import CreateTripShortcut from "../CreateTripForm/CreateTripShortcut";
 import AddToItinerary from "../AddToItinerary";
+import { Carousel } from 'react-responsive-carousel';
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+
 function Explore () {
     const dispatch = useDispatch();
     const {city} = useParams();
@@ -28,7 +31,7 @@ function Explore () {
     const bookings_city_things = bookings_city.filter(booking=> booking.category==='Things To Do');
 
     const [filter,setFiltered] = useState('All')
-    const [bookingsFilter,setBookings]=useState(bookings_city)
+    const [bookingsFilter,setBookings]=useState(bookings_city);
 
     useEffect(()=> {
         dispatch(getBookings())
@@ -40,9 +43,11 @@ function Explore () {
             else if (filter==='Restaurants') setBookings(bookings_city_restaurants);
             else setBookings(bookings_city_things);
         } else {
+            if (bookingsFilter.length!==bookings_city.length){
             setBookings(bookings_city)
+            }
         }
-    },[filter])
+    },[filter,bookings_city])
 
     const locations = [{city:'Aspen',state:'CO',image:"https://www.travelandleisure.com/thmb/Yiq3rXHGmHnDrgzBsGmEvqjHxSo=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/aspen-colorado-lead-ASPENTG0122-3bd432152d1f4758b1b89fd8a3a231cc.jpg", header:"About Aspen",about:"Everyone knows Aspen as a top-notch winter resort town. But outdoor enthusiasts will enjoy it in the summer, too, when the mountains become a perfect setting for hiking, biking and horseback tours. Some may be surprised to find it’s a top romance destination—but after all that outdoor exercise, who wouldn’t want to repair to a luxurious hotel room or a cozy, firelit bar?"},
     {city:'Miami',state:'FL',image:'https://www.mayflower.com/wp-content/uploads/2022/05/Miami-City-Guide_Header-scaled.jpg',header:"About Miami",about:"Miami at night is legendary—it’s all art-deco neon, music spilling into the streets and rooftop cocktails. But by day, there’s just as much to explore. Architecture buffs can visit the reconstructed 12th century Ancient Spanish Monastery and Renaissance-inspired Vizcaya Museum & Gardens, or cruise down the art deco-dotted Ocean Drive. For beach lovers, there’s plenty beyond South Beach: Swim with sea turtles at Boynton Beach, go windsurfing at Hobie Beach, or skip the sand and take a dip at the Venetian Pool (another architectural gem). And thanks to the strong Cuban and Jewish communities, you can snack on pastelitos in Little Havana or grab a loaf of kosher rye in Wynwood—in the same day, if you’re up for it."},
@@ -66,7 +71,17 @@ function Explore () {
 
     const location_picture = locations.filter(locationObj => locationObj.city===city)[0]
 
+    const renderRightArrow = (onClickHandler, hasNext, label) => hasNext && (
+        <button type="button" onClick={onClickHandler} title={label} className='carousel-buttons button-right'>
+            <i class="fa-solid fa-arrow-right fa-xl"></i>
+        </button>
+    )
 
+    const renderLeftArrow = (onClickHandler, hasPrev, label) => hasPrev && (
+    <button type="button" onClick={onClickHandler} title={label} className='carousel-buttons button-left'>
+        <i class="fa-solid fa-arrow-left fa-xl"></i>
+    </button>
+)
     return (
         <div className='explore'>
         <h3 className='breadcrumb-container'><Link to='/' className='breadcrumb'>Home </Link> {`  >`} Explore {city}</h3>
@@ -118,8 +133,7 @@ function Explore () {
             Quintessential {city} bistros, bars, and beyond.
             </>
             }
-            </>}</span> :
-            <span>Stay,Do,Eat</span>
+            </>}</span> :""
             }</p>
 
             {
@@ -130,15 +144,19 @@ function Explore () {
                 <h2>Stay</h2>
                 <p>A mix of the charming, iconic, and modern.</p>
                 </div>
-                <div className='bookings-div'>
+                <Carousel className='bookings-carousel' showThumbs={false} centerMode={true}
+                centerSlidePercentage={50} showIndicators={false}
+                showStatus={false}
+                renderArrowNext={renderRightArrow} renderArrowPrev={renderLeftArrow}
+                >
                 {bookings_city_hotels.map((booking)=> (
                 <div key={booking.id} className='booking-places'>
                     <div className='explore-images'>
                         <img src={booking.image1} alt={booking.name}></img>
-                        <i className="fa-regular fa-heart"></i>
+                        <i className="fa-regular fa-heart fa-xl"></i>
                     {user ?
                         <OpenModalButton
-                        buttonText={`Add to Trip Itinerary`}
+                        buttonText={`Add to Itinerary`}
                         modalComponent={<AddToItinerary booking={booking}/>}
                         />
                         :<></>
@@ -146,10 +164,11 @@ function Explore () {
                     </div>
                     <h3><Link to={`/bookings/${booking.id}`}>{booking.name}</Link></h3>
                     <h3>{booking.stars}</h3>
+                    <h4>{booking.features}</h4>
                     <h4>from ${booking.price.toFixed(2)}/night</h4>
                 </div>
                 ))}
-                </div>
+                </Carousel>
                 </div>
 
                 <div className="explore-things">
@@ -157,15 +176,19 @@ function Explore () {
                 <h2>Do</h2>
                 <p>Places to see, ways to wander, and signature experiences that define {city}.</p>
                 </div>
-                <div className='bookings-div'>
+                <Carousel className='bookings-carousel' showThumbs={false} centerMode={true}
+                centerSlidePercentage={50} showIndicators={false}
+                showStatus={false}
+                renderArrowNext={renderRightArrow} renderArrowPrev={renderLeftArrow}
+                >
                 {bookings_city_things.map((booking)=> (
                 <div key={booking.id} className='booking-places'>
                     <div className='explore-images'>
                         <img src={booking.image1} alt={booking.name}></img>
-                        <i className="fa-regular fa-heart"></i>
+                        <i className="fa-regular fa-heart fa-xl"></i>
                         {user ?
                         <OpenModalButton
-                        buttonText={`Add to Trip Itinerary`}
+                        buttonText={`Add to Itinerary`}
                         modalComponent={<AddToItinerary booking={booking}/>}
                         />
                         :<></>
@@ -173,10 +196,11 @@ function Explore () {
                     </div>
                     <h3><Link to={`/bookings/${booking.id}`}>{booking.name}</Link></h3>
                     <h3>{booking.stars}</h3>
+                    <h4>{booking.features}</h4>
                     <h4>from ${booking.price.toFixed(2)}/person</h4>
                 </div>
                 ))}
-                </div>
+                </Carousel>
                 </div>
 
                 <div className="explore-restaurants">
@@ -184,14 +208,19 @@ function Explore () {
                 <h2>Eat</h2>
                 <p>Quintessential {city} bistros, bars, and beyond.</p>
                 </div>
-                <div className='bookings-div'>
+                <Carousel className='bookings-carousel' showThumbs={false} centerMode={true}
+                centerSlidePercentage={50} showIndicators={false}
+                showStatus={false}
+                renderArrowNext={renderRightArrow} renderArrowPrev={renderLeftArrow}
+                >
                 {bookings_city_restaurants.map((booking)=> (
                 <div key={booking.id} className='booking-places'>
                     <div className='explore-images'>
                         <img src={booking.image1} alt={booking.name}></img>
+                        <i className="fa-regular fa-heart fa-xl"></i>
                         {user ?
                         <OpenModalButton
-                        buttonText={`Add to Trip Itinerary`}
+                        buttonText={`Add to Itinerary`}
                         modalComponent={<AddToItinerary booking={booking}/>}
                         />
                         :<></>
@@ -202,7 +231,7 @@ function Explore () {
                     <h4>{booking.price===1000 ? '$$$' : <span>{booking.price===100 ? "$$": "$"}</span>}  •  {booking.features}</h4>
                 </div>
                 ))}
-                 </div>
+                 </Carousel>
                 </div>
 
                 </>:

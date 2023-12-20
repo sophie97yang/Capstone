@@ -284,7 +284,7 @@ def create_expense(id):
         #attach expense to trip
         trip.expenses.append(expense)
         db.session.commit()
-        return {"trip":trip.to_dict()}
+        return {"trip":trip.to_dict(),"expense":expense.to_dict()}
     return {"errors":form.errors},400
 
 
@@ -554,10 +554,10 @@ def add_booking(id):
         return {"trip":trip.to_dict()}
     else:
         return {"errors":form.errors},400
-
-@trip_routes.route('/<int:id>/itineraries/<int:itid>/expense',methods=['PUT'])
+#expensing itinerary
+@trip_routes.route('/<int:id>/itineraries/<int:itid>/expense/<int:exid>',methods=['PUT'])
 @login_required
-def expense_itinerary(id,itid):
+def expense_itinerary(id,itid,exid):
     trip = Trip.query.get(id)
     itinerary = Itinerary.query.get(itid)
 
@@ -567,6 +567,8 @@ def expense_itinerary(id,itid):
         return {'errors': "Itinerary doesn't exist"}, 404
 
     itinerary.expensed=True
+    itinerary.expense_id = int(exid)
+
 
     db.session.commit()
     return {"trip":trip.to_dict()}

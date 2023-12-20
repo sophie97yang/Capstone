@@ -75,6 +75,18 @@ function LandingPage ({isLoaded}) {
         }
     })
 
+    const renderRightArrow = (onClickHandler, hasNext, label) => hasNext && (
+            <button type="button" onClick={onClickHandler} title={label} className='carousel-buttons button-right'>
+                <i class="fa-solid fa-arrow-right fa-xl"></i>
+            </button>
+        )
+
+    const renderLeftArrow = (onClickHandler, hasPrev, label) => hasPrev && (
+        <button type="button" onClick={onClickHandler} title={label} className='carousel-buttons button-left'>
+            <i class="fa-solid fa-arrow-left fa-xl"></i>
+        </button>
+    )
+
     return (
         <div className='landing-page'>
             <div className='landing-top'>
@@ -94,7 +106,7 @@ function LandingPage ({isLoaded}) {
 
 {isLoaded &&
             <div className='dashboard'>
-                    <div>
+                    <div className='top-destinations'>
                     <h3>Dream Your Next Trip</h3>
                     <h4>These are the top destinations for your next vacation</h4>
                     <div className='random-places-landing'>
@@ -114,7 +126,8 @@ function LandingPage ({isLoaded}) {
                                 These places are waiting for you...
                             </h3>
                             <h4>Access your past and upcoming trips here</h4>
-                            <Carousel className='landing-user-trips' showThumbs={false} centerMode={true} centerSlidePercentage={33} onClickItem={(index,item)=>history.push(`/trips/${item.key}/expenses`)} >
+                            <Carousel className='landing-user-trips' showThumbs={false} centerMode={true} centerSlidePercentage={33}
+                            onClickItem={(index,item)=>history.push(`/trips/${item.key}/expenses`)} renderArrowNext={renderRightArrow} renderArrowPrev={renderLeftArrow} >
                             {
                                 Object.values(user.trips).map(trip => (
                                     // <div key={trip.id} >

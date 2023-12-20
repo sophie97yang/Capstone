@@ -57,6 +57,7 @@ const CreateTripShortcut = ({city,state,closeModal}) => {
 
       return (
           <form onSubmit={handleSubmit} encType="multipart/form-data" className='shortcut-trip-form'>
+            <div>
               <label>My trip shall be called...</label>
               <input
                 type="text"
@@ -66,13 +67,14 @@ const CreateTripShortcut = ({city,state,closeModal}) => {
                 className=""
               />
               {errors.name ? <p className='errors'>{errors.name}</p>: <p className='errors'></p>}
-
+              </div>
 
             <div>
             <label>Destination </label>
             <select>
                 <option value={`${[city,state]}`}>{city},{state}</option>
             </select>
+            <p className='errors'></p>
             </div>
 
             <div>
@@ -92,8 +94,9 @@ const CreateTripShortcut = ({city,state,closeModal}) => {
             />
             {errors.end_date ? <p className='errors'>{errors.end_date}</p>: <p className='errors'></p>}
             </div>
-
+            <div id="shortcut-buttons">
             <button type="submit" className="action-button-ls">Create Trip</button>
+            </div>
           </form>
           )}
 
