@@ -23,9 +23,9 @@ class Booking(db.Model):
     opening_hour = db.Column(db.String(50))
     closing_hour = db.Column(db.String(50))
 
-    image1 = db.Column(db.String(255),nullable=False)
-    image2 = db.Column(db.String(255),nullable=False)
-    image3 = db.Column(db.String(255),nullable=False)
+    image1 = db.Column(db.String(500),nullable=False)
+    image2 = db.Column(db.String(500),nullable=False)
+    image3 = db.Column(db.String(500),nullable=False)
 
     trips = db.relationship('Itinerary',back_populates='booking')
 
