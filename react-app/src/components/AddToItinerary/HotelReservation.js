@@ -3,7 +3,7 @@ import {useState,useEffect} from 'react';
 import { addItinerary,authenticate } from '../../store/session';
 import { useHistory } from 'react-router-dom';
 
-function HotelReservation ({trip,booking,closeModal}) {
+function HotelReservation ({trip,booking,closeModal,detail}) {
     const [checkIn,setCheckIn] = useState();
     const [checkOut,setCheckOut] = useState();
     const [Rooms,setRooms] = useState(1);
@@ -79,7 +79,7 @@ function HotelReservation ({trip,booking,closeModal}) {
 
     return (
         <form className='reservation-form hotel-form'>
-        <h2>{booking.name}</h2>
+        {!detail ? <h2>{booking.name}</h2>:""}
             <div id='checkin-out'>
             <div>
             <label>Check-In </label>

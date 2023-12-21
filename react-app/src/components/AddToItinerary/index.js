@@ -22,7 +22,7 @@ function AddToItinerary({booking,detail}) {
              {!detail ?<button onClick={closeModal} className='close-modal' id='update-trip-close'><i className="fa-solid fa-xmark fa-2xl"></i></button>:""}
             {availableTrips.length ?
             <div>
-                <h2>Select a Trip</h2>
+                <h2 id='select-trip-heading'>Select a Trip</h2>
                 <select
                 value={TripToAdd}
                 onChange={(e)=> {

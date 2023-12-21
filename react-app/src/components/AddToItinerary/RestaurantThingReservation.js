@@ -116,7 +116,10 @@ if (booking.category==="Restaurants"){
     let counter=0
     return (
     <form className='reservation-form restaurant-thing-form'>
+
+        {!detail && <>
         {booking.category ==='Restaurants' ? <h2>Make a Reservation at {booking.name}</h2>: <h2>Reserve a Spot at {booking.name}</h2>}
+        </>}
         <div className="party-date-info">
         {booking.category==='Restaurants' ?
         <div>

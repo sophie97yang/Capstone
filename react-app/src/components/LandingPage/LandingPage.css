@@ -33,7 +33,7 @@
     margin-bottom:10px;
 }
 
-.headings>h2, .headings>p {
+.headings>h2{
     text-align:center;
     font-weight:400;
     max-width:600px;
@@ -108,14 +108,18 @@
 
 }
 .slogan {
-    width:600px;
+    max-width:600px;
     margin-bottom:0px;
+    font-size:20px;
+    font-weight:300;
+    text-align:center;
 }
 
 
 .bottom {
     margin-top:0px;
     margin-bottom:30px;
+    text-align:center;
 }
 
 .landing-top img {
@@ -133,7 +137,7 @@
     display:block;
     background-color:white;
     border:none;
-    width:400px;
+    width:600px;
     text-align:left;
     margin:0px;
     padding:20px;
@@ -178,4 +182,21 @@
 
 .button-right {
     right:0px;
+}
+
+.populate-landing-page h4,.landing-user-trips h4 {
+    font-weight:300;
+}
+
+.search-bar {
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.action-button-nav {
+    display:flex;
+    justify-content: flex-end;
+    align-items:center;
+    padding-right:30px;
 }

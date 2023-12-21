@@ -77,13 +77,13 @@ function LandingPage ({isLoaded}) {
 
     const renderRightArrow = (onClickHandler, hasNext, label) => hasNext && (
             <button type="button" onClick={onClickHandler} title={label} className='carousel-buttons button-right'>
-                <i class="fa-solid fa-arrow-right fa-xl"></i>
+                <i className="fa-solid fa-arrow-right fa-xl"></i>
             </button>
         )
 
     const renderLeftArrow = (onClickHandler, hasPrev, label) => hasPrev && (
         <button type="button" onClick={onClickHandler} title={label} className='carousel-buttons button-left'>
-            <i class="fa-solid fa-arrow-left fa-xl"></i>
+            <i className="fa-solid fa-arrow-left fa-xl"></i>
         </button>
     )
 

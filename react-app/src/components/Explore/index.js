@@ -39,15 +39,15 @@ function Explore () {
 
     useEffect(()=> {
         if (filter!=='All') {
-            if (filter==='Hotel') setBookings(bookings_city_hotels);
-            else if (filter==='Restaurants') setBookings(bookings_city_restaurants);
-            else setBookings(bookings_city_things);
+            if (filter==='Hotel' && (bookingsFilter.length!==bookings_city_hotels.length || bookingsFilter[0].name!==bookings_city_hotels[0].name)) setBookings(bookings_city_hotels);
+            else if (filter==='Restaurants' && (bookingsFilter.length!==bookings_city_restaurants.length || bookingsFilter[0].name!==bookings_city_restaurants[0].name)) setBookings(bookings_city_restaurants);
+            else if (filter==='Things To Do' && (bookingsFilter.length!==bookings_city_things.length || bookingsFilter[0].name!==bookings_city_things[0].name)) setBookings(bookings_city_things);
         } else {
             if (bookingsFilter.length!==bookings_city.length){
             setBookings(bookings_city)
             }
         }
-    },[filter,bookings_city])
+    },[filter,bookings_city,bookings_city_hotels,bookings_city_restaurants,bookings_city_things])
 
     const locations = [{city:'Aspen',state:'CO',image:"https://www.travelandleisure.com/thmb/Yiq3rXHGmHnDrgzBsGmEvqjHxSo=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/aspen-colorado-lead-ASPENTG0122-3bd432152d1f4758b1b89fd8a3a231cc.jpg", header:"About Aspen",about:"Everyone knows Aspen as a top-notch winter resort town. But outdoor enthusiasts will enjoy it in the summer, too, when the mountains become a perfect setting for hiking, biking and horseback tours. Some may be surprised to find it’s a top romance destination—but after all that outdoor exercise, who wouldn’t want to repair to a luxurious hotel room or a cozy, firelit bar?"},
     {city:'Miami',state:'FL',image:'https://www.mayflower.com/wp-content/uploads/2022/05/Miami-City-Guide_Header-scaled.jpg',header:"About Miami",about:"Miami at night is legendary—it’s all art-deco neon, music spilling into the streets and rooftop cocktails. But by day, there’s just as much to explore. Architecture buffs can visit the reconstructed 12th century Ancient Spanish Monastery and Renaissance-inspired Vizcaya Museum & Gardens, or cruise down the art deco-dotted Ocean Drive. For beach lovers, there’s plenty beyond South Beach: Swim with sea turtles at Boynton Beach, go windsurfing at Hobie Beach, or skip the sand and take a dip at the Venetian Pool (another architectural gem). And thanks to the strong Cuban and Jewish communities, you can snack on pastelitos in Little Havana or grab a loaf of kosher rye in Wynwood—in the same day, if you’re up for it."},
@@ -73,13 +73,13 @@ function Explore () {
 
     const renderRightArrow = (onClickHandler, hasNext, label) => hasNext && (
         <button type="button" onClick={onClickHandler} title={label} className='carousel-buttons button-right'>
-            <i class="fa-solid fa-arrow-right fa-xl"></i>
+            <i className="fa-solid fa-arrow-right fa-xl"></i>
         </button>
     )
 
     const renderLeftArrow = (onClickHandler, hasPrev, label) => hasPrev && (
     <button type="button" onClick={onClickHandler} title={label} className='carousel-buttons button-left'>
-        <i class="fa-solid fa-arrow-left fa-xl"></i>
+        <i className="fa-solid fa-arrow-left fa-xl"></i>
     </button>
 )
     return (

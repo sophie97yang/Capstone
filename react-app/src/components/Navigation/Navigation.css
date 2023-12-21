@@ -64,7 +64,7 @@ nav {
   z-index:5;
 }
 
-.logo-nav,.search-bar-nav,.action-button-nav {
+.search-bar-nav {
   flex-grow:1
 }
 .auth-action-buttons {
@@ -99,7 +99,7 @@ nav {
 }
 
 .search-bar input {
-  width:400px;
+  width:600px;
   height:50px;
   border-radius:20px;
   padding:10px;
@@ -133,8 +133,9 @@ nav {
 
 
 .search-output {
-  width:400px;
+  width:600px;
   position:absolute;
+  top:60px;
   background-color:white;
   margin-left:30px;
   padding-left:0px;
@@ -157,8 +158,9 @@ nav {
 
 #landing-page-results {
   width:580px;
-  margin-left:70px;
+  margin-left:0px;
   padding-left:0px;
+  top:460px;
 }
 
 #landing-page-results>button {

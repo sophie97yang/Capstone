@@ -249,3 +249,139 @@
     border-style: none;
     border-radius:10px;
   }
+
+  .explore-booking-details {
+    padding-top:50px;
+    width:950px;
+    margin:0px auto;
+  }
+
+  .left-booking>h2 {
+    font-size:37px;
+    margin-bottom:5px;
+  }
+
+  .left-booking>h3 {
+    font-weight:300;
+  }
+
+
+  .features {
+    font-style:italic;
+    margin-top:0px;
+  }
+
+  .explore-detail-carousel {
+    width:950px;
+    margin:0px auto;
+  }
+
+  .explore-detail-carousel img {
+    max-height:500px;
+    object-fit: cover;
+    border-radius:10px;
+  }
+
+  .explore-booking-details>h4 {
+    font-size:20px;
+  }
+
+  .booking-info-top {
+    display:flex;
+    flex-direction: row;
+    align-items:center;
+  }
+
+  .price-booking {
+    justify-self:flex-end;
+    font-size:30px;
+    text-align:right;
+    flex-grow:1;
+  }
+
+  .left-booking {
+    max-width:550px;
+  }
+
+  .price-booking>p {
+    margin:0px;
+  }
+
+  .price-booking>button {
+    width:100px;
+    height:50px;
+    margin-top:10px;
+    border-style:none;
+    border-radius:10px;
+    background-color:orange;
+    margin-right:40px;
+  }
+
+  .explore-booking-details button:hover {
+    cursor:pointer;
+  }
+
+  .explore-booking-details .carousel-buttons {
+    top:220px;
+  }
+  .explore-booking-details .thumb>img{
+    max-height:50px;
+  }
+
+  .about-booking {
+    border:1px solid grey;
+    padding:30px;
+    border-radius:10px;
+    margin-bottom:10px;
+  }
+
+  .about-booking>h2,.explore-details-bottom h2 {
+    font-size:30px;
+    margin:0px;
+  }
+  .about-booking>p {
+    font-size:20px;
+  }
+
+  .explore-details-bottom {
+    display:flex;
+    flex-direction:row;
+    margin-top:30px;
+  }
+  .location-contact-booking {
+    flex-grow:1;
+    min-width:450px;
+  }
+  .location-contact-booking>h2 {
+    margin-top:20px;
+    margin-bottom:20px;
+  }
+  .add-to-itinerary-explore-page {
+    border:1px solid grey;
+    border-radius:10px;
+  }
+
+  .add-to-itinerary-explore-page>h2 {
+    margin:20px;
+    text-align:center;
+  }
+
+  .add-to-itinerary-explore-page #select-trip-heading {
+    font-size:20px;
+    font-weight:200;
+  }
+
+  .contact-info {
+    display:flex;
+    gap:20px;
+    font-size:18px;
+    font-weight:300;
+  }
+
+  .contact-info a{
+    color:black;
+  }
+
+  .about-city>p {
+    text-align:justify;
+  }
