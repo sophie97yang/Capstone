@@ -229,16 +229,16 @@ export const addExpense = (tripId,tripDetail,name,expenseDate,splitType,splitTyp
 	});
 
 	if (response.ok) {
-		const {trip} = await response.json();
+		const {trip,expense} = await response.json();
 		dispatch(updateTrip(trip,tripDetail));
-		return null;
+		return expense;
 	} else if (response.status < 500) {
 		const data = await response.json();
 		if (data.errors) {
-			return data.errors;
+			return data;
 		}
 	} else {
-		return ["An error occurred. Please try again."];
+		return {"errors":"An error occurred. Please try again."};
 	}
 }
 
@@ -315,6 +315,57 @@ export const settleUp = (tripDetail,tripId) => async (dispatch) => {
     }
 }
 
+//add an itinerary to trip
+export const addItinerary = (tripDetailId,tripId,bookingId,checkIn,checkOut,reservation,expensed,price,people) => async (dispatch) =>{
+	try {
+		const res = await fetch(`/api/trips/${tripId}/add_booking`, {
+			method:"POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				"booking_id":bookingId,
+				"booking_startdate":checkIn,
+				"booking_enddate":checkOut,
+				"booking_time":reservation,
+				expensed,
+				price,
+				people
+			})
+		})
+        if (res.ok) {
+			const {trip} = await res.json();
+            dispatch(updateTrip(trip,tripDetailId));
+        } else {
+            const data = await res.json();
+            console.log("There was an error adding itinerary")
+            return data
+        }
+    } catch (e) {
+        console.error('An error occurred', e);
+        return ['An error occurred'];
+    }
+}
+
+//expense the itinerary
+export const ExpenseItinerary = (tripDetailId,tripId,itineraryId,expenseId) => async (dispatch) => {
+	try {
+		const res = await fetch(`/api/trips/${tripId}/itineraries/${itineraryId}/expense/${expenseId}`, {
+			method:"PUT"
+		})
+		if (res.ok) {
+			const {trip} = await res.json();
+            dispatch(updateTrip(trip,tripDetailId));
+        } else {
+            const data = await res.json();
+            console.log("There was an error expensing itinerary")
+            return data
+        }
+    } catch (error) {
+        console.error('An error occurred', error);
+        return ['An error occurred'];
+    }
+}
 
 export default function reducer(state = initialState, action) {
 	let newState

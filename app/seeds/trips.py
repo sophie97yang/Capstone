@@ -14,18 +14,20 @@ def seed_trips(users):
              ['Moab','UT'],
              ['Jackson','WY'],
              ['Nashville','TN'],
-             ['Savannah','GA'],
+             ['Washington','DC'],
+             ['Las Vegas','NV']
+             ]
+    unseeded_locations = [
+            ['Savannah','GA'],
              ['Charleston','SC'],
              ['Sedona','AZ'],
-             ['Washington','DC'],
              ['New Orleans','LA'],
              ['Chicago','IL'],
              ['Orlando','FL'],
-             ['Las Vegas','NV'],
              ['Oahu','HI'],
              ['Maui','HI'],
              ['New York City','NY']
-             ]
+    ]
     names = [f"{fake.first_name_female()}'s Bachelorette",f"{fake.first_name_male()}'s Bachelor Party",
       f"{fake.first_name_female()}'s 21st Birthday Bash",f"{fake.first_name_male()}'s 40th Birthday Party",
       f"Annual {fake.last_name()} Family Vacation", f"{fake.first_name_male()} and {fake.first_name_female()}'s Honeymoon",
@@ -52,7 +54,7 @@ def seed_trips(users):
         location = choice(locations)
         city=location[0]
         state=location[1]
-        startDate=fake.date_between(start_date='-5d',end_date='today')
+        startDate=fake.date_between(start_date='-4d',end_date='today')
         endDate=fake.date_between(start_date='today', end_date='+10d')
         image= choice(images)
         trip = Trip(

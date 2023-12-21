@@ -55,12 +55,16 @@ nav {
   display:flex;
   max-height:200px;
   align-items:center;
-  justify-content:center;
-  width:950px;
+  justify-content:space-between;
   margin:0px auto;
+  position:sticky;
+  top:0px;
+  background-color:white;
+  padding-top:10px;
+  z-index:5;
 }
 
-.logo-nav,.search-bar-nav,.action-button-nav {
+.search-bar-nav {
   flex-grow:1
 }
 .auth-action-buttons {
@@ -95,7 +99,7 @@ nav {
 }
 
 .search-bar input {
-  width:400px;
+  width:600px;
   height:50px;
   border-radius:20px;
   padding:10px;
@@ -129,10 +133,14 @@ nav {
 
 
 .search-output {
-  width:400px;
+  width:600px;
   position:absolute;
+  top:60px;
   background-color:white;
   margin-left:30px;
+  padding-left:0px;
+  max-height:400px;
+  overflow-y: scroll;
 }
 
 .populate-search {
@@ -142,18 +150,6 @@ nav {
   border-radius:10px;
   padding:10px;
 }
-.populate-search a {
-  color:black;
-  height: 50px;
-  overflow: scroll;
-
-}
-
-.populate-search a:hover {
-  background-color:rgb(218, 232, 244);
-  border-radius:10px;
-
-}
 
 #landing-page-search {
   width:600px;
@@ -162,4 +158,16 @@ nav {
 
 #landing-page-results {
   width:580px;
+  margin-left:0px;
+  padding-left:0px;
+  top:460px;
+}
+
+#landing-page-results>button {
+  width:580px;
+}
+
+.search-output li {
+  list-style-type:none;
+  padding-left:20px;
 }

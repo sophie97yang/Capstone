@@ -1,10 +1,11 @@
-import { useState } from 'react';
-import {Link} from 'react-router-dom';
+import { useState,useEffect } from 'react';
+import {useHistory} from 'react-router-dom';
 import '../Navigation/Navigation.css'
 
 function SearchComponent ({className}) {
     const [searchInput, setSearchInput] = useState("");
     const [hidden,setHidden] = useState(true);
+    const history = useHistory();
     const locations = [{city:'Aspen',state:'CO'},
     {city:'Miami',state:'FL'},
     {city:'Napa',state:'CA'},
@@ -24,47 +25,57 @@ function SearchComponent ({className}) {
     {city:'Maui',state:'HI'},
     {city:'New York City',state:'NY'}
     ]
+    const [searchResults,setResults] = useState(locations);
 
-    let locations_match=[]
+    const handleChange = (e) => {
+        e.preventDefault();
+        setSearchInput(e.target.value);
+        setHidden(false);
+        const locations_match = locations.filter((location) => location.city.toLowerCase().includes(searchInput.toLowerCase()))
+        setResults(locations_match);
 
-    if (searchInput.length > 0) {
-        locations_match = locations.filter((location) => {
-            return location.city.match(searchInput);
-        })
-        if (hidden===true) {
-        setHidden(false)
+        };
+
+    useEffect(()=> {
+        if (searchInput.length===0) {
+            setResults(locations)
+            setHidden(true);
         }
-    } else {
-        if (hidden===false) {
-        setHidden(true)
-        }
-    }
+        },[searchInput])
 
     return (
 <div className='search-bar'>
 {!className ? <i className="fa-solid fa-magnifying-glass fa-lg"></i>:<></>}
+{/* {!className ? <></>:
+<select>
+    <option>Cities</option>
+</select>
+} */}
 <input
     type="search"
     placeholder="Search for places to go on your next trip..."
-    onChange={(e)=>setSearchInput(e.target.value)}
+    onChange={handleChange}
     value={searchInput}
     id={className ? className :""}
      />
 
-<table className={hidden ? "hidden":"search-output"}>
-<tbody className='populate-search'id={className ? "landing-page-results" :""}>
-{locations_match.length ? locations_match.map((location) => (
-    <Link to={`/explore/${location.city}`} key={location.city}>
-<tr>
-        <td>{location.city},</td>
-        <td>{location.state}</td>
-</tr>
-    </Link>
+<ul className={hidden ? "hidden":"search-output"} id={className ? "landing-page-results" :""}>
+{/* <tbody className='populate-search'> */}
+{searchResults.length ? searchResults.map((location) => (
+    <button key={location.id} className='search-list-item'
+    onClick={(e)=>{
+        e.preventDefault();
+        setHidden(true);
+        history.push(`/explore/${location.city}`);
+        setSearchInput('');
+    } }>
+        {location.city},{location.state}
+    </button>
 
-)): <tr><td>No results found. Please try again.</td></tr>
+
+)): <li>No results found. Please try again.</li>
 }
-</tbody>
-</table>
+</ul>
 </div>
     )
 }

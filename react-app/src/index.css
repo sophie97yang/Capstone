@@ -27,3 +27,7 @@ a {
     color:red;
     font-style:italic;
 }
+
+#root {
+    overflow:initial;
+}

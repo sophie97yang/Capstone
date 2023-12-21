@@ -330,15 +330,15 @@ function AddExpenseForm ({trip}) {
                 <p>{splitType==='Equal' ? <>{allUsers ? `$ ${(total/trip.trip.users.length).toFixed(2)} per person`:  `$ ${(total/usersInvolved.length).toFixed(2)} per person`}</>
                 : ''}</p>
 
-                <div id='expense-action-buttons'>
-                <button onClick={handleSubmit} id='save-button'>Save</button>
-                <button onClick={e=> {
+            <div id='expense-action-buttons'>
+            <button onClick={e=> {
               e.preventDefault();
               closeModal()
             }}
             id='cancel-button'
             >Cancel</button>
-                </div>
+            <button onClick={handleSubmit} id='save-button'>Save</button>
+            </div>
 
             </form>
         </div>

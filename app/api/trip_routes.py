@@ -1,11 +1,12 @@
 from flask import Blueprint, jsonify,request
 from flask_login import login_required,current_user
-from ..models import Trip,db,User,TripDetail,Expense,ExpenseDetail,ExpenseUpdateDetail,BetweenUserExpense
+from ..models import Trip,db,User,TripDetail,Expense,ExpenseDetail,ExpenseUpdateDetail,BetweenUserExpense,Itinerary
 from ..forms.trip_form import TripForm
 from ..forms.add_user_form import AddUserForm
 from ..forms.expense_form import ExpenseForm
+from ..forms.itinerary_form import ItineraryForm
 from .AWS_helpers import get_unique_filename, upload_file_to_s3, remove_file_from_s3
-from datetime import date
+from datetime import date,datetime
 
 trip_routes = Blueprint('trips', __name__)
 
@@ -283,7 +284,7 @@ def create_expense(id):
         #attach expense to trip
         trip.expenses.append(expense)
         db.session.commit()
-        return {"trip":trip.to_dict()}
+        return {"trip":trip.to_dict(),"expense":expense.to_dict()}
     return {"errors":form.errors},400
 
 
@@ -527,3 +528,47 @@ def settlement(id):
             settlement.owes=0
         db.session.commit()
         return {"trip":trip.to_dict()}
+
+#add a booking to a trip's itinerary
+@trip_routes.route('/<int:id>/add_booking',methods=['POST'])
+@login_required
+def add_booking(id):
+    trip = Trip.query.get(id)
+    form = ItineraryForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
+        itinerary = Itinerary(
+            booking_id = form.data['booking_id'],
+            user_id = current_user.id,
+            booking_date = datetime.now(),
+            booking_startdate = form.data['booking_startdate'],
+            booking_enddate = form.data['booking_enddate'],
+            booking_time = form.data['booking_time'],
+            expensed = form.data['expensed'],
+            total= form.data['price'],
+            people=form.data['people']
+        )
+        db.session.add(itinerary)
+        trip.bookings.append(itinerary)
+        db.session.commit()
+        return {"trip":trip.to_dict()}
+    else:
+        return {"errors":form.errors},400
+#expensing itinerary
+@trip_routes.route('/<int:id>/itineraries/<int:itid>/expense/<int:exid>',methods=['PUT'])
+@login_required
+def expense_itinerary(id,itid,exid):
+    trip = Trip.query.get(id)
+    itinerary = Itinerary.query.get(itid)
+
+    if trip is None:
+        return {'errors': "Trip doesn't exist"}, 404
+    if itinerary is None:
+        return {'errors': "Itinerary doesn't exist"}, 404
+
+    itinerary.expensed=True
+    itinerary.expense_id = int(exid)
+
+
+    db.session.commit()
+    return {"trip":trip.to_dict()}

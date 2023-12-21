@@ -2,12 +2,13 @@ footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: rgb(180, 189, 188);
+    background-color: whitesmoke;
     color: black;
     max-height:150px;
     min-height:150px;
-    margin-left:0px;
-    margin-right:0px;
+    margin-left:-10px;
+    margin-right:-10px;
+    margin-bottom:-10px;
 }
 
 #footer-center {

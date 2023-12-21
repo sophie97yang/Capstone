@@ -1,18 +1,20 @@
-.random-places-landing img, .explore-trips img,.explore-all img {
+.random-places-landing img, .explore-trips img,.explore-all img,.landing-user-trips img {
     width:250px;
     height:250px;
+    object-fit: cover;
 }
 
-.random-places-landing, .landing-user-trips, .explore-choices {
+.random-places-landing, .explore-choices {
     display:flex;
     justify-content:center;
     flex-wrap:wrap;
 }
 
-.landing-user-trips>div {
+
+/* .landing-user-trips>div {
     display:flex;
     flex-direction:column;
-}
+} */
 
 .landing-page {
     width:950px;
@@ -31,7 +33,7 @@
     margin-bottom:10px;
 }
 
-.headings>h2, .headings>p {
+.headings>h2{
     text-align:center;
     font-weight:400;
     max-width:600px;
@@ -49,16 +51,22 @@
     padding-bottom:20px;
 }
 .dashboard h3 {
-    font-size:24px;
+    font-size:30px;
+    margin-bottom:0px;
 }
 
 .dashboard h4 {
     font-weight:normal;
+    font-size:20px;
 }
 
 .dashboard img {
     padding:0px 10px;
     border-radius:25px;
+}
+
+.top-destinations>h4,.explore-trips>h4,.explore-all>h4 {
+    margin-top:10px;
 }
 
 .random-places-landing h4 {
@@ -100,14 +108,18 @@
 
 }
 .slogan {
-    width:600px;
+    max-width:600px;
     margin-bottom:0px;
+    font-size:20px;
+    font-weight:300;
+    text-align:center;
 }
 
 
 .bottom {
     margin-top:0px;
     margin-bottom:30px;
+    text-align:center;
 }
 
 .landing-top img {
@@ -116,4 +128,75 @@
     right:30px;
     z-index:-1;
 
+}
+.selected {
+    background-color:none;
+}
+
+.search-list-item {
+    display:block;
+    background-color:white;
+    border:none;
+    width:600px;
+    text-align:left;
+    margin:0px;
+    padding:20px;
+  }
+
+.search-list-item:hover {
+    cursor:pointer;
+    border:1px solid orange;
+}
+
+.search-bar select {
+    height:45px;
+    width:80px;
+    border-radius:5px;
+    margin-right:5px;
+    text-align:center;
+}
+.slide:hover {
+    cursor:pointer;
+    background-color: rgba(230,230,230,0.5);
+    border-radius:25px;
+}
+
+.slide {
+    padding-top:10px;
+}
+
+.carousel-buttons {
+    position:absolute;
+    z-index:2;
+    top: 130px;
+    width: 50px;
+    height: 50px;
+    background-color:white;
+    border-style:none;
+    border-radius:20px;
+    border:2px solid grey;
+}
+.carousel-buttons:hover {
+    cursor:pointer;
+}
+
+.button-right {
+    right:0px;
+}
+
+.populate-landing-page h4,.landing-user-trips h4 {
+    font-weight:300;
+}
+
+.search-bar {
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.action-button-nav {
+    display:flex;
+    justify-content: flex-end;
+    align-items:center;
+    padding-right:30px;
 }

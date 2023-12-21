@@ -1,18 +1,18 @@
 .explore-images img {
-    width:250px;
+    width:350px;
     height:250px;
     margin:10px;
     border-radius:10px;
+    object-fit: cover;
 }
 
 .explore {
     margin:50px auto;
-    width:950px;
+    width:1000px;
 }
 
 .explore>h2 {
-    text-align:center;
-    font-size:30px;
+    font-size:60px;
 }
 
 .coming-soon img{
@@ -39,12 +39,20 @@
     margin-bottom:30px;
 }
 
+.filter-button {
+    background-color:white;
+    font-weight:500;
+}
+
 .filter-buttons button {
-    width:100px;
-    height:50px;
+    width:250px;
+    height:60px;
     border-radius:20px;
     border:1px solid #57d9ae;
     border-style:outset;
+    font-size:20px;
+    margin-left:10px;
+    margin-right:10px;
 }
 
 .filter-buttons button:hover {
@@ -52,18 +60,328 @@
 }
 
 .booking-places {
-    border: 1px solid #57d9ae;
-    border-radius:10px;
-    padding:30px;
-    margin:20px;
+    margin:10px;
+    max-width:400px;
+    max-height:400px;
+    text-align:left;
+    margin-right:20px;
 }
 
 .booking-places>h4 {
     font-weight:300;
+    margin-top:0px;
+    padding-left:10px;
 }
 
-.explore-images {
+.booking-places>h3 {
+    margin-top:0px;
+    margin-bottom:0px;
+    padding-left:10px;
+
+}
+.booking-places a {
+    color:black;
+}
+
+/* .explore-images {
     display:flex;
     justify-content:center;
 
+} */
+
+.selected-button {
+    background-color:#57d9ae
+
 }
+
+.explore-word {
+    color:rgb(219, 148, 17)
+}
+
+.about-city>img {
+    width:600px;
+    border-radius:10px;
+
+}
+
+.about-city {
+    margin:0px auto;
+    width:950px;
+    display:flex;
+    flex-direction:column;
+    align-items:center
+}
+.about-city p {
+    font-size:20px;
+    font-weight:200;
+    max-width:950px;
+}
+
+.about-city h3 {
+    font-size:35px
+}
+
+.explore-hotels,.explore-things,.explore-restaurants {
+    display:flex;
+    flex-direction:row;
+}
+.bookings-div {
+    display:flex;
+    flex-direction:row;
+    flex-wrap:wrap;
+    flex-grow:2;
+}
+
+.about-explore-section {
+    max-width:125px;
+}
+.explore-things>.booking-places {
+    margin-left:0px;
+}
+
+.explore-images>button, .explore-images>.fa-heart {
+    position:absolute;
+}
+
+.explore-images>button {
+    top:40px;
+    right:20px;
+    background-color:white;
+    border-style:none;
+    border:1.5px solid white;
+    width:150px;
+    height:50px;
+    border-radius:30px;
+    padding:10px;
+    padding-right:15px;
+    padding-left:35px;
+    font-size:15px;
+}
+
+.explore-images>button:hover {
+    cursor:pointer;
+    border:1px solid black;
+}
+
+.fa-heart {
+    top:65px;
+    right:130px;
+    z-index:2;
+    color:black;
+
+}
+
+.plan-trip{
+    border:1px solid grey;
+    border-radius:10px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    width:950px;
+  }
+
+  .shortcut-trip-form {
+    padding-top:10px;
+  }
+  .shortcut-trip-form>div{
+    display:flex;
+    flex-direction:column;
+    width:400px;
+
+  }
+
+  #shortcut-buttons {
+    align-items: center;
+  }
+
+  #shortcut-buttons>button {
+    margin-left:0px;
+  }
+
+  #shortcut-buttons>button:hover {
+    cursor:pointer;
+  }
+
+  .shortcut-trip-form input,.shortcut-trip-form select {
+    height:40px;
+    border-radius:10px;
+    border-style:none;
+    border:1px solid black;
+    padding-left:5px;
+  }
+
+  .shortcut-trip-form label {
+    margin-bottom:10px;
+    font-size:18px;
+
+  }
+
+  .explore-bookings h2 {
+    font-size:40px;
+  }
+
+  .about-explore-section p {
+    font-size:18px;
+  }
+
+  .about-explore-section {
+    margin-right:40px;
+  }
+
+#shortcut-trip-modal #shortcut-buttons {
+    display:flex;
+    flex-direction:row;
+    align-items: center;
+    gap:20px;
+    justify-content: flex-end;
+  }
+
+  #shortcut-trip-modal {
+    width:600px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+  }
+
+  #shortcut-trip-modal #settle-cancel {
+    width:100px;
+    height:50px;
+    border-style: none;
+    border-radius:10px;
+  }
+
+  .explore-booking-details {
+    padding-top:50px;
+    width:950px;
+    margin:0px auto;
+  }
+
+  .left-booking>h2 {
+    font-size:37px;
+    margin-bottom:5px;
+  }
+
+  .left-booking>h3 {
+    font-weight:300;
+  }
+
+
+  .features {
+    font-style:italic;
+    margin-top:0px;
+  }
+
+  .explore-detail-carousel {
+    width:950px;
+    margin:0px auto;
+  }
+
+  .explore-detail-carousel img {
+    max-height:500px;
+    object-fit: cover;
+    border-radius:10px;
+  }
+
+  .explore-booking-details>h4 {
+    font-size:20px;
+  }
+
+  .booking-info-top {
+    display:flex;
+    flex-direction: row;
+    align-items:center;
+  }
+
+  .price-booking {
+    justify-self:flex-end;
+    font-size:30px;
+    text-align:right;
+    flex-grow:1;
+  }
+
+  .left-booking {
+    max-width:550px;
+  }
+
+  .price-booking>p {
+    margin:0px;
+  }
+
+  .price-booking>button {
+    width:100px;
+    height:50px;
+    margin-top:10px;
+    border-style:none;
+    border-radius:10px;
+    background-color:orange;
+    margin-right:40px;
+  }
+
+  .explore-booking-details button:hover {
+    cursor:pointer;
+  }
+
+  .explore-booking-details .carousel-buttons {
+    top:220px;
+  }
+  .explore-booking-details .thumb>img{
+    max-height:50px;
+  }
+
+  .about-booking {
+    border:1px solid grey;
+    padding:30px;
+    border-radius:10px;
+    margin-bottom:10px;
+  }
+
+  .about-booking>h2,.explore-details-bottom h2 {
+    font-size:30px;
+    margin:0px;
+  }
+  .about-booking>p {
+    font-size:20px;
+  }
+
+  .explore-details-bottom {
+    display:flex;
+    flex-direction:row;
+    margin-top:30px;
+  }
+  .location-contact-booking {
+    flex-grow:1;
+    min-width:450px;
+  }
+  .location-contact-booking>h2 {
+    margin-top:20px;
+    margin-bottom:20px;
+  }
+  .add-to-itinerary-explore-page {
+    border:1px solid grey;
+    border-radius:10px;
+  }
+
+  .add-to-itinerary-explore-page>h2 {
+    margin:20px;
+    text-align:center;
+  }
+
+  .add-to-itinerary-explore-page #select-trip-heading {
+    font-size:20px;
+    font-weight:200;
+  }
+
+  .contact-info {
+    display:flex;
+    gap:20px;
+    font-size:18px;
+    font-weight:300;
+  }
+
+  .contact-info a{
+    color:black;
+  }
+
+  .about-city>p {
+    text-align:justify;
+  }
