@@ -156,7 +156,7 @@ function Explore () {
                         <i className="fa-regular fa-heart fa-xl"></i>
                     {user ?
                         <OpenModalButton
-                        buttonText={`Add to Itinerary`}
+                        buttonText={`Add to Trip`}
                         modalComponent={<AddToItinerary booking={booking}/>}
                         />
                         :<></>
@@ -188,7 +188,7 @@ function Explore () {
                         <i className="fa-regular fa-heart fa-xl"></i>
                         {user ?
                         <OpenModalButton
-                        buttonText={`Add to Itinerary`}
+                        buttonText={`  Add to Trip`}
                         modalComponent={<AddToItinerary booking={booking}/>}
                         />
                         :<></>
@@ -220,7 +220,7 @@ function Explore () {
                         <i className="fa-regular fa-heart fa-xl"></i>
                         {user ?
                         <OpenModalButton
-                        buttonText={`Add to Itinerary`}
+                        buttonText={`Add to Trip`}
                         modalComponent={<AddToItinerary booking={booking}/>}
                         />
                         :<></>

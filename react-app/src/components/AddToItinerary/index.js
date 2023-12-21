@@ -18,7 +18,7 @@ function AddToItinerary({booking,detail}) {
         return (new Date(trip.trip.end_date)>new Date() && trip.trip.location[0]===booking.city)
     })
     return (
-        <div>
+        <div className='add-to-itinerary-modal'>
              {!detail ?<button onClick={closeModal} className='close-modal' id='update-trip-close'><i className="fa-solid fa-xmark fa-2xl"></i></button>:""}
             {availableTrips.length ?
             <div>
@@ -46,7 +46,7 @@ function AddToItinerary({booking,detail}) {
                 </div>)}
             </div>
             :
-            <div>
+            <div className='no-trips-itinerary'>
                 <h2>Looks like you are not able to add {booking.name} to any of your trips.</h2>
                 <p>Either your trips have already passed or are not happening in {booking.city}.</p>
                 <OpenModalButton

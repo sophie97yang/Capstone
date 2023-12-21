@@ -115,11 +115,12 @@ if (booking.category==="Restaurants"){
     }
     let counter=0
     return (
-    <form>
+    <form className='reservation-form restaurant-thing-form'>
         {booking.category ==='Restaurants' ? <h2>Make a Reservation at {booking.name}</h2>: <h2>Reserve a Spot at {booking.name}</h2>}
+        <div className="party-date-info">
         {booking.category==='Restaurants' ?
         <div>
-            <label><i className="fa-solid fa-people-group"></i>Party Size</label>
+            <label><i className="fa-solid fa-people-group fa-xl"></i> Party Size</label>
             <select defaultValue={2}>
                 {
                     tripToAdd.trip.users.map(user=> {
@@ -133,7 +134,7 @@ if (booking.category==="Restaurants"){
         </div>
        :
        <div>
-        <label><i className="fa-solid fa-people-group"></i></label>
+        <label><i className="fa-solid fa-people-group fa-xl"></i></label>
             <select
             value={individuals}
             onChange={(e)=> setIndividuals(e.target.value)}
@@ -151,7 +152,7 @@ if (booking.category==="Restaurants"){
     }
 
         <div>
-            <label> <i className="fa-regular fa-calendar"></i>Reservation Date</label>
+            <label> <i className="fa-regular fa-calendar fa-xl"></i> Reservation Date</label>
             <input
                 type="date"
                 value={reservationDate}
@@ -159,9 +160,11 @@ if (booking.category==="Restaurants"){
             />
               {errors.date ? <p className='errors'>{errors.date}</p>: <p className='errors'></p>}
         </div>
+    </div>
 
-        <div className={hidden ? "reservation-time hidden" : "reservation-time"}>
-            <label><i className="fa-regular fa-clock"></i>Reservation Time</label>
+    <div className={hidden ? "hidden" : "reservation-time"}>
+            <label><i className="fa-regular fa-clock fa-xl"></i> Select a time</label>
+            <div>
             {reservationTimes.map(time => (
                 <button key={time}
                 onClick={(e)=> {
@@ -172,8 +175,10 @@ if (booking.category==="Restaurants"){
                     {time}
                 </button>
             ))}
+            </div>
               {errors.time ? <p className='errors'>{errors.time}</p>: <p className='errors'></p>}
-        </div>
+    </div>
+
         { reservationTime ?
         <div className="reservation-time-info">
             <p>Your selected reservation time: {reservationTime}</p>
@@ -183,7 +188,7 @@ if (booking.category==="Restaurants"){
                 setReservationTime(null);
                 setHidden(false);
             }}
-            >Change Reservation Time</button>
+            >Change Time</button>
             {errors.existing_time ? <p className='errors'>{errors.existing_time}</p>: <p className='errors'></p>}
         </div> :
         <></>
@@ -203,8 +208,7 @@ if (booking.category==="Restaurants"){
             }
             </div>:<p></p>
         }
-
-        <button onClick={handleReservation}>Reserve</button>
+        <div id='rest-thing-itinerary-buttons'>
         <button onClick={(e)=> {
             e.preventDefault();
             closeModal();
@@ -215,6 +219,11 @@ if (booking.category==="Restaurants"){
             setErrors({});
             if (detail) setTrip('');
             }} id='settle-cancel'>Cancel</button>
+        <button onClick={handleReservation}
+         className='submit-button'
+        >Reserve</button>
+        </div>
+
 
     </form>
     )

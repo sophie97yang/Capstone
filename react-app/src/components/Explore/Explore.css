@@ -149,7 +149,8 @@
     background-color:white;
     border-style:none;
     border:1.5px solid white;
-    width:100px;
+    width:150px;
+    height:50px;
     border-radius:30px;
     padding:10px;
     padding-right:15px;
@@ -163,8 +164,8 @@
 }
 
 .fa-heart {
-    top:70px;
-    right:90px;
+    top:65px;
+    right:130px;
     z-index:2;
     color:black;
 
@@ -225,4 +226,26 @@
 
   .about-explore-section {
     margin-right:40px;
+  }
+
+#shortcut-trip-modal #shortcut-buttons {
+    display:flex;
+    flex-direction:row;
+    align-items: center;
+    gap:20px;
+    justify-content: flex-end;
+  }
+
+  #shortcut-trip-modal {
+    width:600px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+  }
+
+  #shortcut-trip-modal #settle-cancel {
+    width:100px;
+    height:50px;
+    border-style: none;
+    border-radius:10px;
   }

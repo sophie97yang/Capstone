@@ -78,8 +78,9 @@ function HotelReservation ({trip,booking,closeModal}) {
 
 
     return (
-        <form>
+        <form className='reservation-form hotel-form'>
         <h2>{booking.name}</h2>
+            <div id='checkin-out'>
             <div>
             <label>Check-In </label>
             <input
@@ -98,6 +99,7 @@ function HotelReservation ({trip,booking,closeModal}) {
             />
             {errors.checkOut ? <p className='errors'>{errors.checkOut}</p>: <p className='errors'></p>}
             </div>
+            </div>
 
             <div>
             <label>Rooms</label>
@@ -109,29 +111,36 @@ function HotelReservation ({trip,booking,closeModal}) {
             </input>
             {errors.Rooms ? <p className='errors'>{errors.Rooms}</p>: <p className='errors'></p>}
             </div>
-
-        <h2>View Prices for your Travel Dates</h2>
-        <p>$ {booking.price} per night</p>
-        <p>Total: $ {price}</p>
+        <div className='itinerary-price-details'>
+        <h4>VIEW PRICES FOR YOUR TRAVEL DATES</h4>
+        <h3 id='price-per-night'>$ {booking.price} / night</h3>
+        <h3 id='total-itinerary'>Total: $ {price.toFixed(2)}</h3>
           {checkIn && checkOut ?
-            <p title="assuming 14% tax">including taxes and fees</p>:
-            ""
+            <p title="assuming 14% tax" id='tax'>**including taxes and fees</p>:
+            <p></p>
         }
+        </div>
 
+        <div id='expense-itinerary'>
         <label>Expense this itinerary?</label>
         <input
         type="checkbox"
         value= {expensed}
         onChange={(e)=> setExpensed(!expensed)}
         ></input>
+        </div>
+
         {errors.existing_stay ? <p className='errors'>{errors.existing_stay}</p>: <p className='errors'></p>}
 
-        <button
-        onClick={handleReservation}>Reserve</button>
-
+        <div id='itinerary-buttons'>
         <button onClick={(e)=> {
             e.preventDefault();
             closeModal()}} id='settle-cancel'>Cancel</button>
+        <button
+        onClick={handleReservation}
+        className='submit-button'
+        >Reserve</button>
+        </div>
         </form>
     )
 

@@ -47,7 +47,9 @@ const CreateTripShortcut = ({city,state,closeModal}) => {
             setErrors(res.errors);
           } else {
             history.push(`/trips`);
-            closeModal();
+            if (closeModal) {
+              closeModal();
+            }
             setSubmitted(true);
             return "success";
           }
@@ -56,7 +58,14 @@ const CreateTripShortcut = ({city,state,closeModal}) => {
       };
 
       return (
-          <form onSubmit={handleSubmit} encType="multipart/form-data" className='shortcut-trip-form'>
+          <form onSubmit={handleSubmit} encType="multipart/form-data" className='shortcut-trip-form' id={closeModal ? "shortcut-trip-modal":""}>
+             {closeModal ?<button onClick={
+              (e)=> {
+                e.preventDefault();
+                closeModal();
+              }
+              } className='close-modal' id='update-trip-close'><i className="fa-solid fa-xmark fa-2xl"></i></button>:""}
+              {closeModal ? <h2>Plan your trip to {city}</h2>:""}
             <div>
               <label>My trip shall be called...</label>
               <input
@@ -95,6 +104,9 @@ const CreateTripShortcut = ({city,state,closeModal}) => {
             {errors.end_date ? <p className='errors'>{errors.end_date}</p>: <p className='errors'></p>}
             </div>
             <div id="shortcut-buttons">
+              {closeModal ?  <button onClick={(e)=> {
+              e.preventDefault();
+              closeModal()}} id='settle-cancel'>Cancel</button>:""}
             <button type="submit" className="action-button-ls">Create Trip</button>
             </div>
           </form>

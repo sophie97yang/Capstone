@@ -2,3 +2,241 @@
     width:200px;
 
 }
+
+.add-to-itinerary-modal {
+    width:600px;
+    max-height:600px;
+    overflow-y:scroll;
+}
+
+.add-to-itinerary-modal>div {
+    display:flex;
+    flex-direction:column;
+    align-items: center;
+}
+
+.add-to-itinerary-modal>div>select {
+    width:300px;
+    height:60px;
+    margin-bottom:20px;
+    border-style:none;
+    border:1px solid grey;
+    border-radius:5px;
+    padding-left:10px;
+    font-size:18px;
+}
+
+.reservation-form  {
+    display:flex;
+    flex-direction:column;
+}
+
+.hotel-form>div {
+    display:flex;
+    flex-direction:column;
+}
+#checkin-out {
+    flex-direction:row;
+    gap:20px;
+}
+
+#checkin-out>div {
+    display:flex;
+    flex-direction:column;
+    flex-grow:1;
+}
+
+.reservation-form input,.reservation-form select {
+    height:45px;
+    border-style:none;
+    border:1px solid grey;
+    border-radius:5px;
+    padding-left:10px;
+    font-size:16px;
+}
+
+.reservation-form label {
+    margin-bottom:5px;
+}
+
+.itinerary-price-details >h4 {
+    font-weight:300;
+    margin:10px;
+
+
+}
+
+.itinerary-price-details {
+    border:1px solid grey;
+    padding-left:0px;
+    border-radius:10px;
+}
+
+#price-per-night {
+    margin:0px;
+    text-align:center;
+}
+
+#total-itinerary {
+    text-align: center;
+    color:#57d9ae;
+    margin:10px 0px;
+    margin-bottom:0px
+
+}
+
+#tax {
+    min-height:12px;
+    font-size: 12px;
+    text-align:right;
+    margin:5px;
+    margin-right:10px;
+}
+
+#expense-itinerary>input {
+    height:60px;
+}
+#expense-itinerary {
+    flex-direction: row;
+    align-items: center;
+    font-size:18px;
+}
+
+#itinerary-buttons {
+    flex-direction:row;
+    justify-content: flex-end;
+    gap:20px;
+    margin-bottom:10px;
+    margin-top:0px;
+}
+
+#itinerary-buttons button {
+    width:100px;
+    height:50px;
+    border-style:none;
+    border-radius:10px;
+}
+
+#itinerary-buttons button:hover {
+    cursor:pointer;
+}
+
+.submit-button {
+    background-color:#57d9ae;
+}
+
+.party-date-info>div {
+    display:flex;
+    flex-direction:column;
+}
+
+.party-date-info {
+    display:flex;
+    flex-direction:row;
+    justify-content: center;
+    gap:100px;
+}
+
+.reservation-time {
+    display:flex;
+    flex-direction:column;
+}
+
+.reservation-time button {
+    width:100px;
+    height:50px;
+    background-color:white;
+    border-style:none;
+    border:1px solid black;
+    border-radius:10px;
+    font-size:16px;
+
+}
+
+.reservation-time>label,.reservation-time p {
+    margin-left:75px;
+
+}
+.reservation-time>div {
+    display:flex;
+    gap:20px;
+    flex-wrap:wrap;
+    padding:20px;
+    justify-content: center;
+}
+
+.restaurant-thing-form >h2{
+    text-align:center;
+}
+
+#rest-thing-itinerary-buttons {
+    display:flex;
+    flex-direction:row;
+    justify-content: flex-end;
+    gap:20px;
+    margin-bottom:10px;
+    margin-top:0px;
+}
+
+#rest-thing-itinerary-buttons button {
+    width:100px;
+    height:50px;
+    border-style:none;
+    border-radius:10px;
+}
+
+#itinerary-buttons button:hover {
+    cursor:pointer;
+}
+
+.reservation-time-info {
+    border:1px solid grey;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+}
+
+.reservation-time-info>p {
+    width:400px;
+}
+
+.reservation-time-info>button {
+    width:100px;
+    height:50px;
+    border-style:none;
+    border-radius:10px;
+    background-color:orange;
+
+}
+
+.no-trips-itinerary {
+    height:300px;
+    display:flex;
+    flex-direction:column;
+    justify-content: center;
+    padding:20px;
+}
+
+.no-trips-itinerary>h2 {
+    font-weight:600;
+    font-size:30px;
+
+}
+
+.no-trips-itinerary>p {
+    font-weight:200;
+    font-size:20px;
+}
+
+.no-trips-itinerary>button {
+    width:150px;
+    height:80px;
+    border-style:none;
+    border-radius:10px;
+    background-color:#57d9ae;
+}
+
+.no-trips-itinerary>button:hover {
+    cursor:pointer;
+}
