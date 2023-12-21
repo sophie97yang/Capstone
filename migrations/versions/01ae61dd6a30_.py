@@ -38,9 +38,9 @@ def upgrade():
     sa.Column('price', sa.Float(), nullable=True),
     sa.Column('opening_hour', sa.String(length=50), nullable=True),
     sa.Column('closing_hour', sa.String(length=50), nullable=True),
-    sa.Column('image1', sa.String(length=255), nullable=False),
-    sa.Column('image2', sa.String(length=255), nullable=False),
-    sa.Column('image3', sa.String(length=255), nullable=False),
+    sa.Column('image1', sa.String(length=500), nullable=False),
+    sa.Column('image2', sa.String(length=500), nullable=False),
+    sa.Column('image3', sa.String(length=500), nullable=False),
     sa.PrimaryKeyConstraint('id')
     )
 
