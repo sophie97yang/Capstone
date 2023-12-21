@@ -11,6 +11,7 @@ ARG DATABASE_URL
 ARG SCHEMA
 ARG REACT_APP_BASE_URL
 ARG SECRET_KEY
+ARG REACT_APP_MAPS_KEY
 WORKDIR /var/www
 COPY requirements.txt .
 RUN pip install -r requirements.txt
