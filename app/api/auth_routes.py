@@ -20,7 +20,7 @@ import json
 CLIENT_SECRET = os.getenv('CLIENT_SECRET')
 CLIENT_ID = os.getenv('CLIENT_ID')
 BASE_URL = os.getenv('BASE_URL')
-REACT_APP_BASE_URL = os.getenv('BASE_URL')
+REACT_APP_BASE_URL = os.getenv('REACT_APP_BASE_URL')
 
 client_secrets = {
   "web": {
@@ -47,7 +47,7 @@ os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1" # to allow Http traffic for loca
 flow = Flow.from_client_secrets_file(
     client_secrets_file=secrets.name,
     scopes=["https://www.googleapis.com/auth/userinfo.profile", "https://www.googleapis.com/auth/userinfo.email", "openid"],
-    redirect_uri=f"${BASE_URL}/api/auth/callback"
+    redirect_uri=f"{BASE_URL}/api/auth/callback"
 )
 
 secrets.close() # This method call deletes our temporary file from the /tmp folder! We no longer need it as our flow object has been configured!
