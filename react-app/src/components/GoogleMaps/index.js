@@ -23,7 +23,7 @@ function Map({trip}) {
     const [currentPosition, setCurrentPosition] = useState(booking_city_map[trip.trip.location[0]]);
     const { isLoaded } = useJsApiLoader({
         id: 'google-map-script',
-        key: process.env.REACT_APP_MAPS_KEY
+        googleMapsApiKey: process.env.REACT_APP_MAPS_KEY
       })
 
     const containerStyle = {
