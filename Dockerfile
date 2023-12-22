@@ -1,6 +1,8 @@
 FROM node:15-alpine3.10 as build
 COPY /react-app /react_app
 ENV REACT_APP_BASE_URL=https://split-trip.onrender.com
+ARG REACT_APP_MAPS_KEY=default_key
+ENV REACT_APP_MAPS_KEY=$REACT_APP_MAPS_KEY
 WORKDIR /react_app
 RUN npm install && CI=false && npm run build
 FROM python:3.9.18-alpine3.18
@@ -12,7 +14,6 @@ ARG DATABASE_URL
 ARG SCHEMA
 ARG REACT_APP_BASE_URL
 ARG SECRET_KEY
-ARG REACT_APP_MAPS_KEY
 ARG BASE_URL
 ARG CLIENT_SECRET
 ARG CLIENT_ID
