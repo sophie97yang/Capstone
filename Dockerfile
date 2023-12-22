@@ -1,5 +1,6 @@
 FROM node:15-alpine3.10 as build
 COPY /react-app /react_app
+ENV REACT_APP_BASE_URL=https://split-trip.onrender.com
 WORKDIR /react_app
 RUN npm install && CI=false && npm run build
 FROM python:3.9.18-alpine3.18
