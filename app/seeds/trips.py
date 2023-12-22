@@ -11,7 +11,6 @@ def seed_trips(users):
              ['Miami','FL'],
              ['Napa','CA'],
              ['Boston','MA'],
-             ['Moab','UT'],
              ['Jackson','WY'],
              ['Nashville','TN'],
              ['Washington','DC'],
@@ -26,7 +25,8 @@ def seed_trips(users):
              ['Orlando','FL'],
              ['Oahu','HI'],
              ['Maui','HI'],
-             ['New York City','NY']
+             ['New York City','NY'],
+              ['Moab','UT'],
     ]
     names = [f"{fake.first_name_female()}'s Bachelorette",f"{fake.first_name_male()}'s Bachelor Party",
       f"{fake.first_name_female()}'s 21st Birthday Bash",f"{fake.first_name_male()}'s 40th Birthday Party",

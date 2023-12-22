@@ -16,6 +16,7 @@ import Footer from "./components/Footer";
 import ProtectedRoute from "./components/ProtectedRoute";
 import PageNotFound from "./components/404/404";
 import BookingDetails from "./components/Explore/BookingDetails";
+import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
   const dispatch = useDispatch();
@@ -27,6 +28,7 @@ function App() {
   return (
     <>
       <Navigation isLoaded={isLoaded} />
+      <ScrollToTop />
       {isLoaded && (
         <Switch>
           <Route path="/login" >

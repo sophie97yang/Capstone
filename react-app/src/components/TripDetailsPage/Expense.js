@@ -46,9 +46,6 @@ const Expense = ({trip,group_balances,total_info}) => {
         }
     })
 
-    console.log(expense_by_year)
-    console.log(user_expense_detail)
-
 
     return (
         <div className='expense-overview'>

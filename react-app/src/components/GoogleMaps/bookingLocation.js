@@ -6,7 +6,10 @@ function LocationMap({city,lat,lng,name}) {
         "Aspen":{lat:39.1910983,lng:-106.8175387},
         "Boston":{lat:42.3600825,lng:-71.0588801},
         "Napa":{lat:38.2975381,lng:-122.286865},
-        "Miami":{lat:25.7616798,lng:-80.1917902}
+        "Miami":{lat:25.7616798,lng:-80.1917902},
+        "Jackson":{lat:43.582767,lng:-110.821999},
+        "Washington":{lat:38.9072,lng:-77.0369},
+        "Las Vegas":{lat:36.1716,lng:-115.1391},
     }
 
     const [currentPosition, setCurrentPosition] = useState(booking_city_map[city]);
@@ -34,7 +37,7 @@ function LocationMap({city,lat,lng,name}) {
               {isLoaded && <GoogleMap
                 mapContainerStyle={containerStyle}
                 zoom={14}
-                center={currentPosition}
+                center={{lat:lat, lng:lng}}
                 onUnmount={onUnmount}
                 >
                 <Marker
