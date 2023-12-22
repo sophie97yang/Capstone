@@ -5,7 +5,6 @@ import hotelIcon from "../../assets/images/hotel-icon-maps.png";
 import thingsIcon from "../../assets/images/hotel-icon-maps.png";
 
 function Map({trip}) {
-    console.log(trip);
     const booking_city_map = {
         "Aspen":{lat:39.1910983,lng:-106.8175387},
         "Boston":{lat:42.3600825,lng:-71.0588801},

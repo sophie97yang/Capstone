@@ -127,7 +127,7 @@ function BookingDetails() {
                 <button onClick={(e)=> {
               			e.preventDefault();
               			history.push('/login');
-            		}} id='explore-login'>Log in</button>
+            		}} id='longer' className='action-button-ls'>Log in</button>
 
             </div>
             }
