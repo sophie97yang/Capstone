@@ -121,14 +121,14 @@ function HotelReservation ({trip,booking,closeModal,detail}) {
         }
         </div>
 
-        <div id='expense-itinerary'>
+        {/* <div id='expense-itinerary'>
         <label>Expense this itinerary?</label>
         <input
         type="checkbox"
         value= {expensed}
         onChange={(e)=> setExpensed(!expensed)}
         ></input>
-        </div>
+        </div> */}
 
         {errors.existing_stay ? <p className='errors'>{errors.existing_stay}</p>: <p className='errors'></p>}
 

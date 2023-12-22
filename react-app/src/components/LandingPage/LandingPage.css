@@ -1,5 +1,5 @@
 .random-places-landing img, .explore-trips img,.explore-all img,.landing-user-trips img {
-    width:250px;
+    width:270px;
     height:250px;
     object-fit: cover;
 }
@@ -7,7 +7,7 @@
 .random-places-landing, .explore-choices {
     display:flex;
     justify-content:center;
-    flex-wrap:wrap;
+    gap:20px;
 }
 
 
@@ -61,8 +61,8 @@
 }
 
 .dashboard img {
-    padding:0px 10px;
     border-radius:25px;
+    padding:0px 10px;
 }
 
 .top-destinations>h4,.explore-trips>h4,.explore-all>h4 {
@@ -124,8 +124,8 @@
 
 .landing-top img {
     position:absolute;
-    top:60px;
-    right:30px;
+    top:120px;
+    right:50px;
     z-index:-1;
 
 }
@@ -167,7 +167,7 @@
 
 .carousel-buttons {
     position:absolute;
-    z-index:2;
+    z-index:1;
     top: 130px;
     width: 50px;
     height: 50px;
@@ -199,4 +199,8 @@
     justify-content: flex-end;
     align-items:center;
     padding-right:30px;
+}
+
+#landing-top-images img, #explore-landing-bottom img{
+    padding:0px;
 }

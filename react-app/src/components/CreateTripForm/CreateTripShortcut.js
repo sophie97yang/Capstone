@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { createTrip } from "../../store/session";
+import '../Explore/Explore.css';
 
 const CreateTripShortcut = ({city,state,closeModal}) => {
     const dispatch = useDispatch();

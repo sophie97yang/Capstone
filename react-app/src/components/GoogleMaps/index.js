@@ -3,6 +3,7 @@ import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api';
 import foodIcon from "../../assets/images/food-icon-maps.png";
 import hotelIcon from "../../assets/images/hotel-icon-maps.png";
 import thingsIcon from "../../assets/images/hotel-icon-maps.png";
+import './maps.css'
 
 function Map({trip}) {
     const booking_city_map = {
@@ -27,7 +28,7 @@ function Map({trip}) {
       })
 
     const containerStyle = {
-        width: '500px',
+        width: '400px',
         height: '1200px'
       };
 
@@ -40,7 +41,7 @@ function Map({trip}) {
 
         <div className="map_page__container">
 
-          <div style={{ height: '1200px', width: '600px' }}>
+          <div style={{ height: '1200px', width: '400px' }}>
               {isLoaded && <GoogleMap
                 mapContainerStyle={containerStyle}
                 zoom={10}

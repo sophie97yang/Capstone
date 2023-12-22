@@ -135,6 +135,12 @@
 .about-explore-section {
     max-width:125px;
 }
+
+.about-explore-section p {
+  text-align:left;
+  font-size:18px;
+  margin-top:0px;
+}
 .explore-things>.booking-places {
     margin-left:0px;
 }
@@ -218,10 +224,6 @@
 
   .explore-bookings h2 {
     font-size:40px;
-  }
-
-  .about-explore-section p {
-    font-size:18px;
   }
 
   .about-explore-section {
@@ -434,4 +436,23 @@
 
   .explore-details-bottom {
     margin-bottom:15px;
+  }
+
+  .bookings-carousel {
+    max-width:780px;
+  }
+
+  .shortcut-trip-form #shortcut-buttons>.action-button-ls {
+    width:400px;
+    height:60px;
+    margin-bottom:20px;
+    font-size:18px;
+  }
+
+  #shortcut-trip-modal #shortcut-buttons button {
+    width:200px;
+    height:60px;
+    font-size:18px;
+    margin-bottom:10px;
+    margin-top:10px;
   }
