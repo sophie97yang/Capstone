@@ -181,15 +181,17 @@ const UpdateTripModal = ({trip}) =>{
              </div>
 
             <div id='update-action-buttons'>
-            <button type="submit"
-            className='submit-update-trip'
-            >Update Trip</button>
+
             <button onClick={e=> {
               e.preventDefault();
               closeModal()
             }}
             className='update-cancel-trip'
             >Cancel</button>
+            <button type="submit"
+            className='submit-update-trip'
+            >Update Trip</button>
+
             </div>
             {imageLoading && <p>Loading...</p>}
           </form>

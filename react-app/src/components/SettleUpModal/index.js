@@ -14,7 +14,7 @@ function SettleUp({group_balances,total_info,trip}) {
     const user_settlements = group_balances[user.id]
     const user_total = total_info[user.id]
     const to_pay = user_settlements.filter(settlement => settlement.type==='payee')
-    console.log('settlements',user_settlements,'total',user_total,'to_pay',to_pay,'trip',trip);
+    // console.log('settlements',user_settlements,'total',user_total,'to_pay',to_pay,'trip',trip);
 
     const handleSettle = async () => {
         const data = await dispatch(settleUp(trip.id,trip.trip.id))
@@ -64,8 +64,9 @@ function SettleUp({group_balances,total_info,trip}) {
         }
         {to_pay.length || user_settlements.length ?
         <div className='settle-action-buttons'>
+            <button onClick={closeModal} id='settle-cancel'>Cancel</button>
         <button onClick={handleSettle}>Record Cash  Payment</button>
-        <button onClick={closeModal} id='settle-cancel'>Cancel</button>
+
         </div>
         :
         <></>

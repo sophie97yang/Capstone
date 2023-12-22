@@ -135,7 +135,7 @@ function AddExpenseForm ({trip}) {
 
                <div  className={!allUsers ?'user-choices' : 'user-choices hidden'}>
                 {trip.trip.users.length>1 ?
-                <>
+                <div className='select-specific-users'>
                 <label> Select Users: </label>
                     <select
                         multiple={true}
@@ -152,7 +152,7 @@ function AddExpenseForm ({trip}) {
                        <option value={[user.user.id,user.user.first_name]} key={user.user.id}>{user.user.first_name} {user.user.last_name[0]}.</option>
                        ))}
                     </select>
-                </> :
+                </div> :
                 <div className="invite-collaborators-option">
                     <p>You look a little lonely.. </p>
                     <OpenModalButton
@@ -237,7 +237,7 @@ function AddExpenseForm ({trip}) {
 
                 {splitType==='Percentages' && (
                         <div className="split-type-info">
-                            <p>Split by Percentage</p>
+                            <p className='bigger-p'>Split by Percentage</p>
                             {
                                 allUsers ?
                                 trip.trip.users.map(user =>  (
@@ -272,8 +272,10 @@ function AddExpenseForm ({trip}) {
                                 </div>
                             ))
                             }
-                            <p>Total: {checkSplit}% </p>
-                            <p> {100-checkSplit}% left </p>
+                            <div className='total-info-splits'>
+                            <p className='less-bigger-p'>Total: {checkSplit}% </p>
+                            <p className='less-bigger-p'> {100-checkSplit}% left </p>
+                            </div>
                             {errors.checkSplit ? <p className='errors'>{errors.checkSplit}</p>: <p className='errors'></p>}
                             {errors.splitTypeError ? <p className='errors'>{errors.splitTypeError}</p>: <p className='errors'></p>}
                         </div>
@@ -282,7 +284,7 @@ function AddExpenseForm ({trip}) {
 
                 {splitType==='Exact' && (
                         <div className="split-type-info">
-                            <p>Split by Exact Amounts</p>
+                            <p className='bigger-p'>Split by Exact Amounts</p>
                             {
                                 allUsers ?
                                 trip.trip.users.map(user =>  (
@@ -318,16 +320,17 @@ function AddExpenseForm ({trip}) {
 
                             ))
                             }
-                            <p>Total: ${checkSplit} </p>
-                            <p> ${(total-checkSplit).toFixed(2)} left </p>
+                            <div className='total-info-splits'>
+                            <p className='less-bigger-p'>Total: ${checkSplit} </p>
+                            <p className='less-bigger-p'> ${(total-checkSplit).toFixed(2)} left </p>
+                            </div>
                             {errors.checkSplit ? <p className='errors'>{errors.checkSplit}</p>: <p className='errors'></p>}
                             {errors.splitTypeError ? <p className='errors'>{errors.splitTypeError}</p>: <p className='errors'></p>}
                         </div>
                     )
                         }
 
-
-                <p>{splitType==='Equal' ? <>{allUsers ? `$ ${(total/trip.trip.users.length).toFixed(2)} per person`:  `$ ${(total/usersInvolved.length).toFixed(2)} per person`}</>
+                <p className='per-person-info'>{splitType==='Equal' ? <>{allUsers ? `$ ${(total/trip.trip.users.length).toFixed(2)} per person`:  `$ ${(total/usersInvolved.length).toFixed(2)} per person`}</>
                 : ''}</p>
 
             <div id='expense-action-buttons'>
