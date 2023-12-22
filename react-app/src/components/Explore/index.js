@@ -153,7 +153,7 @@ function Explore () {
                 <div key={booking.id} className='booking-places'>
                     <div className='explore-images'>
                         <img src={booking.image1} alt={booking.name}></img>
-                        <i className="fa-regular fa-heart fa-xl"></i>
+                    {user ?  <i className="fa-regular fa-heart fa-xl"></i>:<></>}
                     {user ?
                         <OpenModalButton
                         buttonText={`Add to Trip`}
@@ -185,7 +185,7 @@ function Explore () {
                 <div key={booking.id} className='booking-places'>
                     <div className='explore-images'>
                         <img src={booking.image1} alt={booking.name}></img>
-                        <i className="fa-regular fa-heart fa-xl"></i>
+                        {user ?  <i className="fa-regular fa-heart fa-xl"></i>:<></>}
                         {user ?
                         <OpenModalButton
                         buttonText={`  Add to Trip`}
@@ -217,7 +217,7 @@ function Explore () {
                 <div key={booking.id} className='booking-places'>
                     <div className='explore-images'>
                         <img src={booking.image1} alt={booking.name}></img>
-                        <i className="fa-regular fa-heart fa-xl"></i>
+                        {user ?  <i className="fa-regular fa-heart fa-xl"></i>:<></>}
                         {user ?
                         <OpenModalButton
                         buttonText={`Add to Trip`}
