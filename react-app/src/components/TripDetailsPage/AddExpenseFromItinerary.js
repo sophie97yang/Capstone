@@ -197,7 +197,7 @@ function AddExpenseFromItinerary ({trip,booking}) {
                 <input
                 type="number"
                 onChange={(e)=> setTotal(Number(e.target.value))}
-                value={total}
+                value={total.toFixed(2)}
                 />
                 {errors.total ? <p className='errors'>{errors.total}</p>: <p className='errors'></p>}
                 </div>

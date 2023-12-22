@@ -25,6 +25,8 @@ function AddExpenseForm ({trip}) {
     const [total, setTotal] = useState(0);
     const [checkSplit,setCheckSplit] = useState(0);
     const {closeModal} = useModal();
+    const options={}
+    options.timeZone = "UTC";
 
     const categories=['General','Food and Drink','Transportation','Entertainment']
     // console.log(splitTypeInfo,usersInvolved,checkSplit,total)
@@ -97,8 +99,8 @@ function AddExpenseForm ({trip}) {
             // console.log('user-info',UsersInfoSend);
             // console.log('split-info',SplitTypeInfoSend)
             const data = await dispatch(addExpense(trip.trip.id,trip.id,name,expenseDate,splitType,SplitTypeInfoSend,category,total,UsersInfoSend))
-            if (data) {
-                setErrors(data);
+            if (data.errors) {
+                setErrors(data.errors);
                 console.log(data);
                 return;
             } else {
@@ -116,6 +118,7 @@ function AddExpenseForm ({trip}) {
             <div>
             <h2>Add an Expense.</h2>
             <img src={logo} alt='money-owl'></img>
+            <p className='trip-date-info'>Trip Duration: {new Date(trip.trip.start_date).toLocaleDateString('en-US',options)}-{new Date(trip.trip.end_date).toLocaleDateString('en-US',options)}</p>
             </div>
             <form className='add-expense-form'>
                 {/* <h3>Split expenses with anyone and everyone...</h3> */}
