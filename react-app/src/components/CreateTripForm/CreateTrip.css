@@ -9,12 +9,17 @@
     margin-bottom:0px;
     margin-left:30px;
 }
+.create-trip {
+    max-width:1000px;
+    min-height: 700px;
+    margin:0px auto;
+}
 
 .create-trip>div {
     display:flex;
-    margin:25px;
     border:1px solid grey;
-    padding:20px;
+    padding:30px;
+    margin:25px;
     border-radius:10px;
 }
 
@@ -31,7 +36,7 @@
 }
 #trip-form {
     flex-grow:1;
-    margin-top:80px;
+    margin-top:30px;
     padding-left:50px;
 }
 
@@ -41,17 +46,18 @@
     width:300px;
     display:block;
     margin-bottom:10px;
+    font-size:17px;
 }
 
 
 #trip-form input {
-    width:250px;
-    height:30px;
+    width:400px;
+    height:60px;
     border-radius:10px;
     border:1px solid grey;
-    margin-left:20px;
     padding-left:10px;
     padding-right:10px;
+    font-size:17px;
 }
 
 #trip-form input:hover,#trip-form select:hover,#trip-form textarea:hover {
@@ -70,21 +76,19 @@
 }
 
 #trip-form textarea {
-    width:250px;
-    height:250px;
+    width:400px;
+    height:150px;
     border-radius:10px;
     border:1px solid grey;
-    margin-left:20px;
     padding:10px;
+    font-size:17px;
 
 }
 
-#image-input input {
-    border-style:none;
-}
+
 
 #image-input input:hover {
-    border-style:none;
+    border:1px solid grey;
 }
 #create-trip_first >label {
     font-size: 1.5em;
@@ -93,11 +97,27 @@
 }
 
 #trip-form select {
-    width:270px;
-    height:30px;
+    width:420px;
+    height:65px;
     border-radius:10px;
     border:1px solid grey;
-    margin-left:20px;
     padding-left:10px;
     padding-right:10px;
+    font-size:17px;
+}
+
+#image-input input {
+    border:1px solid grey;
+    padding:20px 60px;
+    height:20px;
+    width:300px;
+    text-align:center;
+}
+
+.create-trip-button>.action-button-ls {
+    width:420px;
+    margin-top:20px;
+    margin-left:0px;
+    height:50px;
+    font-size:17px;
 }

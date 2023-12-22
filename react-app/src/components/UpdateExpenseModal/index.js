@@ -141,7 +141,6 @@ function UpdateExpenseModal ({trip,expense}) {
                 <p>Who is Involved?</p>
                 <div className='keep-min'>
                 <label > All Users </label>
-
                     <input
                         type='checkbox'
                         value={allUsers}
@@ -157,6 +156,7 @@ function UpdateExpenseModal ({trip,expense}) {
 
 
                 <div  className={!allUsers ?'user-choices' : 'user-choices hidden'}>
+                    <div className='update-select-users'>
                 <label className='select-users'> Select Users: </label>
                     <select
                         multiple={true}
@@ -174,6 +174,7 @@ function UpdateExpenseModal ({trip,expense}) {
                        <option value={[user.user.id,user.user.first_name]} key={user.user.id}>{user.user.first_name} {user.user.last_name[0]}.</option>
                        ))}
                     </select>
+                    </div>
                 </div>
                 </div>
 
@@ -280,6 +281,7 @@ function UpdateExpenseModal ({trip,expense}) {
                                     <div key={user.split(',')[0]} className='info-details'>
                                     <label  >
                                         {user.split(',')[1]}
+                                        </label>
                                         <input
                                         type='number'
                                         min={0}
@@ -289,7 +291,6 @@ function UpdateExpenseModal ({trip,expense}) {
                                             newInfo[parseInt(user.split(',')[0])]=e.target.value
                                             setSplitTypeInfo(newInfo)
                                         }}/>
-                                    </label>
                                     </div>
                             ))
                             }
@@ -312,6 +313,7 @@ function UpdateExpenseModal ({trip,expense}) {
                                     <div key={user.user.id} className='info-details'>
                                         <label  >
                                             {user.user.first_name}
+                                            </label>
                                             <input
                                             type='number'
                                             step={0.01}
@@ -321,13 +323,13 @@ function UpdateExpenseModal ({trip,expense}) {
                                                 newInfo[user.user.id]=e.target.value
                                                 setSplitTypeInfo(newInfo)
                                             }}/>
-                                        </label>
                                     </div>
                                 )):
                                 usersInvolved.map(user =>  (
                                     <div key={user.split(',')[0]} className='info-details'>
                                     <label  >
                                         {user.split(',')[1]}
+                                    </label>
                                         <input
                                         type='number'
                                         step={0.01}
@@ -337,7 +339,6 @@ function UpdateExpenseModal ({trip,expense}) {
                                             newInfo[parseInt(user.split(',')[0])]=e.target.value
                                             setSplitTypeInfo(newInfo)
                                         }}/>
-                                    </label>
                                     </div>
                             ))
                             }
@@ -356,14 +357,15 @@ function UpdateExpenseModal ({trip,expense}) {
                 : ''}</p>
 
                 <div id='update-expense-action-buttons'>
-                <button onClick={handleSubmit}
-                id='update-save-button'
-                >Save</button>
                 <button onClick={(e=> {
                     e.preventDefault();
                     closeModal()})}
                     id='update-cancel-button'
                     >Cancel</button>
+                <button onClick={handleSubmit}
+                id='update-save-button'
+                >Save</button>
+
                 </div>
 
             </form>

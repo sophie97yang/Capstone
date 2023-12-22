@@ -315,3 +315,7 @@
     margin-top:50px;
     text-align:center;
 }
+
+.all-trips .action-buttons {
+    align-items:flex-start;
+}

@@ -171,10 +171,11 @@ const CreateTripForm = () => {
                 type="file"
                 accept="image/*"
                 onChange={(e) => setImage(e.target.files[0])}
+                id='file-upload-input'
              />
              </div>
 
-            <div>
+            <div className='create-trip-button'>
             <button type="submit" className="action-button-ls">Create Trip</button>
             </div>
             {imageLoading && <p>Loading...</p>}

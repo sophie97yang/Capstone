@@ -1,6 +1,6 @@
 .add-expense-modal {
-    width:800px;
-    min-height:600px;
+    width:1000px;
+    min-height:700px;
     max-height:620px;
     overflow:scroll;
     display:flex;
@@ -14,8 +14,8 @@
     display:block;
 }
 
-.user-choice {
-    height:fit-content
+.user-choices {
+    min-height:150px;
 }
 
 .add-expense-modal img{
@@ -27,14 +27,14 @@
     margin:30px;
     display:flex;
     flex-direction:column;
-    border-right:1px solid grey;
+    /* border-right:1px solid grey; */
     /* justify-content:center;
     align-items:center;
 } */
 }
 
 .add-expense-modal h2{
-    font-size:30px;
+    font-size:40px;
 }
 
 .add-expense-form {
@@ -51,13 +51,17 @@
 }
 
 .add-expense-form input {
-    width:250px;
-    height:30px;
+    width:400px;
+    height:50px;
     border-radius:10px;
     border:1px solid grey;
     padding-left:10px;
     padding-right:10px;
     margin-top:10px;
+}
+
+.add-expense-form input,.add-expense-form select {
+    font-size:17px;
 }
 
 .add-expense-form input:hover,.add-expense-form select:hover {
@@ -66,8 +70,8 @@
 }
 
 .add-expense-form select {
-    width:270px;
-    height:35px;
+    width:420px;
+    height:60px;
     border-radius:10px;
     border:1px solid grey;
     padding-left:10px;
@@ -85,7 +89,7 @@
 
 #users-checkbox {
     display:inline-block;
-    margin-left:30px;
+    margin:10px;
 }
 
 .keep-min {
@@ -96,19 +100,21 @@
 }
 
 .user-choices {
-    margin-left:50px;
+    margin:20px 0px;
 }
 .choosing-users {
-    height:250px;
+    height:350px;
 }
 
 #multiple-users {
-    height:100px;
+    height:150px;
     padding:10px;
+    padding-left:25px;
+    font-size:17px;
 }
 
 .choosing-users p{
-    font-size:18px;
+    font-size:30px;
     font-weight:bold;
     margin-bottom:0px;
 }
@@ -116,6 +122,18 @@
 .add-expense-form>div {
     display:flex;
     flex-direction:column;
+}
+
+.add-expense-form label {
+    font-size:18px;
+}
+
+#users-checkbox {
+    font-size:30px;
+    font-weight:200;
+}
+#checkbox {
+    font-size:30px;
 }
 
 .split-type-info {
@@ -129,7 +147,6 @@
 }
 
 #save-button {
-    width:100px;
     height:50px;
     border-radius:10px;
     border-style:none;
@@ -141,18 +158,17 @@
 #expense-action-buttons {
     display:flex;
     flex-direction:row;
+    justify-content: flex-end;
     gap:20px;
-
+    padding-bottom:20px;
 }
 
 #cancel-button {
-    width:100px;
     height:50px;
     border-radius:10px;
     border-style:none;
     padding:10px;
     background-color:rgb(226, 225, 225);
-    margin-left:30px;
 }
 
 #expense-action-buttons button:hover {
@@ -167,9 +183,55 @@
     padding:10px;
     background-color:rgb(226, 225, 225);
     margin-top:20px;
+    margin-left:30px;
 
 }
 
+.invite-collaborators-option p {
+    font-size:25px;
+}
+.invite-collaborators-option {
+    flex-grow:1;
+}
 .disabled-option {
     font-weight:bold;
+}
+
+.bigger-p{
+    font-size:20px;
+    color:orange;
+    margin:10px auto;
+}
+
+.split-type-info {
+    padding-left:20px;
+}
+
+.per-person-info {
+    color:orange;
+    font-size:25px;
+    margin-bottom:30px;
+    margin-left:100px;
+}
+
+.total-info-splits {
+    border:1px solid grey;
+    width:300px;
+    margin-left:60px;
+    margin-top:15px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    border-radius:10px;
+    color:orange;
+    font-size:20px;
+}
+.total-info-splits>p {
+    margin:5px;
+}
+
+#expense-action-buttons>button {
+    width:150px;
+    height:60px;
+    font-size:17px;
 }

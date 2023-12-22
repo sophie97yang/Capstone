@@ -50,6 +50,11 @@
     align-items: center;
 }
 
+.expense-buttons button {
+    width:150px;
+    height:50px;
+    margin-left:0px;
+}
 .expense-buttons button:hover {
     cursor:pointer;
     background-color:#57d9ae;

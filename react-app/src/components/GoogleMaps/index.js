@@ -14,6 +14,7 @@ function Map({trip}) {
         "Jackson":{lat:43.582767,lng:-110.821999},
         "Washington":{lat:38.9072,lng:-77.0369},
         "Las Vegas":{lat:36.1716,lng:-115.1391},
+        "Nashville":{lat:36.1627,lng:-86.7816}
 
     }
     const icons_category_map = {
