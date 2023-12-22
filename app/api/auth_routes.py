@@ -30,7 +30,7 @@ client_secrets = {
     "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
     "client_secret": CLIENT_SECRET,
     "redirect_uris": [
-      f"${BASE_URL}/api/auth/callback"
+      f"{BASE_URL}/api/auth/callback"
     ]
   }
 }
