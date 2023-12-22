@@ -80,7 +80,6 @@ function LoginFormPage() {
         <button type="submit" className='action-button-ls' id='longer'>Log In</button>
         <button onClick={handleDemo} className='action-button-ls'id='longer'>Log In as Demo User</button>
         <p>----------------------- OR ----------------------- </p>
-        <p>"{`${process.env.REACT_APP_BASE_URL}/`}"</p>
         <a href={`${process.env.REACT_APP_BASE_URL}/api/auth/oauth_login`}><img src={google} alt='google' id='google'></img></a>
         </div>
 

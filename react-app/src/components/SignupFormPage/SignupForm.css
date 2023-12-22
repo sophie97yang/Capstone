@@ -9,6 +9,7 @@
 }
 .sign-up-page {
     width:950px;
+    min-height:750px;
     margin:20px auto;
     padding:20px;
     border-radius:10px;
@@ -47,20 +48,22 @@
 }
 
 .sign-up-page input {
-    width:250px;
-    height:30px;
+    width:400px;
+    height:50px;
     border-radius:10px;
     border:1px solid grey;
-    margin-left:20px;
     padding-left:10px;
+    margin-top:10px;
 }
 
 .sign-up-page select {
-    width:260px;
-    height:35px;
-    margin-left:10px;
+    width:410px;
+    height:55px;
     border-radius:10px;
     border:1px solid grey;
+    padding-left:10px;
+    margin-top:10px;
+    font-size:17px;
 
 }
 .sign-up-page input:hover,.sign-up-page select:hover {
@@ -81,4 +84,34 @@
 .action-button-ls:hover {
     background-color:#57D9AE;
     transition: background-color 0.5s
+}
+
+.signup-layout>form {
+    flex-grow:1;
+    margin-left:50px;
+    margin-top:-70px;
+}
+
+.signup-layout>form label {
+    font-size:18px;
+}
+.signup-inputs-div {
+    display:flex;
+    flex-direction:column;
+}
+.signup-inputs-div input {
+    margin-left:0px;
+    font-size:17px;
+
+}
+
+.sign-up-page .action-button-ls {
+    margin-left:0px;
+    width:400px;
+    height:60px;
+    font-size:18px;
+    margin-left:10px;
+}
+.block>a {
+    margin-left:90px;
 }

@@ -7,7 +7,7 @@
   border:1px black solid;
   border-radius:10px;
   padding:20px;
-  width:100px;
+  width:150px;
 }
 #user-info {
   border-bottom:1px solid grey;
@@ -22,7 +22,7 @@
 .profile-dropdown li {
   list-style-type:none;
   padding:10px 0px;
-  font-size:14px;
+  font-size:18px;
   text-align: center;
 }
 .profile-dropdown li:hover, .profile-dropdown button:hover {
@@ -41,6 +41,7 @@
   border:none;
   font-size:14px;
   padding-left:0px;
+  font-size:18px;
 }
 
 nav li {
@@ -82,6 +83,7 @@ nav {
   border-radius:10px;
   width:100px;
   border-style:none;
+  font-size:16px;
 }
 
 .auth-action-buttons button:hover {

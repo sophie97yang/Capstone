@@ -5,7 +5,8 @@ import { signUp } from "../../store/session";
 import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from "../LoginFormModal";
 import './SignupForm.css';
-import logo from '../../assets/images/logo-signup.png'
+import logo from '../../assets/images/logo-signup.png';
+import google from '../../assets/images/google.png';
 
 function SignupFormPage() {
   const dispatch = useDispatch();
@@ -81,44 +82,57 @@ function SignupFormPage() {
 
         <div id='signup_first-half'>
          <h2> Hi there! My name is... </h2>
-
+          <div className='signup-inputs-div'>
           <label>
             First Name <span className='required'>*</span>
+          </label>
           <input
             type="text"
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
           />
           {errors.firstName ? <p className='errors'>{errors.firstName}</p>: <p className='errors'></p>}
-          </label>
+          </div>
 
+          <div className='signup-inputs-div'>
           <label>
             Last Name <span className='required'>*</span>
+          </label>
           <input
             type="text"
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
           />
           {errors.lastName ? <p className='errors'>{errors.lastName}</p>: <p className='errors'></p>}
-         </label>
+          </div>
+
+        </div>
+
+        <div className={hidden ? 'login-action block':'hidden'}>
+          <p>----------------------------- OR ----------------------------- </p>
+          <a href={`${process.env.REACT_APP_BASE_URL}/api/auth/oauth_login`}><img src={google} alt='google' id='google'></img></a>
         </div>
 
         <div id='signup-second_half' className={!hidden ? 'block':'hidden'}>
         <div>
           <h2>I'm joining from...</h2>
 
+          <div className='signup-inputs-div'>
         <label>
             City <span className='required'>*</span>
+        </label>
             <input
               type="text"
               value={city}
               onChange={(e) => setCity(e.target.value)}
             />
         {errors.city ? <p className='errors'>{errors.city}</p>: <p className='errors'></p>}
-        </label>
+       </div>
 
+       <div className='signup-inputs-div'>
         <label>
             State <span className='required'>*</span>
+        </label>
             <select value={state} onChange={(e) => setState(e.target.value)}>
               <option value="">Select a State</option>
               <option value="AL">Alabama</option>
@@ -174,40 +188,46 @@ function SignupFormPage() {
               <option value="WY">Wyoming</option>
           </select>
           {errors.state ? <p className='errors'>{errors.state}</p>: <p className='errors'></p>}
-        </label>
+        </div>
         </div>
 
         <h2> This is how to contact me ... </h2>
+        <div className='signup-inputs-div'>
         <label>
           Email <span className='required'>*</span>
+          </label>
           <input
             type="text"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
           {errors.email ? <p className='errors'>{errors.email}</p>: <p className='errors'></p>}
-        </label>
+          </div>
 
         <h2> This is my password ... </h2>
+        <div className='signup-inputs-div'>
         <label>
           Password <span className='required'>*</span>
+        </label>
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
           {errors.password ? <p className='errors'>{errors.password}</p>: <p className='errors'></p>}
-        </label>
-
-        <label className={confirm ? '': 'hidden'}>
+          </div>
+          <div  className={confirm ? 'signup-inputs-div': 'signup-inputs-div hidden'}>
+        <label>
           Confirm Password
+        </label>
           <input
             type="password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
-        </label>
+
         {errors.confirmPassword ? <p className='errors'>{errors.confirmPassword}</p>: <p className='errors'></p>}
+        </div>
 
         <button type="submit" className='action-button-ls'>Sign Up</button>
 

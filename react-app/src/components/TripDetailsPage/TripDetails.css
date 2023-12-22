@@ -23,6 +23,7 @@
     flex-direction:row;
     width:950px;
     margin:0px auto;
+    min-height:700px;
 }
 
 .trip-detail-right {
@@ -413,4 +414,8 @@
 }
 .no-itinerary a:hover {
     cursor:pointer;
+}
+
+#itinerary-map {
+    background-color: transparent;
 }

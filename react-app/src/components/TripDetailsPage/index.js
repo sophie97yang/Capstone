@@ -133,7 +133,7 @@ const TripDetails = ({type}) => {
                 <Itinerary trip={trip_found}/>
             }
             </div>
-            <div className='trip-detail-right'>
+            <div className='trip-detail-right' id={type!=='expense' ?"itinerary-map":""}>
                 {
                     type==='expense' ?
                     <div>

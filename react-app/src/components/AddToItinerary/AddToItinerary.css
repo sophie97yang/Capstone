@@ -237,11 +237,12 @@
 }
 
 .no-trips-itinerary>button {
-    width:150px;
-    height:80px;
+    width:300px;
+    height:65px;
     border-style:none;
     border-radius:10px;
     background-color:#57d9ae;
+    font-size:18px;
 }
 
 .no-trips-itinerary>button:hover {

@@ -112,7 +112,7 @@ function LandingPage ({isLoaded}) {
                     <div className='top-destinations'>
                     <h3>Dream Your Next Trip</h3>
                     <h4>These are the top destinations for your next vacation</h4>
-                    <div className='random-places-landing'>
+                    <div className='random-places-landing' id='landing-top-images'>
                         {locationChoices.map(location => (
                             <Link to={`/explore/${location.city}`} key={location.city} className='populate-landing-page'>
                                 <img src={location.image} alt={location.city}></img>
@@ -155,7 +155,7 @@ function LandingPage ({isLoaded}) {
                         <div className='explore-all'>
                             <h3><Link to='/login' id="login-link"> Sign In</Link> to unlock the best of SplitTrip</h3>
                             <h4>In the meantime.. Explore all of the things you can do</h4>
-                            <div className='explore-choices'>
+                            <div className='explore-choices' id='explore-landing-bottom'>
                             {
                                 bookingChoices.map(booking => (
                                     <div className='populate-landing-page' key={booking.name}>
