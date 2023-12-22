@@ -6,6 +6,8 @@ import OpenModalButton from "../OpenModalButton";
 import SignupFormModal from '../SignupFormModal'
 import "./LoginForm.css";
 import logo from '../../assets/images/SplitTrip-logo.png';
+import google from '../../assets/images/google.png';
+
 
 function LoginFormPage() {
   const dispatch = useDispatch();
@@ -50,35 +52,37 @@ function LoginFormPage() {
       <img src={logo} alt='logo' className="logo"></img>
       <form onSubmit={handleSubmit}>
         <h2>Log In to access the best of SplitTrip</h2>
+        <div className='login-flex'>
         <label>
-          <p className="label-text">
           Email
-          </p>
+        </label>
           <input
             type="text"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
           />
-        </label>
         {errors.email ? <p className='errors' id="login-errors-email">{errors.email}</p>: <p className='errors' id="login-errors-email"></p>}
-
+        </div>
+        <div className='login-flex'>
         <label>
-          <p className="label-text">
           Password
-          </p>
+          </label>
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-        </label>
         {errors.password ? <p className='errors'id="login-errors-pass">{errors.password}</p>: <p className='errors' id="login-errors-pass"></p>}
-        <div className='action-buttons'>
-        <button type="submit" className='action-button-ls'>Log In</button>
-        <button onClick={handleDemo} className='action-button-ls'>Log In as Demo User</button>
         </div>
+        <div className='action-buttons login-action'>
+        <button type="submit" className='action-button-ls' id='longer'>Log In</button>
+        <button onClick={handleDemo} className='action-button-ls'id='longer'>Log In as Demo User</button>
+        <p>----------------------- OR ----------------------- </p>
+        <a href={`${process.env.REACT_APP_BASE_URL}/api/auth/oauth_login`}><img src={google} alt='google' id='google'></img></a>
+        </div>
+
       </form>
       </div>
     </div>

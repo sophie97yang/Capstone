@@ -385,3 +385,53 @@
   .about-city>p {
     text-align:justify;
   }
+
+  #explore-login {
+    padding:10px;
+    border-radius:10px;
+    height:50px;
+    width:100px;
+    border-style:none;
+    background-color: orange;
+  }
+
+  .no-user {
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:50px;
+    justify-content:center;
+  }
+
+  .open-status {
+    color:green;
+    font-weight:700
+  }
+
+  .closed-status {
+    color:red;
+    font-weight:700
+  }
+  .add-to-itinerary-explore-page .no-trips-itinerary>h2,.add-to-itinerary-explore-page .no-trips-itinerary>p {
+    text-align:justify;
+    width:400px;
+  }
+
+  .add-to-itinerary-explore-page .no-trips-itinerary>h2 {
+    font-size:25px;
+    font-weight:300;
+    margin-top:0px;
+
+  }
+
+  .add-to-itinerary-explore-page>h2 {
+    border-bottom:1px solid grey;
+    padding-bottom:15px;
+    padding-left:15px;
+    margin-left:0px;
+    margin-right:0px;
+  }
+
+  .explore-details-bottom {
+    margin-bottom:15px;
+  }

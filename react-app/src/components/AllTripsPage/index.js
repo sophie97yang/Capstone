@@ -1,3 +1,4 @@
+import {useEffect, useState} from 'react';
 import { useSelector } from "react-redux";
 import { useHistory,Link } from "react-router-dom";
 import './AllTrips.css'
@@ -8,13 +9,25 @@ import AddExpenseForm from "../AddExpenseForm"
 const AllTrips = () => {
     const user = useSelector(state=>state.session.user);
     const history=useHistory();
+    const [imageChoice,setImageChoice] = useState();
     const trips =user?.trips ? Object.values(user?.trips):null;
+    const locations = [{city:'Aspen',state:'CO',image:"https://www.travelandleisure.com/thmb/Yiq3rXHGmHnDrgzBsGmEvqjHxSo=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/aspen-colorado-lead-ASPENTG0122-3bd432152d1f4758b1b89fd8a3a231cc.jpg"},
+    {city:'Miami',state:'FL',image:'https://www.mayflower.com/wp-content/uploads/2022/05/Miami-City-Guide_Header-scaled.jpg'},
+    {city:'Napa',state:'CA',image:"https://falstaff.b-cdn.net/core/5039223/napa-valley_5039223.jpg"},
+    {city:'Boston',state:'MA',image:"https://content.r9cdn.net/rimg/dimg/8d/d4/5837febe-city-25588-16b90081d43.jpg"},
+    {city:'Jackson',state:'WY',image:"https://assets.vogue.com/photos/61d453c3069d2a61c3d376e1/master/w_2560%2Cc_limit/520395534"},
+    {city:'Nashville',state:'TN',image:"https://i.natgeofe.com/n/070fbe2c-a644-4c62-aa76-bddf63dd6f10/broadway-record-shop-nashville-tennessee.jpg"},
+    {city:'Washington',state:'DC',image:"https://www.thoughtco.com/thmb/_ZNhs9lhwfoos1WoYBygoL03g6c=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/GettyImages-497322993-598b2ad403f4020010ae0a08.jpg"},
+    {city:'Las Vegas',state:'NV',image:"https://media.cnn.com/api/v1/images/stellar/prod/180313182911-01-las-vegas-travel-strip.jpg"},
+    ]
+    const location_choice = Math.floor(Math.random()*locations.length)
 
     //calculate how many days until the trip
     trips?.forEach(trip=> {
         const today = new Date()
         const start = new Date(trip.trip.start_date)
         trip.until = Math.ceil((start.getTime()-today.getTime())/(1000*60*60*24))
+        if (trip.until<0 && today<new Date(trip.trip.end_date)) trip.until='current'
         //calculate general overview of what is owed by you and how much you spent
         let owed=0;
         let owe=0
@@ -41,6 +54,7 @@ const AllTrips = () => {
         trip.owe=(owed-owe).toFixed(2);
     })
 
+    useEffect(()=> {
     const images=['https://images.unsplash.com/photo-1522878129833-838a904a0e9e?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     'https://images.unsplash.com/photo-1433838552652-f9a46b332c40?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     'https://images.unsplash.com/photo-1475503572774-15a45e5d60b9?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8MTR8fHxlbnwwfHx8fHw%3D',
@@ -55,7 +69,10 @@ const AllTrips = () => {
     'https://images.unsplash.com/photo-1440778303588-435521a205bc?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8Njd8fHxlbnwwfHx8fHw%3D',
     'https://images.unsplash.com/photo-1505778276668-26b3ff7af103?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8ODF8fHxlbnwwfHx8fHw%3D'
     ]
-    const choice = Math.floor(Math.random()*images.length)
+    const choice = Math.floor(Math.random()*images.length);
+    if (!imageChoice) setImageChoice(choice);
+    },[imageChoice])
+
 
     return (
         <div className='all-trips'>
@@ -67,16 +84,16 @@ const AllTrips = () => {
                 }}>Create a New Trip</button>
                 <button onClick={(e)=> {
                     e.preventDefault();
-                    history.push('/explore/Aspen')
+                    history.push(`/explore/${locations[location_choice].city}`)
                 }}>Explore places to go</button>
             </div>
            { trips.length ? trips.map(trip=> (
             <div key={trip.id} className='individual-trip'>
             <div className='my_trips-left'>
-            <img src={trip.trip.image?trip.trip.image:images[choice]} alt={trip.trip.name}
+            <img src={trip.trip.image?trip.trip.image:imageChoice} alt={trip.trip.name}
             onError={e => { e.currentTarget.src = "https://images.unsplash.com/photo-1522878129833-838a904a0e9e?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" }}
             ></img>
-            {trip.until>=0 ? <p className='countdown'>In {trip.until} days</p>:<p className='countdown'>Past Trip</p>}
+            {trip.until>=0 ? <p className='countdown'>In {trip.until} days</p>:<p className='countdown'><span> {trip.until==='current' ? "Happening Now" :"Past Trip"}</span></p>}
             </div>
             <div className='my_trips-right'>
                 <TripOptions trip={trip} />

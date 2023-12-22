@@ -21,21 +21,23 @@ function LandingPage ({isLoaded}) {
     {city:'Miami',state:'FL',image:'https://www.mayflower.com/wp-content/uploads/2022/05/Miami-City-Guide_Header-scaled.jpg'},
     {city:'Napa',state:'CA',image:"https://falstaff.b-cdn.net/core/5039223/napa-valley_5039223.jpg"},
     {city:'Boston',state:'MA',image:"https://content.r9cdn.net/rimg/dimg/8d/d4/5837febe-city-25588-16b90081d43.jpg"},
-    {city:'Moab',state:'UT',image:"https://www.visittheusa.com/sites/default/files/styles/hero_l/public/images/hero_media_image/2017-07/92ce662af277a11b73ea3a6d451271fc.jpeg"},
     {city:'Jackson',state:'WY',image:"https://assets.vogue.com/photos/61d453c3069d2a61c3d376e1/master/w_2560%2Cc_limit/520395534"},
     {city:'Nashville',state:'TN',image:"https://i.natgeofe.com/n/070fbe2c-a644-4c62-aa76-bddf63dd6f10/broadway-record-shop-nashville-tennessee.jpg"},
-    {city:'Savannah',state:'GA',image:"https://ballastone.com/wp-content/uploads/2019/04/best-time-to-travel-to-savannah-ga-1.jpg"},
-    {city:'Charleston',state:'SC',image:"https://www.fodors.com/wp-content/uploads/2022/09/HERO-shutterstock_1577091133.jpg"},
-    {city:'Sedona',state:'AZ',image:"https://visit-sedona.s3.amazonaws.com/CMS/2214/view_from_airport_mesa_at_sunrise__medium.jpg"},
     {city:'Washington',state:'DC',image:"https://www.thoughtco.com/thmb/_ZNhs9lhwfoos1WoYBygoL03g6c=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/GettyImages-497322993-598b2ad403f4020010ae0a08.jpg"},
-    {city:'New Orleans',state:'LA',image:"https://media.timeout.com/images/105770969/750/562/image.jpg"},
-    {city:'Chicago',state:'IL',image:"https://cdn.choosechicago.com/uploads/2022/06/wygyk-agnostic-A.Alexander_5cloudgateMay13-scaled.jpg"},
-    {city:'Orlando',state:'FL',image:"https://a.cdn-hotels.com/gdcs/production4/d842/1da7b753-73d3-4f87-9661-13fc8b819242.jpg"},
     {city:'Las Vegas',state:'NV',image:"https://media.cnn.com/api/v1/images/stellar/prod/180313182911-01-las-vegas-travel-strip.jpg"},
-    {city:'Oahu',state:'HI',image:"https://i.insider.com/62867ef1577b8a001827a029?width=1136&format=jpeg"},
-    {city:'Maui',state:'HI',image:"https://a.cdn-hotels.com/gdcs/production81/d1269/0cffe15a-7fdf-4e75-9415-92eaf78e2f73.jpg"},
-    {city:'New York City',state:'NY',image:"https://cdn.britannica.com/61/93061-050-99147DCE/Statue-of-Liberty-Island-New-York-Bay.jpg"}
     ]
+    // const unseeded = [
+    //     {city:'Savannah',state:'GA',image:"https://ballastone.com/wp-content/uploads/2019/04/best-time-to-travel-to-savannah-ga-1.jpg"},
+    // {city:'Charleston',state:'SC',image:"https://www.fodors.com/wp-content/uploads/2022/09/HERO-shutterstock_1577091133.jpg"},
+    // {city:'Sedona',state:'AZ',image:"https://visit-sedona.s3.amazonaws.com/CMS/2214/view_from_airport_mesa_at_sunrise__medium.jpg"},
+    // {city:'New Orleans',state:'LA',image:"https://media.timeout.com/images/105770969/750/562/image.jpg"},
+    // {city:'Chicago',state:'IL',image:"https://cdn.choosechicago.com/uploads/2022/06/wygyk-agnostic-A.Alexander_5cloudgateMay13-scaled.jpg"},
+    // {city:'Orlando',state:'FL',image:"https://a.cdn-hotels.com/gdcs/production4/d842/1da7b753-73d3-4f87-9661-13fc8b819242.jpg"},
+    // {city:'Oahu',state:'HI',image:"https://i.insider.com/62867ef1577b8a001827a029?width=1136&format=jpeg"},
+    // {city:'Maui',state:'HI',image:"https://a.cdn-hotels.com/gdcs/production81/d1269/0cffe15a-7fdf-4e75-9415-92eaf78e2f73.jpg"},
+    // {city:'New York City',state:'NY',image:"https://cdn.britannica.com/61/93061-050-99147DCE/Statue-of-Liberty-Island-New-York-Bay.jpg"}
+    //{city:'Moab',state:'UT',image:"https://www.visittheusa.com/sites/default/files/styles/hero_l/public/images/hero_media_image/2017-07/92ce662af277a11b73ea3a6d451271fc.jpeg"},
+    // ]
 
     useEffect(()=> {
         dispatch(getBookings())
@@ -45,9 +47,9 @@ function LandingPage ({isLoaded}) {
     useEffect(()=> {
         const location_choices = []
         for (let i=0;i<3;i++) {
-            let choice_index = Math.floor(Math.random()*17);
+            let choice_index = Math.floor(Math.random()*7);
             if (location_choices.includes(locations[choice_index])) {
-                choice_index= Math.floor(Math.random()*17);
+                choice_index= Math.floor(Math.random()*8);
             }
             location_choices.push(locations[choice_index])
         }
@@ -60,14 +62,15 @@ function LandingPage ({isLoaded}) {
     //populate 3 random choices of bookings to look at
     useEffect(()=> {
         const booking_choices =[]
+        const already_in = new Set();
         if (Object.values(bookings).length) {
             for (let i=0;i<3;i++) {
                 let choice_index = Math.floor(Math.random()*Object.values(bookings).length)+1;
-                if (booking_choices.includes(bookings[choice_index])) {
+                if (choice_index in already_in) {
                     choice_index= Math.floor(Math.random()*Object.values(bookings).length)+1;
-                    console.log(choice_index)
                 }
                 booking_choices.push(bookings[choice_index])
+                already_in.add(choice_index)
             }
         }
         if (!bookingChoices.length) {
@@ -156,7 +159,7 @@ function LandingPage ({isLoaded}) {
                             {
                                 bookingChoices.map(booking => (
                                     <div className='populate-landing-page' key={booking.name}>
-                                         <Link to={`/explore/${booking.city}`}>
+                                         <Link to={`/bookings/${booking.id}`}>
                                             <img src={booking.image1} alt={booking.name}></img>
                                             <h4>{booking.name}</h4>
                                         </Link>

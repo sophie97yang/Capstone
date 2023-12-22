@@ -1,11 +1,13 @@
 import { useDispatch,useSelector } from "react-redux";
-import { useParams,Link } from "react-router-dom";
+import { useParams,Link,useHistory } from "react-router-dom";
 import {getBookings} from '../../store/booking';
 import { useEffect,useState,useRef } from "react";
 import { Carousel } from 'react-responsive-carousel';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import AddToItinerary from "../AddToItinerary";
 import LocationMap from "../GoogleMaps/bookingLocation";
+import './Explore.css';
+import '../Navigation/Navigation.css'
 
 function BookingDetails() {
     const {id} = useParams()
@@ -13,6 +15,7 @@ function BookingDetails() {
     const bookings = useSelector(state=>state.bookings.bookings);
     const user = useSelector(state=>state.session.user);
     const ref=useRef();
+    const history = useHistory();
     const booking = bookings[Number(id)];
     let stars=''
         for (let i=0;i<Math.round(booking?.rating);i++) {
@@ -43,7 +46,6 @@ function BookingDetails() {
             } else {
                 parsedCloseTime[0] = Number(parsedCloseTime[0])+12
             }
-
         if (new Date().getHours()>=parsedOpenTime[0] &&new Date().getHours()<=parsedCloseTime[0] ) setStatus('Open Now');
         else setStatus('Closed Now')
 
@@ -80,12 +82,12 @@ function BookingDetails() {
             <h2>{booking.name}</h2>
             <h3>{booking.stars} |  {reviews} reviews</h3>
             <h3 className='features'>{booking.features}</h3>
-            {booking.opening_hour ? <h3> {status} | <i className='fa-regular fa-clock'></i> {booking.opening_hour} - {booking.closing_hour} </h3>:<></>}
+            {booking.opening_hour ? <h3> <span className={status==='Open Now' ? "open-status":"closed-status"}>{status}</span> | <i className='fa-regular fa-clock'></i> {booking.opening_hour} - {booking.closing_hour} </h3>:<></>}
             </div>
             { booking.category!=='Restaurants' ?
             <div className='price-booking'>
-               <p>$ {booking.price} <span> {booking.category==='Hotel' ? 'per night' :<> {booking.category==='Things To Do' ?'per individual':""}</>}</span></p>
-               <button onClick={ ()=> handleClick(ref)}>Reserve</button>
+               <p>$ {booking.price.toFixed(2)} <span> {booking.category==='Hotel' ? 'per night' :<> {booking.category==='Things To Do' ?'per individual':""}</>}</span></p>
+               {user ? <button onClick={ ()=> handleClick(ref)}>Reserve</button>:""}
             </div>
             :
             <></>
@@ -115,10 +117,18 @@ function BookingDetails() {
             </div>
             </div>
 
-            {user &&
+            {user ?
             <div ref={ref} className='add-to-itinerary-explore-page'>
             <h2>Add <span> {booking.name} </span>to Your Trip</h2>
             <AddToItinerary booking={booking} detail={true}/>
+            </div>:
+            <div className='add-to-itinerary-explore-page no-user'>
+                <h2>Log In to Unlock the Best of TripSplit</h2>
+                <button onClick={(e)=> {
+              			e.preventDefault();
+              			history.push('/login');
+            		}} id='longer' className='action-button-ls'>Log in</button>
+
             </div>
             }
             </div>
