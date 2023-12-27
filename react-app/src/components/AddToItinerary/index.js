@@ -17,6 +17,8 @@ function AddToItinerary({booking,detail}) {
     const availableTrips = Object.values(user.trips).filter((trip)=> {
         return (new Date(trip.trip.end_date)>new Date() && trip.trip.location[0]===booking.city)
     })
+    const options={}
+    options.timeZone = "UTC";
     return (
         <div className='add-to-itinerary-modal'>
              {!detail ?<button onClick={closeModal} className='close-modal' id='update-trip-close'><i className="fa-solid fa-xmark fa-2xl"></i></button>:""}
@@ -31,13 +33,14 @@ function AddToItinerary({booking,detail}) {
                 >
                     <option value='' disabled>Your Trips...</option>
                 {availableTrips.map(trip=> (
-                    <option value={trip.id} key={trip.id}>{trip.trip.name}</option>
+                    <option value={trip.id} key={trip.id}>{trip.trip.name}: {new Date(trip.trip.start_date).toLocaleDateString('en-US',options)} - {new Date(trip.trip.end_date).toLocaleDateString('en-US',options)}</option>
                 ))}
                 </select>
 
                 {
                 TripToAdd && (
                 <div>
+                {/* <p>{new Date(user.trips[TripToAdd].trip.start_date).toLocaleDateString('en-US',options)} - {new Date(user.trips[TripToAdd].trip.end_date).toLocaleDateString('en-US',options)}</p> */}
                 {booking.category==='Hotel' ?
                 <HotelReservation trip={TripToAdd} booking={booking} closeModal={closeModal} setTrip={SetTrip} detail={detail}/>
                 :

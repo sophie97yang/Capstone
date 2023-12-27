@@ -145,7 +145,7 @@ if (booking.category==="Restaurants"){
             {
                 tripToAdd.trip.users.map(user=> {
                     counter++;
-                    return <option value={counter}>{counter} {counter!==1 ? "people" :"person"}</option>
+                    return <option value={counter} key={counter}>{counter} {counter!==1 ? "people" :"person"}</option>
 
             })
             }

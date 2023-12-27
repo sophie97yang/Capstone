@@ -5,7 +5,9 @@ import { ExpenseItinerary, addExpense, authenticate} from '../../store/session';
 import {useModal} from '../../context/Modal';
 import {useHistory} from 'react-router-dom';
 import "../UpdateExpenseModal/UpdateExpense.css"
-import logo from '../../assets/images/add-expense.png'
+import logo from '../../assets/images/add-expense.png';
+import InviteOthers from "../AllTripsPage/InviteOthersModal";
+import OpenModalButton from "../OpenModalButton";
 
 function AddExpenseFromItinerary ({trip,booking}) {
     const booking_category_maps = {"Hotel":"Transportation","Things To Do":"Entertainment","Restaurants":"Food and Drink"}
@@ -22,7 +24,7 @@ function AddExpenseFromItinerary ({trip,booking}) {
     const [splitType, setSplitType] = useState('Equal');
     const [splitTypeInfo, setSplitTypeInfo] = useState({});
     const [category, setCategory] = useState(booking_category_maps[booking.booking.category]);
-    const [total, setTotal] = useState(booking.total);
+    const [total, setTotal] = useState(booking.booking.category==='Hotel' || booking.booking.category==='Things To Do' ? booking.total : 0);
     const [checkSplit,setCheckSplit] = useState(0);
     const {closeModal} = useModal();
 
@@ -128,7 +130,9 @@ function AddExpenseFromItinerary ({trip,booking}) {
                 </div>
 
 
-                <div  className={!allUsers ?'user-choices' : 'user-choices hidden'}>
+                <div  className={!allUsers ?'user-choices' : 'hidden'}>
+                { trip.trip.users.length>1 ?
+                <div>
                 <label className='select-users'> Select Users: </label>
                     <select
                         multiple={true}
@@ -146,6 +150,16 @@ function AddExpenseFromItinerary ({trip,booking}) {
                        <option value={[user.user.id,user.user.first_name]} key={user.user.id}>{user.user.first_name} {user.user.last_name[0]}.</option>
                        ))}
                     </select>
+                </div> :
+                 <div className="invite-collaborators-option">
+                 <p>You look a little lonely.. </p>
+                 <OpenModalButton
+                 onItemClick={(e)=> e.preventDefault()}
+                 modalComponent={<InviteOthers tripId={trip.id}/>}
+                 buttonText="Click here to invite collaborators to your trip."/>
+             </div>
+
+}
                 </div>
                 </div>
 
