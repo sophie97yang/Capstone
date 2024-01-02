@@ -62,7 +62,7 @@ function SearchComponent ({className}) {
 <ul className={hidden ? "hidden":"search-output"} id={className ? "landing-page-results" :""}>
 {/* <tbody className='populate-search'> */}
 {searchResults.length ? searchResults.map((location) => (
-    <button key={location.id} className='search-list-item'
+    <button key={location.city} className='search-list-item'
     onClick={(e)=>{
         e.preventDefault();
         setHidden(true);

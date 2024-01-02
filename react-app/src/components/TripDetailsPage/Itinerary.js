@@ -38,7 +38,8 @@ const Itinerary = ({trip}) => {
             if (!attach_booking_to_date[date]) {
                 attach_booking_to_date[date] = [itinerary];
                 } else {
-                    attach_booking_to_date[date].push(itinerary);
+                    if (itinerary.category==='Hotel') attach_booking_to_date[date].unshift(itinerary);
+                    else attach_booking_to_date[date].push(itinerary);
                 }
 
 
@@ -76,14 +77,14 @@ const Itinerary = ({trip}) => {
                                 setVisible(index);
                             }}
                             className="visibility-arrow"
-                            ><i class="fa-solid fa-angle-down fa-xl"></i></button>:
+                            ><i className="fa-solid fa-angle-down fa-xl"></i></button>:
                             <button onClick={(e)=> {
                                 e.preventDefault();
                                 setVisible();
                             }}
                             className="visibility-arrow"
                             >
-                            <i class="fa-solid fa-angle-up fa-xl"></i>
+                            <i className="fa-solid fa-angle-up fa-xl"></i>
                             </button>
 
                             }</h2>
@@ -107,6 +108,7 @@ const Itinerary = ({trip}) => {
                                            {booking.booking.category==='Hotel' ? <p> <i className="fa-regular fa-calendar"></i> Check-Out: {new Date(booking.booking_enddate).toLocaleDateString('en-US',options)}</p>: ""}
                                            {!booking.expensed ? <OpenModalButton
                                            buttonText="Add Expense"
+                                           className='add-expense-button'
                                            modalComponent={<AddExpenseFromItinerary trip={trip} booking={booking}/>}
                                            />: <button onClick={(e)=> {
                                             e.preventDefault();

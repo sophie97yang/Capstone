@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify,request
 from flask_login import login_required,current_user
-from ..models import Trip,db,User,Expense,ExpenseDetail,BetweenUserExpense
+from ..models import Trip,db,User,Expense,ExpenseDetail,BetweenUserExpense,Itinerary
 
 expense_routes = Blueprint('expenses', __name__)
 
@@ -9,6 +9,8 @@ expense_routes = Blueprint('expenses', __name__)
 @login_required
 def delete_expense(id):
     expense = Expense.query.get(id)
+    itinerary = Itinerary.query.filter(Itinerary.expense_id==id and Itinerary.trip_id==expense.trip_id).first()
+    print('ITINERARRRYYYYY',itinerary)
     #ONLY THOSE WHO HAVE CREATED THE EXPENSE CAN DELETE IT
     if expense.payer_id!=current_user.id:
         return {'errors':"Forbidden"},403
@@ -34,7 +36,10 @@ def delete_expense(id):
 
     # trip = Trip.query.get(expense.trip_id)
     db.session.delete(expense)
+    if itinerary:
+        itinerary.expense_id=None
+        itinerary.expensed=False
     db.session.commit()
 
     #need to update trip at store
-    return {'trip': trip.to_dict()}, 200
+    return {'trip': trip.to_dict(),'itinerary':itinerary.to_dict()}, 200

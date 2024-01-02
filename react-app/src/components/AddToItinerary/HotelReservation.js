@@ -20,14 +20,16 @@ function HotelReservation ({trip,booking,closeModal,detail}) {
 
     const handleReservation = async(e) => {
         e.preventDefault();
+        console.log(new Date(checkIn) < new Date())
+        console.log(new Date(checkOut) < new Date())
         const validateErrors = {};
         //check the check in and check out dates
         if (!checkIn) validateErrors.checkIn = "Check-In date is required"
         if (!checkOut) validateErrors.checkOut = "Check-Out date is required"
         if (new Date(checkIn) < new Date(tripToAdd.trip.start_date)) validateErrors.checkIn = "Check-In cannot be before trip's start date";
-        if (new Date(checkIn) < new Date()) validateErrors.checkIn = "Check-In cannot be in the past";
+        if (new Date(checkIn) < new Date()) validateErrors.checkIn = "Check-In must be in the future";
         if (new Date(checkOut) > new Date(tripToAdd.trip.end_date)) validateErrors.checkIn = "Check-Out cannot be after trip's end date";
-        if (new Date(checkOut) < new Date()) validateErrors.checkOut = "Check-Out cannot be in the past";
+        if (new Date(checkOut) < new Date()) validateErrors.checkOut = "Check-Out must be in the future";
         //number of rooms cannot exceed number of guests involved in trip
         if (Rooms>tripToAdd.trip.users.length) validateErrors.Rooms = "Number of rooms cannot exceed the number of trip members";
         if (Rooms<1) validateErrors.Rooms="You must reserve at least 1 room"

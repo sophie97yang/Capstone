@@ -280,9 +280,9 @@ export const deleteExpense = (tripDetail,expenseId) => async (dispatch) => {
             method: "DELETE"
         })
         if (res.ok) {
-			const {trip} = await res.json();
+			const {trip,itinerary} = await res.json();
             dispatch(updateTrip(trip,tripDetail));
-            return trip
+            return (trip,itinerary)
         } else {
             const data = await res.json();
             console.log("There was an error removing expense")

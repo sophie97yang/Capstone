@@ -11,7 +11,10 @@ function DeleteExpense({trip,expense}) {
 
     const handleDelete = (e) => {
         e.preventDefault();
-        dispatch(deleteExpense(trip.id,expense.id)).then(closeModal).catch(res=>res);
+        const response = dispatch(deleteExpense(trip.id,expense.id)).then(res=> {
+            closeModal();
+            console.log(res)
+        }).catch(res=>res);
         dispatch(authenticate());
         history.push(`/trips/${trip.trip.id}/expenses`)
 

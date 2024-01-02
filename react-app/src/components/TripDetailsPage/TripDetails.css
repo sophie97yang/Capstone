@@ -419,3 +419,11 @@
 #itinerary-map {
     background-color: transparent;
 }
+.more-booking-right a{
+    color:black;
+
+}
+
+.trip-details {
+    min-height:800px;
+}

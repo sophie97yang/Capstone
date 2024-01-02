@@ -73,6 +73,8 @@ const AllTrips = () => {
     if (!imageChoice) setImageChoice(choice);
     },[imageChoice])
 
+    const options={}
+    options.timeZone = "UTC";
 
     return (
         <div className='all-trips'>
@@ -99,7 +101,7 @@ const AllTrips = () => {
                 <TripOptions trip={trip} />
                 <h3><Link to={`/trips/${trip.trip.id}/expenses`}>{trip.trip.name}</Link></h3>
                 <div className='my-trips-details'>
-                <p><i className="fa-solid fa-calendar-day"/> {new Date(trip.trip.start_date).toLocaleDateString()} - {new Date(trip.trip.end_date).toLocaleDateString()}</p>
+                <p><i className="fa-solid fa-calendar-day"/> {new Date(trip.trip.start_date).toLocaleDateString('en-US',options)} - {new Date(trip.trip.end_date).toLocaleDateString('en-US',options)}</p>
                 <p><i className="fa-solid fa-location-dot"/> {trip.trip.location[0]}, {trip.trip.location[1]}</p>
                 </div>
                 <div className='my-trips-expenses'>
