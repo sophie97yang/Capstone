@@ -6,3 +6,37 @@
     width:950px;
     margin:30px auto;
 }
+.user-bookings>h3 {
+    margin-bottom:30px;
+}
+
+.individual-booking {
+  border: 1px black solid;
+  padding: 20px;
+  width: 950px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  display: flex;
+}
+
+.individual-booking>img {
+    border-radius: 10px;
+    margin-right: 20px;
+    min-width:450px;
+    max-width: 450px;
+    min-height: 250px;
+    max-height:300px;
+    object-fit: cover;
+}
+.individual-booking i {
+    margin-right:10px;
+}
+
+.individual-booking a {
+    color:black;
+    cursor:pointer;
+}
+
+.individual-booking .add-expense-button, .individual-booking .view-expense-button {
+    margin-left:0px;
+}

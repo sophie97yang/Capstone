@@ -36,5 +36,6 @@ class Itinerary(db.Model):
             "people":self.people,
             "booking":self.booking.to_dict(),
             "creator":self.user.to_dict_simple(),
-            "expense_id":self.expense_id
+            "expense_id":self.expense_id,
+            "trip_id":self.trip_id
         }
