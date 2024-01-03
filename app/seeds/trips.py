@@ -1,4 +1,4 @@
-from app.models import db, Trip, environment, SCHEMA,TripDetail
+from app.models import db, Trip, environment, SCHEMA,TripDetail,User
 from sqlalchemy.sql import text
 from faker import Faker
 from random import choice,sample,randint
@@ -49,34 +49,121 @@ def seed_trips(users):
             'https://images.unsplash.com/photo-1505778276668-26b3ff7af103?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8ODF8fHxlbnwwfHx8fHw%3D'
             ]
     trip_list=[]
-    for i in names:
-        name = i
-        location = choice(locations)
-        city=location[0]
-        state=location[1]
-        startDate=fake.date_between(start_date='-4d',end_date='today')
-        endDate=fake.date_between(start_date='today', end_date='+5d')
-        image= choice(images)
-        trip = Trip(
-            name=name,city=city,state=state,start_date=startDate,end_date=endDate,image=image
+
+    #seed past trip
+    past_trip = Trip(
+        name=f"Annual {fake.last_name()} Friends & Fam Vacay",
+        city='Aspen',
+        state='CO',
+        start_date=fake.date_between(start_date='-30d',end_date='-25d'),
+        end_date=fake.date_between(start_date='-25d',end_date='-20d'),
+        image=images[1]
         )
-        users_involved = sample(users,randint(3,4))
-        trip_list_detail=[]
-        count=1
-        for user in users_involved:
-            if count==1:
-                trip_detail = TripDetail(settled=False,creator=True)
-                trip_detail.user=user
-            else:
-                trip_detail = TripDetail(settled=False)
-                trip_detail.user=user
-            trip_list_detail.append(trip_detail)
-            count+=1
+    users_involved = sample(users,randint(3,5))
+    demo_user = User.query.filter(User.first_name=='Demo').first()
+    if demo_user not in users_involved:
+        users_involved.append(demo_user)
+    trip_list_detail=[]
+    trip_detail = TripDetail(settled=False,creator=True)
+    trip_detail.user=demo_user
+    trip_list_detail.append(trip_detail)
 
-        trip.users = trip_list_detail
+    for user in users_involved:
+        if user !=demo_user:
+            trip_detail = TripDetail(settled=False)
+            trip_detail.user=user
+        trip_list_detail.append(trip_detail)
 
-        db.session.add(trip)
-        trip_list.append(trip)
+    past_trip.users = trip_list_detail
+
+    db.session.add(past_trip)
+    trip_list.append(past_trip)
+
+    #seed current trip
+    current_trip = Trip(
+        name=f"{fake.first_name_male()}'s 40th Birthday Party",
+        city='Las Vegas',
+        state='NV',
+        start_date=fake.date_between(start_date='-4d',end_date='today'),
+        end_date=fake.date_between(start_date='+2d',end_date='+4d'),
+        image=images[2]
+        )
+    users_involved = sample(users,randint(3,5))
+    if demo_user not in users_involved:
+        users_involved.append(demo_user)
+    trip_list_detail=[]
+    count=1
+    for user in users_involved:
+        if count!=1:
+            trip_detail = TripDetail(settled=False)
+            trip_detail.user=user
+        else:
+            trip_detail = TripDetail(settled=False,creator=True)
+            trip_detail.user=user
+        trip_list_detail.append(trip_detail)
+        count+=1
+
+    current_trip.users = trip_list_detail
+
+    db.session.add(current_trip)
+    trip_list.append(current_trip)
+
+    #seed future trip
+    future_trip = Trip(
+        name=f"{fake.first_name_female()}'s Bachelorette",
+        city='Nashvile',
+        state='TN',
+        start_date=fake.date_between(start_date='+18d',end_date='+20d'),
+        end_date=fake.date_between(start_date='+23d',end_date='+24d'),
+        image=images[2]
+        )
+    users_involved = sample(users,randint(3,5))
+    if demo_user not in users_involved:
+        users_involved.append(demo_user)
+    trip_list_detail=[]
+    trip_detail = TripDetail(settled=False,creator=True)
+    trip_detail.user=demo_user
+    trip_list_detail.append(trip_detail)
+
+    for user in users_involved:
+        if user !=demo_user:
+            trip_detail = TripDetail(settled=False)
+            trip_detail.user=user
+        trip_list_detail.append(trip_detail)
+
+    future_trip.users = trip_list_detail
+
+    db.session.add(future_trip)
+    trip_list.append(future_trip)
+
+    # for i in names:
+    #     name = i
+    #     location = choice(locations)
+    #     city=location[0]
+    #     state=location[1]
+    #     startDate=fake.date_between(start_date='-4d',end_date='today')
+    #     endDate=fake.date_between(start_date='today', end_date='+5d')
+    #     image= choice(images)
+    #     trip = Trip(
+    #         name=name,city=city,state=state,start_date=startDate,end_date=endDate,image=image
+    #     )
+    #     users_involved = sample(users,randint(3,4))
+    #     trip_list_detail=[]
+    #     count=1
+    #     for user in users_involved:
+    #         if count==1:
+    #             trip_detail = TripDetail(settled=False,creator=True)
+    #             trip_detail.user=user
+    #         else:
+    #             trip_detail = TripDetail(settled=False)
+    #             trip_detail.user=user
+    # #         trip_list_detail.append(trip_detail)
+    #         count+=1
+
+    #     trip.users = trip_list_detail
+
+    #     db.session.add(trip)
+    #     trip_list.append(trip)
 
     db.session.commit()
     return trip_list
