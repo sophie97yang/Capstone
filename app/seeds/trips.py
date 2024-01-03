@@ -55,12 +55,12 @@ def seed_trips(users):
         city=location[0]
         state=location[1]
         startDate=fake.date_between(start_date='-4d',end_date='today')
-        endDate=fake.date_between(start_date='today', end_date='+10d')
+        endDate=fake.date_between(start_date='today', end_date='+5d')
         image= choice(images)
         trip = Trip(
             name=name,city=city,state=state,start_date=startDate,end_date=endDate,image=image
         )
-        users_involved = sample(users,randint(3,7))
+        users_involved = sample(users,randint(3,4))
         trip_list_detail=[]
         count=1
         for user in users_involved:

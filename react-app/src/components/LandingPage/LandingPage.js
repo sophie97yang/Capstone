@@ -102,7 +102,7 @@ function LandingPage ({isLoaded}) {
             <p className='slogan'>Embark on Adventures, Share the Costs: </p>
             <p className='slogan bottom'>Transform Your Travels with Seamless Expense Sharing at Every Destination.</p>
             </div>
-            <img src={logo} alt='travel'></img>
+            {/* <img src={logo} alt='travel'></img> */}
             </div>
 
             <SearchComponent className='landing-page-search'/>
