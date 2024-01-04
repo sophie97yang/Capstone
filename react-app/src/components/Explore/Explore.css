@@ -65,6 +65,7 @@
     max-height:400px;
     text-align:left;
     margin-right:20px;
+    padding-bottom:20px;
 }
 
 .booking-places>h4 {
@@ -456,3 +457,57 @@
     margin-bottom:10px;
     margin-top:10px;
   }
+.filter-heading>img {
+  width:100%;
+  height:300px;
+  object-fit: cover;
+}
+.filter-heading>h3 {
+  position:absolute;
+  top:475px;
+  left:130px;
+  color:white;
+  text-shadow: 2px 2px 3px black;
+  font-size:50px;
+  text-align:center;
+  width:80%;
+}
+
+#filter-heading-text {
+  position:absolute;
+  top:600px;
+  left:130px;
+  width:80%;
+  color:white;
+  text-align:center;
+  font-size:25px;
+
+}
+.filter-booking-div {
+  display:flex;
+  flex-direction:row;
+  width:50%;
+  flex-wrap: wrap;
+  justify-content:flex-start;
+  height:500px;
+  overflow-y: scroll;
+}
+
+.filter-booking-div>.booking-places {
+  border-bottom:1px solid grey;
+}
+.flex-filter-bookings {
+  display:flex;
+  justify-content: center;
+
+}
+.flex-filter-bookings>.add-to-itinerary-modal,.directions-for-choosing {
+  width:50%
+}
+
+.directions-for-choosing {
+  text-align:center;
+}
+.directions-for-choosing>h3 {
+  font-weight:300;
+}

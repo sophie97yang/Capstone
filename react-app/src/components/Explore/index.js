@@ -32,6 +32,7 @@ function Explore () {
 
     const [filter,setFiltered] = useState('All')
     const [bookingsFilter,setBookings]=useState(bookings_city);
+    const [chosenAttraction,setAttraction] = useState();
 
     useEffect(()=> {
         dispatch(getBookings())
@@ -90,26 +91,40 @@ function Explore () {
             <>
         <div className='filter-buttons'>
             <button className={filter==='All'? "filter-button selected-button" : "filter-button"} onClick={(e)=> {
+                 setAttraction();
                 setFiltered('All');
             }}>All</button>
             <button className={filter==='Hotel'? "filter-button selected-button" : "filter-button"} onClick={(e)=> {
+                 setAttraction();
                 setFiltered('Hotel')
             }}>Hotels <i className="fa-solid fa-bed"></i></button>
             <button className={filter==='Things To Do'? "filter-button selected-button" : "filter-button"} onClick={(e)=> {
+                 setAttraction();
                 setFiltered('Things To Do')
             }}>Things To Do <i className="fa-solid fa-ticket"></i></button>
             <button className={filter==='Restaurants'? "filter-button selected-button" : "filter-button"} onClick={(e)=> {
+                 setAttraction();
                 setFiltered('Restaurants')
             }}>Restaurants <i className="fa-solid fa-utensils"></i></button>
         </div>
-
+        {filter==='All' ?
         <div className='about-city'>
         <img src={location_picture.image} alt={city}></img>
         <h3>{location_picture.header}</h3>
         <p>{location_picture.about}</p>
         </div>
+        :
+        <div className='filter-heading'>
+            <img src={location_picture.image} alt={city}></img>
+            {
+                filter==='Hotel'?
+                <h3>{city}'s Hotels and Places to Stay</h3>:
+                <h3>{filter==='Restaurants' ? `Restaurants in ${city}`:`Things To Do in ${city}`}</h3>
+            }
+        </div>
+}
 
-        {user &&
+        {user&&filter==='All' &&
         <div className='plan-trip'>
             <h2>Plan your trip to {city} </h2>
             <CreateTripShortcut city={city} state={location_picture.state}/>
@@ -117,8 +132,8 @@ function Explore () {
         </div>}
 
         <div className='explore-bookings'>
-            <h2>Essential {city}</h2>
-            <p> {filter!=='All' ?
+            {filter==='All' && <h2>Essential {city}</h2>}
+            <p id='filter-heading-text'> {filter!=='All' ?
             <span>{filter==='Hotel' ?
              <>
              A mix of the charming, iconic, and modern.
@@ -235,22 +250,30 @@ function Explore () {
                 </div>
 
                 </>:
-            <>
+            <div className='flex-filter-bookings'>
+            <div className='filter-booking-div'>
             {bookingsFilter.map((booking)=> (
-                <div key={booking.id} className='booking-places'>
-                    <h3>{booking.name}</h3>
-                    <h3>{booking.stars}</h3>
-                    {booking.category==='Hotel' && <h4>from ${booking.price.toFixed(2)}/night</h4>}
-                    {booking.category==='Things To Do' && <h4>Price per person: ${booking.price.toFixed(2)}</h4>}
-                    {booking.category==='Restaurants' && <h4>{booking.price===1000 ? '$$$' : <span>{booking.price===100 ? "$$": "$"}</span>}</h4>}
-                    <div className='explore-images'>
+                <div key={booking.id} className='booking-places' onClick={
+                    (e)=> {
+                        setAttraction(booking.name);
+                    }}>
+                <div className='explore-images'>
                     <img src={booking.image1} alt={booking.name}></img>
-                    {/* <img src={booking.image2} alt={booking.name}></img>
-                    <img src={booking.image3} alt={booking.name}></img> */}
-                    </div>
                 </div>
+                <h3><Link to={`/bookings/${booking.id}`}>{booking.name}</Link></h3>
+                <h3>{booking.stars}</h3>
+                <h4>{booking.features}</h4>
+                <h4>from ${booking.price.toFixed(2)}/night</h4>
+            </div>
             ))}
-            </>
+            </div>
+            {chosenAttraction ? <AddToItinerary booking={bookingsFilter.filter(booking=>booking.name===chosenAttraction)[0]}/>:
+            <div className='directions-for-choosing'>
+                <h2>Add to your Trip's Itinerary</h2>
+                <h3>Select the attraction for reservation details </h3>
+
+            </div>}
+            </div>
         }
         </div>
         </>:
