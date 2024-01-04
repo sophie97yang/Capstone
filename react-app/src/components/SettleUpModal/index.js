@@ -19,7 +19,6 @@ function SettleUp({group_balances,total_info,trip}) {
     const handleSettle = async () => {
         const data = await dispatch(settleUp(trip.id,trip.trip.id))
         if (data) {
-            console.log(data)
             return data
         } else {
             dispatch(authenticate())

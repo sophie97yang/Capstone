@@ -12,7 +12,6 @@ const UpdateTripModal = ({trip}) =>{
     const user = useSelector((state) => state.session.user);
     const {closeModal} = useModal();
 
-    console.log(trip);
     // console.log(`${new Date(trip.trip.start_date).getFullYear()}-${new Date(trip.trip.start_date).getMonth()+1}-${new Date(trip.trip.start_date).getDate()}`)
 
     const [name, setName] = useState(trip.trip.name);
@@ -28,7 +27,6 @@ const UpdateTripModal = ({trip}) =>{
     const [submitted, setSubmitted] = useState(false);
     const [errors, setErrors] = useState([]);
 
-    console.log(start_date,end_date);
     useEffect(() => {
         setSubmitted(false);
         setErrors({});

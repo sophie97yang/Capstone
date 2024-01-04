@@ -90,7 +90,6 @@ function AddExpenseFromItinerary ({trip,booking}) {
 
             if (data.errors) {
                 setErrors(data.errors);
-                console.log(data.errors);
                 return;
             } else {
                 const expense=data;

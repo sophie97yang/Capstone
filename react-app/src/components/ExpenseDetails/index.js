@@ -32,7 +32,6 @@ function ExpenseDetail() {
         }
     }
     const payer_detail = payer_detail_index!==undefined ? expense_details.splice(payer_detail_index,1) : []
-    console.log(payer_detail,expense_details,payer_detail_index)
     const category_images = {
         "General":"https://s3.amazonaws.com/splitwise/uploads/category/icon/square_v2/uncategorized/general@2x.png",
         "Transportation":"https://s3.amazonaws.com/splitwise/uploads/category/icon/square_v2/transportation/other@2x.png",

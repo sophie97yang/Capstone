@@ -95,13 +95,9 @@ function AddExpenseForm ({trip}) {
             } else {
                 if (splitType!=='Equal') SplitTypeInfoSend = Object.values(splitTypeInfo).join(',')
             }
-            // console.log('trip',trip)
-            // console.log('user-info',UsersInfoSend);
-            // console.log('split-info',SplitTypeInfoSend)
             const data = await dispatch(addExpense(trip.trip.id,trip.id,name,expenseDate,splitType,SplitTypeInfoSend,category,total,UsersInfoSend))
             if (data.errors) {
                 setErrors(data.errors);
-                console.log(data);
                 return;
             } else {
                 dispatch(authenticate())

@@ -102,7 +102,6 @@ if (booking.category==="Restaurants"){
             const data = await dispatch(addItinerary(trip,tripToAdd.trip.id,booking.id,reservationDate,reservationDate,reservationTime,expensed,price,individuals));
             if (data) {
                 setErrors(data);
-                console.log(data);
                 return;
             } else {
                 dispatch(authenticate());

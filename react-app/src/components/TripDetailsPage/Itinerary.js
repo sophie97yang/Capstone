@@ -65,7 +65,6 @@ const Itinerary = ({trip}) => {
         behavior: "smooth"})
         setVisible(index);
     }
-    console.log(attach_booking_to_date);
 
     return (
         <div className="trip-itinerary">
