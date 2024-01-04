@@ -40,3 +40,24 @@
 .individual-booking .add-expense-button, .individual-booking .view-expense-button {
     margin-left:0px;
 }
+
+.no-bookings {
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+}
+
+.no-bookings>p {
+    width:80%;
+    text-align:justify;
+    margin:10px auto;
+}
+.no-bookings>button {
+    width:150px;
+    height:50px;
+    margin:10px auto;
+    border-radius:10px;
+    border-style:none;
+    cursor:pointer;
+}
