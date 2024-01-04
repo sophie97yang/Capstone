@@ -2196,3 +2196,11 @@ def undo_bookings():
     else:
         db.session.execute(text("DELETE FROM bookings"))
     db.session.commit()
+
+def undo_itineraries():
+    if environment == "production":
+        db.session.execute(f"TRUNCATE table {SCHEMA}.itineraries RESTART IDENTITY CASCADE;")
+    else:
+        db.session.execute(text("DELETE FROM itineraries"))
+
+    db.session.commit()

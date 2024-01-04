@@ -62,6 +62,17 @@ function UserBookings() {
                     </div>
                 </div>
              ))}
+             {!bookings.length &&
+             <div className='no-bookings'>
+            <p>
+                Ready to turn your trip into an unforgettable experience? Explore a world of possibilities by discovering and
+                booking unique hotels, delightful restaurants, and exciting things to do. Your personalized adventure is just a click away.
+            </p>
+            <button onClick={(e)=> {
+                    e.preventDefault();
+                    history.push(`/trips/all`)
+                }}>Start Planning Now</button>
+            </div>}
         </div>
     )
 
