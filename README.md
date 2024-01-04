@@ -68,3 +68,4 @@ I look forward to:
 - Allowing users to modify their reservation and itinerary
     - Modifying reservation time, modifying party size, canceling reservation
 - Creating more interactions between collaborators of trips - allowing ocllaborators to pitch potential ideas/bookings to trip members and being able to release a poll to vote on the attraction of their choice that they would like to make the reservation for
+- Allowing users to be able to search for bookings or specific attractions. Currently, they are only able to search for potential destinations
