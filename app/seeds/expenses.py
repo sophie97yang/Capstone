@@ -58,7 +58,7 @@ def seed_expenses(users,trips):
         expense.trip=trip
         expense.payer=payer
 
-        users_involved = sample(trip.users,randint(3,len(trip.users)))
+        users_involved = sample(trip.users,randint(1,len(trip.users)))
         expense_list_detail=[]
         for user in users_involved:
             #check if there is already an existing expense relationship between two users in trip

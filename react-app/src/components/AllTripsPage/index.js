@@ -89,7 +89,7 @@ const AllTrips = () => {
                     history.push(`/explore/${locations[location_choice].city}`)
                 }}>Explore places to go</button>
             </div>
-           { trips.length ? trips.map(trip=> (
+           { trips.length ? trips.sort((obj1,obj2)=>new Date(obj1.trip.start_date)-new Date(obj2.trip.start_date)).map(trip=> (
             <div key={trip.id} className='individual-trip'>
             <div className='my_trips-left'>
             <img src={trip.trip.image?trip.trip.image:imageChoice} alt={trip.trip.name}
