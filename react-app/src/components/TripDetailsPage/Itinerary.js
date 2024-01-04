@@ -23,6 +23,20 @@ const Itinerary = ({trip}) => {
     const attach_booking_to_date = {};
     trip.trip.bookings_itinerary?.forEach(itinerary => {
         //place to stay
+        //parsed time
+        let parsedBooking = itinerary.booking_time.split(' ');
+        let parsedTime = parsedBooking[0].split(':');
+        if (parsedBooking[1]==='AM' || !parsedBooking[1]) {
+            parsedTime[0] = Number(parsedTime[0])
+            parsedTime[1] = Number(parsedTime[1])
+        } else {
+            parsedTime[0] = Number(parsedTime[0])+12
+            parsedTime[1] = Number(parsedTime[1])
+        }
+
+
+        itinerary.parsed_time = parsedTime[0]+(parsedTime[1]/60);
+
         if (itinerary.booking_startdate!==itinerary.booking_enddate) {
             let date = new Date(itinerary.booking_startdate);
             while (date<=new Date(itinerary.booking_enddate)) {
@@ -51,6 +65,7 @@ const Itinerary = ({trip}) => {
         behavior: "smooth"})
         setVisible(index);
     }
+    console.log(attach_booking_to_date);
 
     return (
         <div className="trip-itinerary">
@@ -91,7 +106,7 @@ const Itinerary = ({trip}) => {
                             <div className='booking-info hidden' id={visible===index ?"visible":""}>
                                 {attach_booking_to_date[date] ?
                                 <>
-                                    {attach_booking_to_date[date].map((booking,index) => (
+                                    {attach_booking_to_date[date].sort((obj1,obj2)=> obj1.parsed_time-obj2.parsed_time).map((booking,index) => (
                                         <div key={booking.id} className="booking-detail-itinerary">
                                            <div className='booking-detail-it-left'>
                                            <h2>{index+1}</h2>
