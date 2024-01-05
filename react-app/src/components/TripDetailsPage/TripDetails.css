@@ -252,6 +252,7 @@
 
 .expense-date {
     font-size:20px;
+    width:70px;
 }
 
 .expense-detail a{
@@ -268,7 +269,7 @@
 }
 
 .expense-detail h4 {
-    max-width:100px;
+    width:100px;
 }
 
 .grey-color {

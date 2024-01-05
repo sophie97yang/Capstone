@@ -86,7 +86,7 @@ const Itinerary = ({trip}) => {
                         <div key={date} id={date.getUTCDate()} className="itineraries-by-date"
                         ref={el => refs.current[date.getUTCDate()] = el}
                         >
-                            <h2>{daysOfWeek[date.getDay()]}, {months[date.getMonth()]} {date.getUTCDate()}
+                            <h2>{daysOfWeek[(date.getDay()+1)%6]}, {months[date.getMonth()]} {date.getUTCDate()}
                             {visible!==index ?
                                 <button onClick={(e)=> {
                                 e.preventDefault();
