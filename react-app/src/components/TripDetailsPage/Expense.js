@@ -65,11 +65,11 @@ const Expense = ({trip,group_balances,total_info}) => {
             </div>
 
             {
-                Object.keys(expense_by_year).map(year => (
+                Object.keys(expense_by_year).sort((year1,year2)=> Number(year1)-Number(year2)).map(year => (
                     <div key={year} className='yearly_expenses'>
                         <h4 id="year-expense-detail">{year}</h4>
                         {
-                             Object.keys(expense_by_year[year]).map(month => (
+                             Object.keys(expense_by_year[year]).sort((month1,month2)=>monthNames.indexOf(month1)-monthNames.indexOf(month2)).map(month => (
                                 <div key={month} className='monthly_expenses'>
                                 <h4>{month.toUpperCase()}</h4>
                                 {
