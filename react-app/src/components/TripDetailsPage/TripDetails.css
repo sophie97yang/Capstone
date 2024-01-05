@@ -427,3 +427,7 @@
 .trip-details {
     min-height:800px;
 }
+
+.more-booking-right .add-expense-button {
+    margin-left:10px;
+}
