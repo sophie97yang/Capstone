@@ -17,18 +17,22 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import PageNotFound from "./components/404/404";
 import BookingDetails from "./components/Explore/BookingDetails";
 import ScrollToTop from "./components/ScrollToTop";
-
+import ReactGA from 'react-ga';
+import RouteChangeTracker from './components/RouteChangeTracker';
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
   useEffect(() => {
     dispatch(authenticate()).then(() => setIsLoaded(true));
   }, [dispatch]);
+  const TRACKING_ID = "UA-297909802-1"; // YOUR_OWN_TRACKING_ID
+ReactGA.initialize(TRACKING_ID);
 
   return (
     <>
       <Navigation isLoaded={isLoaded} />
       <ScrollToTop />
+      // <RouteChangeTracker />
       {isLoaded && (
         <Switch>
           <Route path="/login" >
