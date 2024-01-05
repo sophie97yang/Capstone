@@ -12,7 +12,6 @@ function DeleteModal({trip}) {
 
     const handleDelete =async (e) => {
         e.preventDefault();
-        console.log(trip);
         dispatch(deleteTrip(trip.trip.id,trip.id)).then(closeModal).then(()=> dispatch(authenticate())).catch(res=>res);
         history.push('/trips')
     }

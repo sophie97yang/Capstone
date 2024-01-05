@@ -8,7 +8,7 @@
     opacity: 1;
 }
 .sign-up-page {
-    width:950px;
+    width:95%;
     min-height:750px;
     margin:20px auto;
     padding:20px;
@@ -115,3 +115,24 @@
 .block>a {
     margin-left:90px;
 }
+
+@media screen and (max-width:920px) {
+    .signup-layout {
+        flex-direction:column;
+    }
+    /* .login-layout>.logo {
+        display:none;
+    } */
+    .sign-up-page {
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+    }
+
+    .signup-layout form {
+        margin-top:10px;
+    }
+    .signup-inputs-div input {
+        width:90%
+    }
+    }

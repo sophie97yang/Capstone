@@ -22,6 +22,7 @@
     display:flex;
     flex-direction:column;
     align-items:center;
+    justify-content: center;
 
 }
 
@@ -139,7 +140,7 @@
     display:block;
     background-color:white;
     border:none;
-    width:600px;
+    width:100%;
     text-align:left;
     margin:0px;
     padding:20px;
@@ -205,4 +206,24 @@
 
 #landing-top-images img, #explore-landing-bottom img{
     padding:0px;
+}
+@media screen and (max-width:950px){
+    .landing-page {
+        width:90%;
+        margin:0px auto;
+    }
+    .landing-top {
+        width:80%
+    }
+    .landing-page>.search-bar {
+        width:80%
+    }
+    .dashboard {
+        width:95%
+    }
+    #landing-top-images,#explore-landing-bottom{
+        width:100%;
+        flex-direction:column;
+        align-items:center;
+    }
 }

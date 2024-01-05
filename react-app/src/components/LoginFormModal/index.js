@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 import { useModal } from "../../context/Modal";
 import OpenModalButton from "../OpenModalButton";
 import SignupFormModal from '../SignupFormModal'
-import "./LoginForm.css";
+import "./LoginFormModal.css";
 import logo from '../../assets/images/SplitTrip-logo.png';
 
 function LoginFormModal() {
@@ -42,41 +42,43 @@ function LoginFormModal() {
     <div id='login-modal' className='login-page'>
        <button onClick={closeModal} className='close-modal' id='update-trip-close'><i className="fa-solid fa-xmark fa-2xl"></i></button>
       <h1>Welcome back.</h1>
-      <p className='redirection'>Not a member yet? <OpenModalButton
+      {/* <p className='redirection'>Not a member yet? <OpenModalButton
               buttonText="Sign Up"
               onButtonClick={()=> {history.push('/')}}
               modalComponent={<SignupFormModal />}
             />
-      </p>
+      </p> */}
       <div className="login-layout">
       <img src={logo} alt='logo' className="logo"></img>
       <form onSubmit={handleSubmit}>
       <h2>Log in to access the best of SplitTrip</h2>
+      <div className='login-flex'>
         <label>
           Email
+        </label>
           <input
             type="text"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
           />
-          {errors.email ? <p className='errors'>{errors.email}</p>: <p className='errors'></p>}
-        </label>
-
+        {errors.email ? <p className='errors' id="login-errors-email">{errors.email}</p>: <p className='errors' id="login-errors-email"></p>}
+        </div>
+        <div className='login-flex'>
         <label>
           Password
+          </label>
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            id="password-input"
           />
-          {errors.password ? <p className='errors'>{errors.password}</p>: <p className='errors'></p>}
-        </label>
-        <div className="action-buttons">
-        <button type="submit" className='action-button-ls'>Log In</button>
-        <button onClick={handleDemo}className='action-button-ls'>Log in as Demo User</button>
+        {errors.password ? <p className='errors'id="login-errors-pass">{errors.password}</p>: <p className='errors' id="login-errors-pass"></p>}
+        </div>
+        <div className="action-buttons" id='action-button-modal'>
+        <button type="submit" className='action-button-ls' id='action-button-ls-modal-1'>Log In</button>
+        <button onClick={handleDemo}className='action-button-ls' id='action-button-ls-modal-2'>Log in as Demo User</button>
         </div>
       </form>
       </div>

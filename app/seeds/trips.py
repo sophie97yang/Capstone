@@ -115,7 +115,7 @@ def seed_trips(users):
         state='TN',
         start_date=fake.date_between(start_date='+18d',end_date='+20d'),
         end_date=fake.date_between(start_date='+23d',end_date='+24d'),
-        image=images[2]
+        image=images[3]
         )
     users_involved = sample(users,randint(3,5))
     if demo_user not in users_involved:

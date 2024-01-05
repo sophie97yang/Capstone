@@ -1273,7 +1273,7 @@ Booking(
     website="lodgeatjh.com",
     features="Outdoor Pool, Mountain Views",
     price=189,
-    image1="https://cf.bstatic.com/xdata/images/hotel/max1024x768/26969759.jpg",
+    image1="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0e/6b/3b/e5/the-lodge-at-jackson.jpg",
     image2="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/23/e3/5a/95/l-p-dbl-q-room.jpg",
     image3="https://assets.hospitalityonline.com/photos/employers/277759/884288_l.jpg"
 ),

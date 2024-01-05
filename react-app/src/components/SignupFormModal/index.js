@@ -5,7 +5,7 @@ import { useModal } from "../../context/Modal";
 import { signUp } from "../../store/session";
 import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from "../LoginFormModal";
-import "./SignupForm.css";
+import "./SignupFormModal.css";
 import logo from '../../assets/images/logo-signup.png'
 //this modal will get accesssed ONLY if member comes from login page
 function SignupFormModal() {

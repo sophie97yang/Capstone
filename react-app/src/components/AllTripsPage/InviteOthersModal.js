@@ -42,8 +42,6 @@ function InviteOthers({tripId}) {
         }
     }
     }
-
-    console.log(error)
     return (
         <div className='invite-modal'>
             <button onClick={closeModal} className='close-modal'><i className="fa-solid fa-xmark fa-2xl"></i></button>

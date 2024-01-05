@@ -54,7 +54,7 @@ function UpdateExpenseModal ({trip,expense}) {
     const [checkSplit,setCheckSplit] = useState(initialCheck);
     const {closeModal} = useModal();
 
-    console.log('checkSplit',checkSplit, 'splitTypeInfo',splitTypeInfo,'total',total,'usersInvolved',usersInvolved)
+    // console.log('checkSplit',checkSplit, 'splitTypeInfo',splitTypeInfo,'total',total,'usersInvolved',usersInvolved)
     const categories=['General','Food and Drink','Transportation','Entertainment']
     // console.log(splitTypeInfo,usersInvolved,checkSplit,total)
 
@@ -118,7 +118,6 @@ function UpdateExpenseModal ({trip,expense}) {
             const data = await dispatch(updateExpense(trip.trip.id,trip.id,expense.id,name,expenseDate,splitType,SplitTypeInfoSend,category,total,UsersInfoSend))
             if (data) {
                 setErrors(data);
-                console.log(data);
                 return;
             } else {
                 dispatch(authenticate())

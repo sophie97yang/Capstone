@@ -241,9 +241,11 @@
 
   #shortcut-trip-modal {
     width:600px;
+    max-height:500px;
     display:flex;
     flex-direction:column;
     align-items:center;
+    overflow:scroll;
   }
 
   #shortcut-trip-modal #settle-cancel {

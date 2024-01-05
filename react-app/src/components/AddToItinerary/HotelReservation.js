@@ -20,8 +20,6 @@ function HotelReservation ({trip,booking,closeModal,detail}) {
 
     const handleReservation = async(e) => {
         e.preventDefault();
-        console.log(new Date(checkIn) < new Date())
-        console.log(new Date(checkOut) < new Date())
         const validateErrors = {};
         //check the check in and check out dates
         if (!checkIn) validateErrors.checkIn = "Check-In date is required"
@@ -59,7 +57,6 @@ function HotelReservation ({trip,booking,closeModal,detail}) {
             const data = await dispatch(addItinerary(trip,tripToAdd.trip.id,booking.id,checkIn,checkOut,reservation,expensed,price,Rooms));
             if (data) {
                 setErrors(data);
-                console.log(data);
                 return;
             } else {
                 dispatch(authenticate());

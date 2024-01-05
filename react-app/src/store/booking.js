@@ -18,7 +18,7 @@ export const getBookings = () => async(dispatch) => {
             return null
         } else {
             const data = await res.json();
-            console.log("There was an error getting bookings")
+            // console.log("There was an error getting bookings")
             return data
         }
     } catch (error) {

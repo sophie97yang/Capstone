@@ -41,11 +41,12 @@ function LoginFormPage() {
   return (
     <div id='login-page'>
       <h1>Welcome back.</h1>
-      <p className="redirection">Not a member yet? <OpenModalButton
+      <p className="redirection">
+        {/* Not a member yet? <OpenModalButton
               buttonText="Sign Up"
               onButtonClick={()=> {history.push('/')}}
               modalComponent={<SignupFormModal />}
-            />
+            /> */}
       </p>
 
       <div className="login-layout">
