@@ -32,7 +32,7 @@ ReactGA.initialize(TRACKING_ID);
     <>
       <Navigation isLoaded={isLoaded} />
       <ScrollToTop />
-      // <RouteChangeTracker />
+      <RouteChangeTracker />
       {isLoaded && (
         <Switch>
           <Route path="/login" >

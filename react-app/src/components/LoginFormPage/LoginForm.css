@@ -1,5 +1,6 @@
 #login-page {
-    width:950px;
+    width:95%;
+    height:100%;
     margin:20px auto;
     padding:20px;
     border-radius:10px;
@@ -103,4 +104,42 @@
 
 #login-page>h1,#login-page>p {
     width:400px;
+}
+.login-layout h2 {
+    margin-top:30px;
+}
+
+@media screen and (max-width:860px) {
+.login-layout {
+    flex-direction:column;
+}
+/* .login-layout>.logo {
+    display:none;
+} */
+#login-page {
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+}
+
+}
+
+@media screen and (max-width:420px) {
+    .login-layout>.logo,.login-layout>form {
+        width:95%;
+    }
+
+    .login-layout>form>h2, .login-layout>form>.login-flex {
+        width:80%
+    }
+
+    #login-page input, #login-page button {
+        width:90%;
+    }
+    #login-page>h1, #login-page>p {
+        width:90%
+    }
+    .redirection>button {
+        text-align:left;
+    }
 }
