@@ -2,7 +2,7 @@ from app.models import db, Trip, environment, SCHEMA,TripDetail,User
 from sqlalchemy.sql import text
 from faker import Faker
 from random import choice,sample,randint
-from datetime import datetime
+from datetime import date
 
 fake = Faker()
 
@@ -55,8 +55,8 @@ def seed_trips(users):
         name=f"Annual {fake.last_name()} Friends & Fam Vacay",
         city='Aspen',
         state='CO',
-        start_date=fake.date_between(start_date='-30d',end_date='-25d'),
-        end_date=fake.date_between(start_date='-25d',end_date='-20d'),
+        start_date=date(2023,12,7),
+        end_date=date(2023,12,11),
         image=images[1]
         )
     users_involved = sample(users,randint(3,5))
