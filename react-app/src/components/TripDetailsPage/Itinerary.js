@@ -1,4 +1,5 @@
 import { useRef,useState } from "react";
+import { useSelector } from "react-redux";
 import OpenModalButton from '../OpenModalButton';
 import AddExpenseFromItinerary from "./AddExpenseFromItinerary";
 import {useHistory,Link} from 'react-router-dom'
@@ -6,6 +7,7 @@ import {useHistory,Link} from 'react-router-dom'
 const Itinerary = ({trip}) => {
     const refs = useRef([]);
     const [visible,setVisible] = useState(0);
+    const currUser=useSelector(state => state.session.user);
     //get a list of dates in between trip start and end date
     const daysOfWeek = {0:"Sunday",1:"Monday",2:"Tuesday",3:"Wednesday",4:"Thursday",5:"Friday",6:"Saturday"};
     const months = {0:"January",1:"February",2:"March",3:"April",4:"May",5:"June",6:"July",7:"August",8:"September",9:"October",10:"November",11:"December"}
@@ -118,13 +120,13 @@ const Itinerary = ({trip}) => {
                                            <h3><Link to={`/bookings/${booking.booking.id}`}>{booking.booking.name}</Link></h3>
                                            <p>{booking.booking.category}</p>
                                            <p>{booking.booking.features}</p>
-                                           {booking.booking.category==='Hotel' ? <p> <i className="fa-regular fa-calendar"></i> Check-In: {new Date(booking.booking_startdate).toLocaleDateString('en-US',options)}</p>:<p> <i class="fa-regular fa-clock"></i> Reservation:{new Date(booking.booking_startdate).toLocaleDateString('en-US',options)} at {booking.booking_time}</p> }
+                                           {booking.booking.category==='Hotel' ? <p> <i className="fa-regular fa-calendar"></i> Check-In: {new Date(booking.booking_startdate).toLocaleDateString('en-US',options)}</p>:<p> <i className="fa-regular fa-clock"></i> Reservation:{new Date(booking.booking_startdate).toLocaleDateString('en-US',options)} at {booking.booking_time}</p> }
                                            {booking.booking.category==='Hotel' ? <p> <i className="fa-regular fa-calendar"></i> Check-Out: {new Date(booking.booking_enddate).toLocaleDateString('en-US',options)}</p>: ""}
-                                           {!booking.expensed ? <OpenModalButton
+                                           {!booking.expensed ? <>{booking.creator.id===currUser.id ? <OpenModalButton
                                            buttonText="Add Expense"
                                            className='add-expense-button'
                                            modalComponent={<AddExpenseFromItinerary trip={trip} booking={booking}/>}
-                                           />: <button onClick={(e)=> {
+                                           />:""}</>: <button onClick={(e)=> {
                                             e.preventDefault();
                                             history.push(`/trips/${trip.id}/expenses/${booking.expense_id}`)
                                            }}

@@ -49,11 +49,12 @@ function UserBookings() {
                         "":
                         <p><i className="fa-regular fa-credit-card"/>${booking.total.toFixed(2)}</p>
                     }
-                    {!booking.expensed ? <OpenModalButton
+                    {!booking.expensed ? <>{booking.creator.id===user.id ? <OpenModalButton
                                            buttonText="Add Expense"
                                            className='add-expense-button'
                                            modalComponent={<AddExpenseFromItinerary trip={trip} booking={booking}/>}
-                                           />: <button onClick={(e)=> {
+                                           />:""}
+                                           </>: <button onClick={(e)=> {
                                             e.preventDefault();
                                             history.push(`/trips/${tripId}/expenses/${booking.expense_id}`)
                                            }}
