@@ -118,7 +118,7 @@ function AddExpenseForm ({trip}) {
 
     return (
         <div className='add-expense-modal' id={page ? "add-expense-page":""}>
-             {page ? <h2 id='expense-breadcrumb'><Link to={`/trips/${trip.id}/expenses`} className='breadcrumb'> {trip.trip.name} </Link> {'>'} Add an Expense</h2>:<button onClick={closeModal} className='close-modal' id='update-trip-close'><i className="fa-solid fa-xmark fa-2xl"></i></button>}
+             {page ? <h2 id='expense-breadcrumb'><Link to={`/trips/${trip.trip.id}/expenses`} className='breadcrumb'> {trip.trip.name} </Link> {'>'} Add an Expense</h2>:<button onClick={closeModal} className='close-modal' id='update-trip-close'><i className="fa-solid fa-xmark fa-2xl"></i></button>}
             <div className='expense-header-info'>
             <h2>Add an Expense.</h2>
             <img src={logo} alt='money-owl'></img>

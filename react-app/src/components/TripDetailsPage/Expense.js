@@ -81,7 +81,7 @@ const Expense = ({trip,group_balances,total_info}) => {
                                 {
                                     expense_by_year[year][month].sort((obj1,obj2)=>new Date(obj1.expense_date)- new Date(obj2.expense_date)).map(expense => (
                                         <div key={expense.id} className='expense-detail'>
-                                            <p className='expense-date'>{month.toUpperCase().slice(0,3)} {new Date(expense.expense_date).getDate()}</p>
+                                            <p className='expense-date'>{month.toUpperCase().slice(0,3)} {new Date(expense.expense_date).getDate()+1}</p>
                                             <img src={category_images[expense.category]} alt={expense.category}></img>
                                             <h4><Link to={`/trips/${trip.id}/expenses/${expense.id}`}>{expense.name}</Link></h4>
 

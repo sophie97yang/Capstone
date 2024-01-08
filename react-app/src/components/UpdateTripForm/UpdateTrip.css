@@ -1,6 +1,6 @@
 .update-trip-modal {
     width:950px;
-    height:600px;
+    max-height:450px;
     overflow:scroll;
     display:flex;
     padding:20px;
