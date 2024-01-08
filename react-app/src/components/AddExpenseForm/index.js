@@ -1,9 +1,9 @@
 import {useState,useEffect} from 'react';
-import {useDispatch} from 'react-redux';
+import {useDispatch,useSelector} from 'react-redux';
 import './AddExpense.css'
 import { addExpense, authenticate } from '../../store/session';
 import {useModal} from '../../context/Modal';
-import {useHistory} from 'react-router-dom';
+import {useHistory,useParams,Link} from 'react-router-dom';
 import logo from '../../assets/images/add-expense.png';
 import InviteOthers from "../AllTripsPage/InviteOthersModal";
 import OpenModalButton from "../OpenModalButton";
@@ -12,6 +12,14 @@ import OpenModalButton from "../OpenModalButton";
 function AddExpenseForm ({trip}) {
     const dispatch = useDispatch();
     const history = useHistory();
+    const user = useSelector(state=>state.session.user);
+    //if add expense is a page and not a modal
+    let page=false;
+    const {tripId} = useParams();
+    if (!trip) {
+        trip = user.trips[tripId];
+        page=true;
+    }
     const [usersInvolved,setUsers] = useState(['All']);
     const [allUsers,setDefine] = useState(true);
     const [errors, setErrors] = useState([]);
@@ -109,9 +117,9 @@ function AddExpenseForm ({trip}) {
     }
 
     return (
-        <div className='add-expense-modal'>
-             <button onClick={closeModal} className='close-modal' id='update-trip-close'><i className="fa-solid fa-xmark fa-2xl"></i></button>
-            <div>
+        <div className='add-expense-modal' id={page ? "add-expense-page":""}>
+             {page ? <h2 id='expense-breadcrumb'><Link to={`/trips/${trip.id}/expenses`} className='breadcrumb'> {trip.trip.name} </Link> {'>'} Add an Expense</h2>:<button onClick={closeModal} className='close-modal' id='update-trip-close'><i className="fa-solid fa-xmark fa-2xl"></i></button>}
+            <div className='expense-header-info'>
             <h2>Add an Expense.</h2>
             <img src={logo} alt='money-owl'></img>
             <p className='trip-date-info'>Trip Duration: {new Date(trip.trip.start_date).toLocaleDateString('en-US',options)}-{new Date(trip.trip.end_date).toLocaleDateString('en-US',options)}</p>

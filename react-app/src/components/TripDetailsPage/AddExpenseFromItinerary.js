@@ -103,7 +103,7 @@ function AddExpenseFromItinerary ({trip,booking}) {
     }
 
     return (
-        <div className='update-expense-modal'>
+        <div className='add-expense-modal'>
              <button onClick={closeModal} className='close-modal' id='update-trip-close'><i className="fa-solid fa-xmark fa-2xl"></i></button>
             <div>
             <h2>Add an Expense</h2>
@@ -265,6 +265,7 @@ function AddExpenseFromItinerary ({trip,booking}) {
                                     <div key={user.split(',')[0]} className='info-details'>
                                     <label  >
                                         {user.split(',')[1]}
+                                    </label>
                                         <input
                                         type='number'
                                         min={0}
@@ -274,7 +275,7 @@ function AddExpenseFromItinerary ({trip,booking}) {
                                             newInfo[parseInt(user.split(',')[0])]=e.target.value
                                             setSplitTypeInfo(newInfo)
                                         }}/>
-                                    </label>
+
                                     </div>
                             ))
                             }
@@ -297,6 +298,7 @@ function AddExpenseFromItinerary ({trip,booking}) {
                                     <div key={user.user.id} className='info-details'>
                                         <label  >
                                             {user.user.first_name}
+                                        </label>
                                             <input
                                             type='number'
                                             step={0.01}
@@ -306,13 +308,14 @@ function AddExpenseFromItinerary ({trip,booking}) {
                                                 newInfo[user.user.id]=e.target.value
                                                 setSplitTypeInfo(newInfo)
                                             }}/>
-                                        </label>
+
                                     </div>
                                 )):
                                 usersInvolved.map(user =>  (
                                     <div key={user.split(',')[0]} className='info-details'>
                                     <label  >
                                         {user.split(',')[1]}
+                                    </label>
                                         <input
                                         type='number'
                                         step={0.01}
@@ -322,7 +325,7 @@ function AddExpenseFromItinerary ({trip,booking}) {
                                             newInfo[parseInt(user.split(',')[0])]=e.target.value
                                             setSplitTypeInfo(newInfo)
                                         }}/>
-                                    </label>
+
                                     </div>
                             ))
                             }

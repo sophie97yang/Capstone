@@ -25,10 +25,11 @@
     width:300px;
 }
 .update-expense-modal h2 {
-    font-size:30px;
+    font-size:35px;
     text-align:center;
     margin-top:60px;
 }
+
 #update-split-type-info {
     padding-right:0px;
 }
@@ -116,4 +117,7 @@
 .update-expense-modal .info-details {
     display:flex;
     flex-direction:column;
+}
+.update-expense-modal .choosing-users>p {
+    font-size:25px;
 }

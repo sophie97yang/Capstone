@@ -19,6 +19,7 @@ import BookingDetails from "./components/Explore/BookingDetails";
 import ScrollToTop from "./components/ScrollToTop";
 import ReactGA from 'react-ga';
 import RouteChangeTracker from './components/RouteChangeTracker';
+import AddExpenseForm from "./components/AddExpenseForm";
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -47,6 +48,9 @@ ReactGA.initialize(TRACKING_ID);
           <ProtectedRoute path='/trips/new'>
             <CreateTripForm />
             </ProtectedRoute>
+          <ProtectedRoute exact path='/trips/:tripId/expenses/new'>
+            <AddExpenseForm />
+          </ProtectedRoute>
           <ProtectedRoute exact path='/trips/:tripId/expenses/:expenseId'>
             <ExpenseDetail />
           </ProtectedRoute>
