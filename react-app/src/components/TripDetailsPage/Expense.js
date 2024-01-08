@@ -1,11 +1,12 @@
 import {useSelector} from 'react-redux';
 import OpenModalButton from '../OpenModalButton';
 import AddExpenseForm from '../AddExpenseForm';
-import { Link } from 'react-router-dom';
+import { Link,useHistory } from 'react-router-dom';
 import SettleUp from '../SettleUpModal';
 
 const Expense = ({trip,group_balances,total_info}) => {
-    const user = useSelector(state=>state.session.user)
+    const user = useSelector(state=>state.session.user);
+    const history = useHistory();
     const user_expense_detail = {};
     //images to display depending on expense category
     const category_images = {
@@ -50,11 +51,16 @@ const Expense = ({trip,group_balances,total_info}) => {
     return (
         <div className='expense-overview'>
             <div className='expense-action-buttons'>
-            <OpenModalButton
+            {/* <OpenModalButton
                      buttonText="Add Expense"
                      modalComponent={<AddExpenseForm trip={trip}/>}
                      className={"add-expense-button"}
-                 />
+                 /> */}
+             <button onClick={(e)=> {
+                    e.preventDefault();
+                    history.push(`/trips/${trip.id}/expenses/new`)
+                 }}
+                 className="add-expense-button">Add Expense</button>
             <OpenModalButton
                      buttonText="Settle Up"
                      //userExpenses: expenses that the user owes in the trip

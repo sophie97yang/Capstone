@@ -109,10 +109,14 @@ const AllTrips = () => {
                 <p>You lent: ${trip.lent} </p>
                 </div>
                 <div className='action-buttons'>
-                <OpenModalButton
+                {/* <OpenModalButton
                      buttonText="Add Expense"
                      modalComponent={<AddExpenseForm trip={trip}/>}
-                 />
+                 /> */}
+                 <button onClick={(e)=> {
+                    e.preventDefault();
+                    history.push(`/trips/${trip.id}/expenses/new`)
+                 }}>Add Expense</button>
                 </div>
             </div>
             </div>

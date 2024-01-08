@@ -27,12 +27,14 @@ def delete_expense(id):
             #user_one now is not owed the cost of the expense for the other user
             #query expense detail to get that price
             expense_detail = ExpenseDetail.query.filter_by(user_id=relationship.user_two_id,expense_id=id).first()
-            relationship.owed-=expense_detail.price
+            if  expense_detail:
+                relationship.owed-=expense_detail.price
     for relationship in relationship_two:
             #user_one=user involved in expense, user_two=payer
             #user_one now does not owe the cost of the expense for that user
             expense_detail = ExpenseDetail.query.filter_by(user_id=relationship.user_one_id,expense_id=id).first()
-            relationship.owes-=expense_detail.price
+            if expense_detail:
+                relationship.owes-=expense_detail.price
 
     # trip = Trip.query.get(expense.trip_id)
     db.session.delete(expense)

@@ -132,7 +132,7 @@ function UpdateExpenseModal ({trip,expense}) {
         <div className='update-expense-modal'>
              <button onClick={closeModal} className='close-modal' id='update-trip-close'><i className="fa-solid fa-xmark fa-2xl"></i></button>
             <div>
-            <h2>Update your Expense</h2>
+            <h2>Update Expense</h2>
             <img src={logo} alt='money-owl'></img>
             </div>
             <form className='add-expense-form'>
