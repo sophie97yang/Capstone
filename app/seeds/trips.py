@@ -111,7 +111,7 @@ def seed_trips(users):
     #seed future trip
     future_trip = Trip(
         name=f"{fake.first_name_female()}'s Bachelorette",
-        city='Nashvile',
+        city='Nashville',
         state='TN',
         start_date=fake.date_between(start_date='+18d',end_date='+20d'),
         end_date=fake.date_between(start_date='+23d',end_date='+24d'),
