@@ -173,3 +173,12 @@ nav {
   list-style-type:none;
   padding-left:20px;
 }
+
+@media screen and (max-width:620px) {
+  nav {
+    width:100%
+  }
+  nav>.search-bar-nav {
+    display:none;
+  }
+}

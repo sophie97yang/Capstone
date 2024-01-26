@@ -120,6 +120,7 @@
     display:flex;
     flex-direction:column;
     align-items:center;
+    margin:15px auto;
 }
 
 }
@@ -141,5 +142,16 @@
     }
     .redirection>button {
         text-align:left;
+    }
+    #login-or {
+        display:none;
+    }
+    .login-action>a {
+        margin-top:20px;
+        margin-left:0px;
+        width:100%
+    }
+    #google {
+        width:100%
     }
 }

@@ -119,6 +119,7 @@
 @media screen and (max-width:920px) {
     .signup-layout {
         flex-direction:column;
+        width:97%
     }
     /* .login-layout>.logo {
         display:none;
@@ -128,11 +129,28 @@
         flex-direction:column;
         align-items:center;
     }
+    .sign-up-page>h1 {
+        margin-left:0px;
+    }
+    .sign-up-page img {
+        width:95%;
+    }
 
     .signup-layout form {
         margin-top:10px;
+        margin-left:0px;
     }
-    .signup-inputs-div input {
-        width:90%
+    .signup-inputs-div input,.signup-inputs-div select {
+        width:100%;
+    }
+
+    .sign-up-page .action-button-ls {
+        width:100%;
+        margin-left:0px;
+
+    }
+
+    .sign-up-page .login-action>p {
+        display:none;
     }
     }
