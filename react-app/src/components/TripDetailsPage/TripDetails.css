@@ -432,3 +432,62 @@
 .more-booking-right .add-expense-button {
     margin-left:10px;
 }
+
+@media screen and (max-width:600px) {
+    .trip-details {
+        width:100%;
+        flex-direction:column;
+    }
+
+    .trip-detail-left {
+        width:100%;
+    }
+
+    .trip-detail-image {
+        width:95%;
+        max-width:95%;
+        min-width: 80%;
+    }
+
+    .update-trip-button,.trip-info-date,.trip-info-location,
+    .invite-button-trip, .delete-button-trip,.trip-info-location>a {
+        position:initial;
+        color:black;
+        text-align:left;
+    }
+    .trip-detail-universal {
+        height:fit-content;
+    }
+
+    .trip-detail-universal >.fa-sm {
+        line-height: normal;
+    }
+    .trip-detail-left> h2 {
+        width:100%;
+    }
+    .expense-detail {
+        flex-direction:column;
+    }
+
+    .expense-detail h4,.payer-details, .you-details,.see-more {
+        width:100%;
+    }
+
+    .trip-detail-right {
+        margin:10px;
+    }
+
+    .trip-detail-right>div {
+        display:flex;
+        flex-direction:column;
+
+    }
+    .fa-pen-to-square {
+        display:none;
+    }
+
+    .trip-itinerary {
+        width:100%
+
+    }
+}
