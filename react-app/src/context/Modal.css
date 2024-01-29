@@ -25,3 +25,10 @@
   background-color:white;
   border-radius:10px;
 }
+
+@media screen and (max-width:600px) {
+  #modal {
+    left:200px;
+    width:10px;
+  }
+}

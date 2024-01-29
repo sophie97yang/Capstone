@@ -24,8 +24,8 @@ function DeleteModal({trip}) {
         <p>Once you delete a trip, it can't be restored.</p>
         <p>Are you sure you want to delete {trip.trip.name}?</p>
         <div className='delete-action-buttons'>
-        <button onClick={handleDelete} className='delete-expense'>Delete</button>
         <button onClick={closeModal}  class='cancel-expense'>Cancel</button>
+        <button onClick={handleDelete} className='delete-expense'>Delete</button>
         </div>
         </div>
     )

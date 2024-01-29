@@ -319,3 +319,21 @@
 .all-trips .action-buttons {
     align-items:flex-start;
 }
+
+@media screen and (max-width:600px) {
+    .all-trips {
+        width:100%;
+    }
+    .individual-trip {
+        width:100%;
+        flex-direction:column;
+    }
+    .all-trips .action-buttons button {
+        width:100%;
+    }
+
+    .invite-modal {
+        width:100%;
+    }
+
+}

@@ -255,7 +255,9 @@ function Explore () {
             {bookingsFilter.map((booking)=> (
                 <div key={booking.id} className='booking-places' onClick={
                     (e)=> {
+                        if (user) {
                         setAttraction(booking.name);
+                        }
                     }}>
                 <div className='explore-images'>
                     <img src={booking.image1} alt={booking.name}></img>
@@ -270,7 +272,7 @@ function Explore () {
             {chosenAttraction ? <AddToItinerary booking={bookingsFilter.filter(booking=>booking.name===chosenAttraction)[0]}/>:
             <div className='directions-for-choosing'>
                 <h2>Add to your Trip's Itinerary</h2>
-                <h3>Select the attraction for reservation details </h3>
+                {user ? <h3>Select the attraction for reservation details. </h3>: <h3>Please sign in to access your trips and their itineraries.</h3>}
 
             </div>}
             </div>
@@ -280,7 +282,7 @@ function Explore () {
 
 
         <div className='coming-soon'>
-            <img src={location_picture.image} alt={location_picture.city}></img>
+            <img src={location_picture?.image} alt={location_picture?.city}></img>
             <h2>Exciting Developments Underway: Unveiling Soon!
                 Get Ready to Embark on a Journey Through Our Latest Travel Destination in the Making.
             </h2>

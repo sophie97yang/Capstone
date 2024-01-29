@@ -27,8 +27,8 @@ function DeleteExpense({trip,expense}) {
         <p>Once you delete an expense, it can't be restored.</p>
         <p>Are you sure you want to delete {expense.name}?</p>
         <div className='delete-action-buttons'>
-        <button onClick={handleDelete} className='delete-expense'>Delete</button>
         <button onClick={closeModal} className='cancel-expense'>Cancel</button>
+        <button onClick={handleDelete} className='delete-expense'>Delete</button>
         </div>
         </div>
     )

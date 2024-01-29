@@ -261,3 +261,34 @@
 #add-expense-page>.expense-header-info>h2 {
     margin-top:23px;
 }
+
+@media screen and (max-width:600px) {
+    .add-expense-modal {
+        flex-direction:column;
+    }
+
+    #add-expense-page>.expense-header-info>h2 {
+        margin-top:50px;
+        width:100%;
+        text-align: center;
+    }
+
+    .add-expense-form input{
+        width:90%;
+    }
+
+    .add-expense-form select {
+        width:100%
+    }
+
+    .total-info-splits {
+        width:100%;
+        margin-left:0px;
+
+    }
+
+    .add-expense-modal {
+        width:auto;
+    }
+
+}
