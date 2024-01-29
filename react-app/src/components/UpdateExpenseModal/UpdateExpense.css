@@ -121,3 +121,11 @@
 .update-expense-modal .choosing-users>p {
     font-size:25px;
 }
+
+
+@media screen and (max-width:600px) {
+    .update-expense-modal {
+        flex-direction:column;
+        width:100%;
+    }
+}
