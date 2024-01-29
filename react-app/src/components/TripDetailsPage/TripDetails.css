@@ -490,4 +490,12 @@
         width:100%
 
     }
+
+    .booking-detail-it-right {
+        flex-direction:column
+    }
+    .more-booking-right .add-expense-button {
+        width:100%;
+        margin-left:0px;
+    }
 }

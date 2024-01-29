@@ -593,4 +593,28 @@
   .no-trips-itinerary {
     width:100%;
   }
+
+  .explore-booking-details {
+    width:100%;
+  }
+
+  .booking-info-top {
+    flex-direction:column;
+  }
+
+  .explore-detail-carousel {
+    width:100%
+  }
+  .breadcrumb-container {
+    width:100%;
+  }
+
+  .price-booking {
+    text-align:center;
+  }
+
+  .explore-details-bottom {
+    flex-direction:column;
+  }
+
 }

@@ -121,3 +121,39 @@
     height:50px;
     font-size:17px;
 }
+
+@media screen and (max-width:600px) {
+    .create-trip {
+        width:100%;
+    }
+    .create-trip>div {
+        flex-direction:column;
+    }
+
+    .create-trip-left {
+        width:100%;
+    }
+
+    .create-trip img {
+        width:95%;
+    }
+
+    #trip-form {
+        padding-left:0px;
+    }
+
+    #trip-form input,#trip-form textarea {
+        width:95%;
+    }
+    #trip-form select{
+        width:100%;
+    }
+
+    #image-input input {
+        width:60%;
+    }
+
+    .create-trip-button>.action-button-ls {
+        width:100%;
+    }
+}

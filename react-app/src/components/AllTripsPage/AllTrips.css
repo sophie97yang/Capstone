@@ -331,4 +331,9 @@
     .all-trips .action-buttons button {
         width:100%;
     }
+
+    .invite-modal {
+        width:100%;
+    }
+
 }

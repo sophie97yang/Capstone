@@ -123,3 +123,14 @@
     top:0px;
     left:0px;
 }
+
+@media screen and (max-width:600px) {
+    .update-trip-modal {
+        width:100%;
+        flex-direction:column;
+    }
+
+    .update-header {
+        width:100%;
+    }
+}
