@@ -42,7 +42,7 @@ CORS(app)
 
 
 # Since we are deploying with Docker and Flask,
-# we won't be using a buildpack when we deploy to Heroku.
+# we won't be using a buildpack when we deploy.
 # Therefore, we need to make sure that in production any
 # request made over http is redirected to https.
 # Well.........
