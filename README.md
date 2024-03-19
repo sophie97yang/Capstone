@@ -13,6 +13,9 @@
  ![Google Cloud](https://img.shields.io/badge/Google_Cloud-4285F4?style=for-the-badge&logo=google-cloud&logoColor=white)
  ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
  ![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
+ 
+## Index
+[Feature List](https://github.com/sophie97yang/SplitTrip/wiki/Features) | [Database Schema](https://github.com/sophie97yang/SplitTrip/wiki/Database-Schema) | [User Stories](https://github.com/sophie97yang/SplitTrip/wiki/User-Stories) | [Wireframes](https://github.com/sophie97yang/SplitTrip/wiki/Wireframes)
 
 ## Installation Instructions
 1. Clone the repository: git clone `https://github.com/sophie97yang/SplitTrip.git`
