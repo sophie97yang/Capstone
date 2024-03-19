@@ -1,6 +1,6 @@
 # Split Trip
 
-Introducing [SplitTrip](https://split-trip.onrender.com), a revolutionary travel application that goes beyond the ordinary. Seamlessly blending the functionalities of Trip Advisor and Splitwise, it transforms your travel experience into a harmonious journey. Discover and book exciting adventures with ease, effortlessly manage reservations, and, here's the game-changer, split expenses effortlessly among your travel companions. No more awkward calculations or misunderstandings – SplitTrip ensures that every trip is not just memorable but financially stress-free, making it the ultimate travel companion for those who crave both adventure and financial harmony. Embark on your next journey with confidence, where exploration and expense management coexist seamlessly.
+[SplitTrip](https://split-trip.onrender.com), a revolutionary travel application, blending the functionalities of Trip Advisor and Splitwise. Discover and book adventures with ease and split expenses effortlessly among your travel group. No more awkward calculations or misunderstandings – SplitTrip ensures that every trip is not just memorable but financially stress-free, making it the ultimate travel companion. Embark on your next journey with confidence, where exploration and expense management can coexist seamlessly.
 
 ## Tech Stack
  ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
@@ -13,8 +13,22 @@ Introducing [SplitTrip](https://split-trip.onrender.com), a revolutionary travel
  ![Google Cloud](https://img.shields.io/badge/Google_Cloud-4285F4?style=for-the-badge&logo=google-cloud&logoColor=white)
  ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
  ![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
- 
-## Features
+
+## Installation Instructions
+1. Clone the repository: git clone `https://github.com/sophie97yang/SplitTrip.git`
+2. Set up .env file, see .env.example for assistance
+3. Install Dependencies: `pip install -r requirements.txt`
+4. Set up virtual environment: `pipenv shell`
+5. Database and Server setup, run the following commands
+  * `flask db upgrade`
+  * `flask seed all`
+  * `flask run`
+6. Open a New Terminal, navigate to the react-app folder: `cd react-app`
+7. Install Dependencies: `npm install`
+8. Run application: `npm start`
+9. Visit http://localhost:3000 in your browser to see the React application running.
+
+## How To Use: Features
 ### Landing
 <img width="600" height="600" alt="Screenshot 2024-01-03 at 9 24 17 AM" src="https://github.com/sophie97yang/SplitTrip/assets/129304831/15546e13-520c-42cb-941b-29d521639399">
 
