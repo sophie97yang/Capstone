@@ -1,6 +1,6 @@
 # Split Trip
 
-[SplitTrip](https://split-trip.onrender.com), a revolutionary travel application, blending the functionalities of Trip Advisor and Splitwise. Discover and book adventures with ease and split expenses effortlessly among your travel group. No more awkward calculations or misunderstandings – SplitTrip ensures that every trip is not just memorable but financially stress-free, making it the ultimate travel companion. Embark on your next journey with confidence, where exploration and expense management can coexist seamlessly.
+[SplitTrip](https://split-trip.onrender.com), a travel application, blends the functionalities of Trip Advisor and Splitwise. Discover and book adventures with ease and split expenses effortlessly among your travel group. SplitTrip ensures that every trip is not just memorable but financially stress-free, making it the ultimate travel companion! Embark on your next journey with confidence, where exploration and expense management can coexist seamlessly.
 
 ## Tech Stack
  ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
