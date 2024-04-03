@@ -15,7 +15,7 @@
  ![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
  
 ## Index
-[Feature List](https://github.com/sophie97yang/SplitTrip/wiki/Features) | [Database Schema](https://github.com/sophie97yang/SplitTrip/wiki/Database-Schema) | [User Stories](https://github.com/sophie97yang/SplitTrip/wiki/User-Stories) | [Wireframes](https://github.com/sophie97yang/SplitTrip/wiki/Wireframes)
+[Feature List](https://github.com/sophie97yang/SplitTrip/wiki/Features) | [Database Schema](https://github.com/sophie97yang/SplitTrip/wiki/Database-Schema) | [User Stories](https://github.com/sophie97yang/SplitTrip/wiki/User-Stories) | [Wireframes](https://github.com/sophie97yang/SplitTrip/wiki/Wireframes) | [API Documentation](https://github.com/sophie97yang/SplitTrip/wiki/API-Documentation)
 
 ## Installation Instructions
 1. Clone the repository: git clone `https://github.com/sophie97yang/SplitTrip.git`
